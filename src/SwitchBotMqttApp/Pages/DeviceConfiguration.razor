@@ -1,0 +1,539 @@
+﻿@page "/deviceconfiguration"
+@using SwitchBotMqttApp.Models.DeviceConfiguration;
+@using SwitchBotMqttApp.Models.DeviceDefinitions;
+@using SwitchBotMqttApp.Models.Enums;
+
+<PageTitle>Device Configuration</PageTitle>
+
+<div class="container">
+    <button @onclick="()=>FetchSwitchBotApi()" class="btn btn-outline-primary btn-sm">
+        Fetch Devices By SwitchBotApi
+        @if (Model.Fetching)
+        {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
+    </button>
+    <button @onclick="()=>Save()" class="btn btn-primary btn-sm">
+        Save changes
+        @if (Model.Saveing)
+        {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
+    </button>
+    <button @onclick="()=>Restore()" class="btn btn-warning btn-sm">
+        Restore changes
+        @if (Model.Saveing)
+        {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
+    </button>
+</div>
+<EditForm Model="@Model">
+    <div class="container">
+        <button type="submit" disabled hidden />
+        <table class="table align-middle">
+            <thead>
+                <tr class="table-primary">
+                    <th>Detail</th>
+                    <th>Enable</th>
+                    <th>DeviceType</th>
+                    <th>DeviceName</th>
+                    <th>DeviceId</th>
+                    <th>Description</th>
+                    <th><i class="oi oi-timer"></i>Polling</th>
+                    <th><i class="oi oi-cloud-download"></i>Webhook</th>
+                    <th>DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var device in Model.Data.PhysicalDevices)
+                {
+                    var deviceDef = DeviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == device.DeviceType);
+                    string style = device.ConfigureStatus switch
+                    {
+                        ConfigureStatus.NoChange => "light",
+                        ConfigureStatus.Missing => "danger",
+                        ConfigureStatus.Deleting => "danger",
+                        ConfigureStatus.Modified => "warning",
+                        ConfigureStatus.New => "primary",
+                        _ => throw new NotImplementedException()
+
+                    };
+                    <tr class="table-@style">
+                        <td class="expand-button collapsed" data-bs-toggle="collapse" data-bs-target="#@device.DeviceId">
+                            <div>
+                                <i class="oi oi-plus"></i>
+                                <i class="oi oi-minus"></i>
+                            </div>
+                        </td>
+                        <td style="text-align: center">
+                            <InputCheckbox @bind-Value="device.Enable" class="big-checkbox" />
+                        </td>
+                        <td>@deviceDef.ApiDeviceTypeString</td>
+                        <td>@device.DeviceName</td>
+                        <td>
+                            <button @onclick="()=>ShowDeviceAttribute(device)" class="btn btn-outline-warning btn-sm">
+                                <i class="oi oi-info"></i>
+                            </button>
+                            @device.DeviceId
+                        </td>
+                        <td>
+                            <InputText @bind-Value="device.Description" />
+                        </td>
+                        <td style="text-align: center">
+                            <InputCheckbox @bind-Value="device.UsePolling" class="big-checkbox" />
+
+                            @if (device.UsePolling)
+                            {
+                                <InputText @bind-Value="device.PollingIntervalProxy" size="3" style="margin-left:10px" />
+                            }
+                        </td>
+                        <td style="text-align: center">
+                            <InputCheckbox @bind-Value="device.UseWebhook" class="big-checkbox" />
+                        </td>
+                        <td>
+                            @if (device.ConfigureStatus == ConfigureStatus.Missing
+                           || device.ConfigureStatus == ConfigureStatus.Deleting)
+                            {
+                                <button @onclick="()=>DeleteDevice(device)" class="btn btn-outline-warning btn-sm">
+                                    <i class="oi oi-action-redo"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button @onclick="()=>DeleteDevice(device)" class="btn btn-outline-danger btn-sm">
+                                    <i class="oi oi-trash"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="collapse accordion-collapse pt-0" id="@device.DeviceId">
+                        <td colspan="9" class="p-0">
+                            <div class="row border mx-2 bg-info-subtle">
+                                <div class="col-1" style="text-align: center"><i class="oi oi-info"></i></div>
+                                <div class="col-11"><span class="fw-bold">Fields</span></div>
+                            </div>
+                            <div class="row border mx-2 bg-info-subtle">
+                                <div class="col-1" style="text-align: center">Enable</div>
+                                <div class="col-1">SourceType</div>
+                                <div class="col-2">FieldName</div>
+                                <div class="col-2">FieldDataType</div>
+                                <div class="col-4">Description</div>
+                            </div>
+                            @foreach (var field in device.Fields)
+                            {
+                                var fieldDef = DeviceDefinitionsManager.FieldDefinitions.First(f => f.DeviceType == device.DeviceType && f.FieldName == field.FieldName);
+
+                                <div class="row border mx-2">
+                                    <div class="col-1" style="text-align: center">
+                                        <InputCheckbox @bind-Value="field.Enable" class="big-checkbox" />
+                                    </div>
+                                    <div class="col-1" style="text-align: center">
+                                        @if (fieldDef.FieldSourceType == FieldSourceType.Both || fieldDef.FieldSourceType == FieldSourceType.Status)
+                                        {
+                                            <i class="oi oi-timer @(device.UsePolling?"":"gray")"></i>
+                                        }
+                                        @if (fieldDef.FieldSourceType == FieldSourceType.Both || fieldDef.FieldSourceType == FieldSourceType.Webhook)
+                                        {
+                                            <i class="oi oi-cloud-download @(device.UseWebhook?"":"gray")"></i>
+                                        }
+                                    </div>
+                                    <div class="col-2">
+                                        @fieldDef.FieldName
+                                    </div>
+                                    <div class="col-2">
+                                        @if (fieldDef.Icon != null)
+                                        {
+                                            <span class="mdi fs-5 @fieldDef.Icon.Replace(":","-")"></span>
+                                        }
+                                        @fieldDef.FieldDataType
+                                    </div>
+                                    <div class="col-4">@fieldDef.Description</div>
+                                </div>
+                            }
+
+                            @if (device.Commands.Any())
+                            {
+                                <div class="row border mx-2 bg-success-subtle">
+                                    <div class="col-1" style="text-align: center"><i class="oi oi-command"></i></div>
+                                    <div class="col-11"><span class="fw-bold">Commands</span></div>
+                                </div>
+                                <div class="row border mx-2 bg-success-subtle">
+                                    <div class="col-1" style="text-align: center">Enable</div>
+                                    <div class="col-1">Type</div>
+                                    <div class="col-1">Command</div>
+                                    <div class="col-3">Description</div>
+                                    <div class="col-6">PayloadType/Parameters/Test</div>
+                                </div>
+                                @foreach (var command in device.Commands)
+                                {
+                                    var commandDef = DeviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                    <div class="row border mx-2">
+                                        <div class="col-1" style="text-align: center"><InputCheckbox @bind-Value="command.Enable" class="big-checkbox" /></div>
+                                        <div class="col-1">
+                                            @command.CommandType
+                                        </div>
+                                        <div class="col-1">
+                                            @command.Command
+                                        </div>
+                                        <div class="col-3">
+                                            @if (commandDef.Icon != null)
+                                            {
+                                                <span class="mdi fs-5 @commandDef.Icon.Replace(":","-")"></span>
+                                            }
+                                            @commandDef.Description
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    @commandDef.PayloadType
+                                                    <button @onclick="()=>ExecuteDefaultCommand(device,command)" class="btn btn-outline-warning btn-sm">
+                                                        <i class="oi oi-media-play">Test</i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            @if (commandDef.PayloadType != PayloadType.Default)
+                                            {
+                                                <div class="row border bg-success-subtle">
+                                                    <div class="col-2">Name</div>
+                                                    <div class="col-2">Type</div>
+                                                    <div class="col-4">Value</div>
+                                                    <div class="col-4">Description</div>
+                                                </div>
+                                                var commandParams = DeviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                                @foreach (var param in commandParams.OrderBy(c => c.Index))
+                                                {
+                                                    <div class="row border">
+                                                        <div class="col-2">
+                                                            @param.Name
+                                                        </div>
+                                                        <div class="col-2">
+                                                            @if (param.Icon != null)
+                                                            {
+                                                                <span class="mdi fs-5 @param.Icon.Replace(":","-")"></span>
+                                                            }
+                                                            @param.ParameterType
+                                                        </div>
+                                                        <div class="col-4">
+                                                            @if (param.ParameterType == ParameterType.Range
+                                                           || param.ParameterType == ParameterType.SelectOrRange)
+                                                            {
+
+                                                                <div>@param.RangeMin - @param.RangeMax</div>
+                                                            }
+                                                            @if (param.ParameterType == ParameterType.Select
+                                                           || param.ParameterType == ParameterType.SelectOrRange)
+                                                            {
+                                                                for (int i = 0; i < param.GetOptions()!.Length; i++)
+                                                                {
+                                                                    <div>@param.GetOptions()![i] @param.GetOptionsDescription()![i]</div>
+                                                                }
+                                                            }
+
+                                                        </div>
+                                                        <div class="col-4">@param.Description</div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                @if (Model.Data.PhysicalDevices.Count == 0)
+                {
+                    <tr class="table-secondary">
+                        <th colspan="9">no configured device</th>
+                    </tr>
+                }
+                <tr class="table-secondary">
+                    <th colspan="9" style="text-align:right;">Estimated API calls per day: <span>@Model.EstimateApiCallPerDay</span>/10000</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="container">
+        <table class="table align-middle">
+            <thead>
+                <tr class="table-primary">
+                    <th>Detail</th>
+                    <th>Enable</th>
+                    <th>RemoteDeviceType</th>
+                    <th>DeviceName</th>
+                    <th>DeviceId</th>
+                    <th>Description</th>
+                    <th>DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var device in Model.Data.VirtualInfraredRemoteDevices)
+                {
+                    var deviceDef = DeviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == device.DeviceType);
+                    string style = device.ConfigureStatus switch
+                    {
+                        ConfigureStatus.NoChange => "light",
+                        ConfigureStatus.Missing => "danger",
+                        ConfigureStatus.Deleting => "danger",
+                        ConfigureStatus.Modified => "warning",
+                        ConfigureStatus.New => "primary",
+                        _ => throw new NotImplementedException()
+
+                    };
+                    <tr class="table-@style">
+                        <td class="expand-button collapsed" data-bs-toggle="collapse" data-bs-target="#@device.DeviceId">
+                            <div>
+                                <i class="oi oi-plus"></i>
+                                <i class="oi oi-minus"></i>
+                            </div>
+                        </td>
+                        <td style="text-align: center">
+                            <InputCheckbox @bind-Value="device.Enable" class="big-checkbox" />
+                        </td>
+                        <td>
+                            @if (device.IsCustomized)
+                            {
+                                @deviceDef.CustomizedDeviceTypeString
+                            }
+                            else
+                            {
+                                @deviceDef.ApiDeviceTypeString
+                            }
+                        </td>
+                        <td>@device.DeviceName</td>
+                        <td>
+                            <button @onclick="()=>ShowDeviceAttribute(device)" class="btn btn-outline-warning btn-sm">
+                                <i class="oi oi-info"></i>
+                            </button>
+                            @device.DeviceId
+                        </td>
+                        <td>
+                            <InputText @bind-Value="device.Description" />
+                        </td>
+                        <td>
+                            @if (device.ConfigureStatus == ConfigureStatus.Missing
+                           || device.ConfigureStatus == ConfigureStatus.Deleting)
+                            {
+                                <button @onclick="()=>DeleteDevice(device)" class="btn btn-outline-warning btn-sm">
+                                    <i class="oi oi-action-redo"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button @onclick="()=>DeleteDevice(device)" class="btn btn-outline-danger btn-sm">
+                                    <i class="oi oi-trash"></i>
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                    <tr class="collapse accordion-collapse pt-0" id="@device.DeviceId">
+                        <td colspan="7" class="p-0">
+                            <div class="row border mx-2 bg-success-subtle">
+                                <div class="col-1" style="text-align: center"><i class="oi oi-command"></i></div>
+                                <div class="col-11"><span class="fw-bold">Commands</span></div>
+                            </div>
+                            @if (device.Commands.Any(c => c.CommandType == CommandType.Command))
+                            {
+                                <div class="row border mx-2 bg-success-subtle">
+                                    <div class="col-1" style="text-align: center">Enable</div>
+                                    <div class="col-1">Type</div>
+                                    <div class="col-1">Command</div>
+                                    <div class="col-3">Description</div>
+                                    <div class="col-6">PayloadType/Parameters</div>
+                                </div>
+                            }
+                            @foreach (var command in device.Commands.Where(c => c.CommandType == CommandType.Command))
+                            {
+                                var commandDef = DeviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                <div class="row border mx-2">
+                                    <div class="col-1" style="text-align: center"><InputCheckbox @bind-Value="command.Enable" class="big-checkbox" /></div>
+                                    <div class="col-1">
+                                        @command.CommandType
+                                    </div>
+                                    <div class="col-1">
+                                        @command.Command
+                                    </div>
+                                    <div class="col-3">
+                                        @if (commandDef.Icon != null)
+                                        {
+                                            <span class="mdi fs-5 @commandDef.Icon.Replace(":","-")"></span>
+                                        }
+                                        @commandDef.Description
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                @commandDef.PayloadType
+                                                <button @onclick="()=>ExecuteDefaultCommand(device,command)" class="btn btn-outline-warning btn-sm">
+                                                    <i class="oi oi-media-play">Test</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        @if (commandDef.PayloadType != PayloadType.Default)
+                                        {
+                                            <div class="row border bg-success-subtle">
+                                                <div class="col-2">Name</div>
+                                                <div class="col-2">Type</div>
+                                                <div class="col-4">Value</div>
+                                                <div class="col-4">Description</div>
+                                            </div>
+                                            var commandParams = DeviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                            @foreach (var param in commandParams.OrderBy(c => c.Index))
+                                            {
+                                                <div class="row border">
+                                                    <div class="col-2">
+                                                        @param.Name
+                                                    </div>
+                                                    <div class="col-2">
+                                                        @if (param.Icon != null)
+                                                        {
+                                                            <span class="mdi fs-5 @param.Icon.Replace(":","-")"></span>
+                                                        }
+                                                        @param.ParameterType
+                                                    </div>
+                                                    <div class="col-4">
+                                                        @if (param.ParameterType == ParameterType.Range
+                                                       || param.ParameterType == ParameterType.SelectOrRange)
+                                                        {
+
+                                                            <div>@param.RangeMin - @param.RangeMax</div>
+                                                        }
+                                                        @if (param.ParameterType == ParameterType.Select
+                                                       || param.ParameterType == ParameterType.SelectOrRange)
+                                                        {
+                                                            for (int i = 0; i < param.GetOptions()!.Length; i++)
+                                                            {
+                                                                <div>@param.GetOptions()![i] @param.GetOptionsDescription()![i]</div>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                    <div class="col-4">@param.Description</div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            <div class="row border mx-2 bg-warning-subtle">
+                                <div class="col-1" style="text-align: center">Enable</div>
+                                <div class="col-1">Type</div>
+                                <div class="col-3">Command</div>
+                                <div class="col-4">Description(ButtonEntity DefaultName)</div>
+                                <div class="col-1">PayloadType</div>
+                            </div>
+                            @foreach (var command in device.Commands.Where(c => c.CommandType != CommandType.Command))
+                            {
+                                string styleCommand = device.ConfigureStatus switch
+                                {
+                                    ConfigureStatus.NoChange => "light",
+                                    ConfigureStatus.Deleting => "danger",
+                                    ConfigureStatus.New => "primary",
+                                    _ => throw new NotImplementedException()
+
+                                };
+                                <div class="row border mx-2 table-@styleCommand">
+                                    <div class="col-1" style="text-align: center"><InputCheckbox @bind-Value="command.Enable" class="big-checkbox" /></div>
+                                    <div class="col-1">@command.CommandType</div>
+                                    <div class="col-3">
+
+                                        @if (command.CommandType == CommandType.Tag)
+                                        {
+                                            var keySet = DeviceDefinitionsManager.KeySetDefinitions.FirstOrDefault(k => k.DeviceType == device.DeviceType && k.KeyTag == command.Command);
+                                            if (keySet != null)
+                                            {
+                                                <span>@keySet.KeyName (@keySet.KeyTag)</span>
+                                            }
+                                            else
+                                            {
+                                                <span>undifiend KeySet (@command.Command)</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <InputText @bind-Value="command.Command" size="30" />
+                                        }
+                                    </div>
+                                    <div class="col-4"><InputText @bind-Value="command.DisplayName" size="30" /></div>
+                                    <div class="col-1">
+                                        @PayloadType.Default
+                                    </div>
+                                    <div class="col-2">
+                                        <button @onclick="()=>DeleteCustomCommand(device,command)" class="btn btn-outline-danger btn-sm">
+                                            <i class="oi oi-trash">Delete</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row border mx-2 bg-secondary-subtle">
+                                <div class="col-1" style="text-align: center">
+                                    <button @onclick="()=>AddCustomizeCommand(device)" class="btn btn-outline-primary btn-sm">
+                                        <i class="oi oi-plus"></i>
+                                    </button>
+                                </div>
+                                <div class="col-1">
+                                    @CommandType.Customize
+                                </div>
+                                <div class="col-3">
+                                    <InputText @bind-Value="Model.AddingCustomCommand[device].CommandCustomize" placeholder="{user-defined button name}" size="30" />
+                                </div>
+                                <div class="col-4"><InputText @bind-Value="Model.AddingCustomCommand[device].DisplayNameCustomize" size="30" /></div>
+                                <div class="col-1">@PayloadType.Default</div>
+                                <div class="col-2">
+                                    <button @onclick="()=>ExecuteDefaultCommand(device,new CommandConfig(){CommandType = CommandType.Customize,Command = Model.AddingCustomCommand[device].CommandCustomize})" class="btn btn-outline-warning btn-sm">
+                                        <i class="oi oi-media-play">Test</i>
+                                    </button>
+                                </div>
+                            </div>
+                            @if (device.DeviceType != DeviceType.Others)
+                            {
+                                <div class="row border mx-2 bg-secondary-subtle">
+                                    <div class="col-1" style="text-align: center">
+                                        <button @onclick="()=>AddTagCommand(device)" class="btn btn-outline-primary btn-sm">
+                                            <i class="oi oi-plus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-1">
+                                        @CommandType.Tag
+                                    </div>
+                                    <div class="col-3">
+                                        <InputSelect @bind-Value="Model.AddingCustomCommand[device].CommandTag" style="max-width:90%">
+                                            <option value="">{text input(or keyset choice)}</option>
+                                            @foreach (var keySet in DeviceDefinitionsManager.KeySetDefinitions.Where(k => k.DeviceType == device.DeviceType))
+                                            {
+                                                <option value="@keySet.KeyTag">@keySet.KeyName (@keySet.KeyTag)</option>
+                                            }
+                                        </InputSelect>
+                                        @if (string.IsNullOrEmpty(Model.AddingCustomCommand[device].CommandTag))
+                                        {
+                                            <InputText @bind-Value="Model.AddingCustomCommand[device].CommandTagTextInput" size="30" />
+                                        }
+                                    </div>
+                                    <div class="col-4"><InputText @bind-Value="Model.AddingCustomCommand[device].DisplayNameTag" size="30" /></div>
+                                    <div class="col-1">@PayloadType.Default</div>
+                                    <div class="col-2">
+                                        <button @onclick="()=>ExecuteDefaultCommand(device,new CommandConfig(){CommandType = CommandType.Tag,Command = Model.AddingCustomCommand[device].CommandTag})" class="btn btn-outline-warning btn-sm">
+                                            <i class="oi oi-media-play">Test</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+            <tfoot>
+                @if (Model.Data.VirtualInfraredRemoteDevices.Count == 0)
+                {
+                    <tr class="table-secondary">
+                        <th colspan="7">no configured device</th>
+                    </tr>
+                }
+            </tfoot>
+        </table>
+    </div>
+</EditForm>

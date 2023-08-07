@@ -1,0 +1,235 @@
+﻿@using SwitchBotMqttApp.Logics;
+@using SwitchBotMqttApp.Models.DeviceConfiguration;
+@using SwitchBotMqttApp.Models.DeviceDefinitions;
+@using SwitchBotMqttApp.Models.Enums;
+@using System.Text.Json.Nodes;
+@inject DeviceDefinitionsManager DeviceDefinitionsManager;
+@inject SwitchBotApiClient SwitchBotApiClient;
+
+﻿<div>
+    <EditForm Model="@CommandParams">
+        <div class="row">
+            <div class="col-2 border bg-primary-subtle">DeviceType</div>
+            <div class="col-10 border">@Device.DeviceType</div>
+        </div>
+        <div class="row">
+            <div class="col-2 border bg-primary-subtle">DeviceName</div>
+            <div class="col-10 border">@Device.DeviceName</div>
+        </div>
+        <div class="row">
+            <div class="col-2 border bg-primary-subtle">DeviceId</div>
+            <div class="col-10 border">@Device.DeviceId</div>
+        </div>
+        <div class="row">
+            <div class="col-2 border bg-primary-subtle">CommandType</div>
+            <div class="col-10 border">@CommandConf.CommandType</div>
+        </div>
+        <div class="row">
+            <div class="col-2 border bg-primary-subtle">Command</div>
+            <div class="col-10 border">
+            @if (CommandConf.CommandType == CommandType.Customize)
+            {
+                <InputText @bind-Value="CommandConf.Command" size="5" />
+            }
+            else if (CommandConf.CommandType == CommandType.Tag)
+            {
+                <div>
+                    <InputSelect @bind-Value="CommandConf.Command" style="max-width:100%">
+                            <option value="">{text input(or keyset choice)}</option>
+                        @foreach (var keySet in DeviceDefinitionsManager.KeySetDefinitions.Where(k => k.DeviceType == Device.DeviceType))
+                        {
+                            <option value="@keySet.KeyTag">@keySet.KeyName (@keySet.KeyTag)</option>
+                        }
+                    </InputSelect>
+                </div>
+                @if (string.IsNullOrEmpty(CommandConf.Command))
+                {
+                    <InputText @bind-Value="CommandTextInput" size="30" />
+                }
+            }
+            else
+            {
+                @CommandConf.Command
+            }
+            </div>
+        </div>
+        @if (CommandConf.CommandType == CommandType.Customize
+            || CommandConf.CommandType == CommandType.Tag
+            || CommandDef!.PayloadType == PayloadType.Default)
+        {
+            <div class="row">
+                <div class="col-2 border bg-primary-subtle">Parameter</div>
+                <div class="col-10 border">@PayloadType.Default</div>
+            </div>
+        }
+        else
+        {
+
+            <div class="row">
+                <div class="col-2 border bg-primary-subtle">Parameter</div>
+                <div class="col-10 border">
+                    <div class="row">
+                        <div class="col-12">@CommandDef!.PayloadType</div>
+                    </div>
+                    <div class="row border bg-success-subtle">
+                        <div class="col-2">Name</div>
+                        <div class="col-2">Type</div>
+                        <div class="col-4">Value</div>
+                        <div class="col-4">Description</div>
+                    </div>
+                    @foreach (var param in CommandParams)
+                    {
+                        <div class="row border">
+                            <div class="col-2">@param.def.Name</div>
+                            <div class="col-2">@param.def.ParameterType</div>
+                            <div class="col-2">
+                                @if (param.def.ParameterType == ParameterType.Range
+                               || param.def.ParameterType == ParameterType.SelectOrRange)
+                                {
+
+                                    <div>@param.def.RangeMin - @param.def.RangeMax</div>
+                                }
+                                @if (param.def.ParameterType == ParameterType.Select
+                               || param.def.ParameterType == ParameterType.SelectOrRange)
+                                {
+                                    for (int i = 0; i < param.def.GetOptions()!.Length; i++)
+                                    {
+                                        <div>@param.def.GetOptions()![i] @param.def.GetOptionsDescription()![i]</div>
+                                    }
+                                }
+
+                            </div>
+                            <div class="col-2">
+                                <InputText @bind-Value="param.value" size="5" />
+                            </div>
+                            <div class="col-4">@param.def.Description</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-2 border bg-warning-subtle">
+                Result
+            </div>
+            <div class="col-10 border">
+                <InputTextArea @bind-Value="Response" style="width:100%;"></InputTextArea>
+            </div>
+        </div>
+
+        <div class="pt-3">
+            <button @onclick="Execute" class="btn btn-primary">Execute</button>
+            <button @onclick="Close" class="btn btn-secondary">Close</button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    [Parameter] public DeviceBase Device { get; set; } = default!;
+
+    [Parameter] public CommandConfig CommandConf { get; set; } = default!;
+
+    private CommandDefinition? CommandDef = default!;
+    private List<ParamTest> CommandParams = default!;
+    public string CommandTextInput = string.Empty;
+
+    private class ParamTest
+    {
+        public CommandPayloadDefinition def { get; set; } = default!;
+        public string value { get; set; } = default!;
+    }
+    private string? Response = default!;
+
+    protected override Task OnInitializedAsync()
+    {
+        CommandDef = DeviceDefinitionsManager.CommandDefinitions.FirstOrDefault(
+            c => c.DeviceType == Device.DeviceType && c.CommandType == CommandConf.CommandType && c.Command == CommandConf.Command);
+        CommandParams = DeviceDefinitionsManager.CommandPayloadDefinitions.Where(
+            c => c.DeviceType == Device.DeviceType && c.CommandType == CommandConf.CommandType && c.Command == CommandConf.Command)
+            .OrderBy(c => c.Index)
+            .Select(p => new ParamTest() { def = p, value = string.Empty }).ToList();
+        return Task.CompletedTask;
+    }
+    async Task Execute()
+    {
+        Response = string.Empty;
+        StateHasChanged();
+        try
+        {
+            if (CommandConf.CommandType == CommandType.Customize
+                || CommandConf.CommandType == CommandType.Tag
+                || CommandDef!.PayloadType == PayloadType.Default)
+            {
+                if(CommandConf.CommandType == CommandType.Tag && CommandConf.Command == string.Empty)
+                {
+                    Response = await SwitchBotApiClient.SendDefaultDeviceControlCommandAsync(Device, new CommandConfig()
+                    {
+                        CommandType = CommandType.Tag,
+                        Command = CommandTextInput,
+                        
+                    }, CancellationToken.None);
+                }
+                else
+                {
+                    Response = await SwitchBotApiClient.SendDefaultDeviceControlCommandAsync(Device, CommandConf, CancellationToken.None);
+                }
+            }
+            else if (CommandDef.PayloadType == PayloadType.SingleValue)
+            {
+                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, CommandParams[0].value, CancellationToken.None);
+            }
+            else if (CommandDef.PayloadType == PayloadType.Json)
+            {
+                var json = JsonNode.Parse("{}")!;
+                CommandParams.ForEach(commandParam =>
+                {
+                    var paramDef = commandParam.def;
+                    if (paramDef.ParameterType == ParameterType.Long
+                        || paramDef.ParameterType == ParameterType.Range)
+                    {
+                        json[paramDef.Name] = JsonValue.Create<long>(long.Parse(commandParam.value));
+                    }
+                    else if (paramDef.ParameterType == ParameterType.SelectOrRange)
+                    {
+                        if (long.TryParse(commandParam.value, out var longValue))
+                        {
+                            json[paramDef.Name] = JsonValue.Create<long>(longValue);
+                        }
+                        else
+                        {
+                            json[paramDef.Name] = JsonValue.Create<string>(commandParam.value);
+                        }
+                    }
+                    else
+                    {
+                        json[paramDef.Name] = JsonValue.Create<string>(commandParam.value);
+                    }
+                });
+                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, json, CancellationToken.None);
+            }
+            else
+            {
+                var parameters = string.Join(
+                    CommandDef.PayloadType switch
+                    {
+                        PayloadType.JoinColon => ':',
+                        PayloadType.JoinComma => ',',
+                        PayloadType.JoinSemiColon => ':',
+                        _ => throw new InvalidOperationException()
+                    }
+                    , CommandParams.Select(p => p.value));
+                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, parameters, CancellationToken.None);
+            }
+        }
+        catch (Exception ex)
+        {
+            Response = ex.Message;
+        }
+
+    }
+    async Task Close() => await BlazoredModal.CloseAsync();
+
+}

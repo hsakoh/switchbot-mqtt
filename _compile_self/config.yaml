@@ -1,0 +1,50 @@
+name: "SwitchBot-Mqtt"
+description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
+version: "1.0.0"
+slug: "switchbot_mqtt"
+url: "https://github.com/hsakoh/switchbot-mqtt"
+startup: application
+boot: manual
+init: false
+arch:
+  - aarch64
+  - amd64
+services:
+  - 'mqtt:need'
+ingress: true
+options:
+  Mqtt: 
+    AutoConfig: true
+    Host: ''
+    Port: 1883
+    Id: ''
+    Pw: ''
+    Tls: false
+  SwitchBot: 
+    ApiKey: ''
+    ApiSecret: ''
+  WebhookService: 
+    UseWebhook: true
+    UseNgrok: true
+    NgrokAuthToken: '<Configuration required only when using Webhook with ngrok>'
+    HostUrl: '<Configuration required only when using Webhook without ngrok>'
+  AutoStartServices: false
+  LogLevel: 'Trace'
+schema:
+  Mqtt: 
+    AutoConfig: bool
+    Host: str?
+    Port: "int(0,65535)?"
+    Id: str?
+    Pw: password?
+    Tls: bool?
+  SwitchBot: 
+    ApiKey: str
+    ApiSecret: password
+  WebhookService: 
+    UseWebhook: bool
+    UseNgrok: bool
+    NgrokAuthToken: str?
+    HostUrl: str?
+  AutoStartServices: bool
+  LogLevel: list(Trace|Debug|Information|Warning|Error|Critical|None)

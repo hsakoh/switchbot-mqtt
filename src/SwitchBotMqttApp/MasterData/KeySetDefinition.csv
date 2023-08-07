@@ -1,0 +1,603 @@
+DeviceType,KeyName,KeyTag
+AirConditioner,ARC_Power,1
+AirConditioner,ARC_Mode,2
+AirConditioner,ARC_Vol,3
+AirConditioner,ARC_M,4
+AirConditioner,ARC_A,5
+AirConditioner,ARC_tmpAdd,6
+AirConditioner,ARC_tmpRed,7
+TV,TV_VolRed,1
+TV,TV_ChAdd,3
+TV,TV_Menu,5
+TV,TV_ChRed,7
+TV,TV_VolAdd,9
+TV,TV_Power,11
+TV,TV_Mute,13
+TV,TV_1,15
+TV,TV_2,17
+TV,TV_3,19
+TV,TV_4,21
+TV,TV_5,23
+TV,TV_6,25
+TV,TV_7,27
+TV,TV_8,29
+TV,TV_9,31
+TV,TV_Res,33
+TV,TV_0,35
+TV,TV_AV_TV,37
+TV,TV_Back,39
+TV,TV_Comfirm,41
+TV,TV_Up,43
+TV,TV_Left,45
+TV,TV_Right,47
+TV,TV_Down,49
+TV,TV_10,51
+TV,TV_11,53
+TV,TV_12,55
+TV,TV_音声切換,20000
+TV,TV_字幕,20001
+TV,TV_地デジ/デジタル,20002
+TV,TV_BS,20003
+TV,TV_CS,20004
+TV,TV_データ放送(d),20005
+TV,TV_青,20006
+TV,TV_赤,20007
+TV,TV_緑,20008
+TV,TV_黄,20009
+TV,TV_ホーム,20010
+TV,TV_番組表,20011
+TV,TV_巻き戻し,20012
+TV,TV_停止,20013
+TV,TV_再生,20014
+TV,TV_一時停止,20015
+TV,TV_早送り,20016
+TV,TV_前のチャプター(|<<),20017
+TV,TV_録画,20018
+TV,TV_録画リスト,20019
+TV,TV_次のチャプター(>>|),20020
+TV,TV_BS チャンネル 1,20021
+TV,TV_BS チャンネル 2,20022
+TV,TV_BS チャンネル 3,20023
+TV,TV_BS チャンネル 4,20024
+TV,TV_BS チャンネル 5,20025
+TV,TV_BS チャンネル 6,20026
+TV,TV_BS チャンネル 7,20027
+TV,TV_BS チャンネル 8,20028
+TV,TV_BS チャンネル 9,20029
+TV,TV_BS チャンネル 0/10,20030
+TV,TV_BS チャンネル 11,20031
+TV,TV_BS チャンネル 12,20032
+TV,TV_CS チャンネル 1,20033
+TV,TV_CS チャンネル 2,20034
+TV,TV_CS チャンネル 3,20035
+TV,TV_CS チャンネル 4,20036
+TV,TV_CS チャンネル 5,20037
+TV,TV_CS チャンネル 6,20038
+TV,TV_CS チャンネル 7,20039
+TV,TV_CS チャンネル 8,20040
+TV,TV_CS チャンネル 9,20041
+TV,TV_CS チャンネル 0/10,20042
+TV,TV_CS チャンネル 11,20043
+TV,TV_CS チャンネル 12,20044
+TV,TV_番号,20045
+TV,TV_サブメニュー,20046
+TV,TV_番組内容,20047
+TV,TV_画面表示,20048
+TV,TV_画面サイズ,20049
+TV,TV_30 秒送り,20050
+TV,TV_10 秒戻し,20051
+TV,TV_予約リスト,20052
+TV,TV_検索,20053
+TV,TV_ファミリンク,20054
+TV,TV_NETFLIX,20055
+TV,TV_GooglePlay,20056
+TV,TV_スカパー！プレミアム,20057
+TV,TV_サッカーモード,20058
+TV,TV_BS/CS,20059
+TV,TV_くっきり音声,20060
+TV,TV_ヘルプ,20061
+TV,TV_アプリ,20062
+TV,TV_ソーシャル視聴,20063
+TV,TV_番組チェック,20064
+TV,TV_ガイド,20065
+TV,TV_裏番組,20066
+TV,TV_2 画面,20067
+TV,TV_インターネット(アクトビラ),20068
+TV,TV_ディーガ操作,20069
+TV,TV_節電視聴,20070
+TV,TV_もっとＴＶ,20071
+TV,TV_静止画,20072
+TV,TV_インターネット(AQUOS CITY),20073
+TV,TV_インフォメーション(AQUOS INFO),20074
+TV,TV_終了,20075
+TV,TV_IPTV,20076
+TV,TV_ツール,20077
+TV,TV_オートターン（中央）,20078
+TV,TV_オートターン（右),20079
+TV,TV_オートターン（左),20080
+TV,TV_時刻,20081
+TV,TV_画質,20082
+TV,TV_色彩,20083
+TV,TV_音質,20084
+TV,TV_ﾜｲﾔﾚｽ音楽,20085
+TV,TV_残すダビング,20086
+IPTV,IPTV_Power,1
+IPTV,IPTV_Mute,3
+IPTV,IPTV_VolAdd,5
+IPTV,IPTV_VolRed,7
+IPTV,IPTV_ChAdd,9
+IPTV,IPTV_ChRed,11
+IPTV,IPTV_Up,13
+IPTV,IPTV_Left,15
+IPTV,IPTV_OK,17
+IPTV,IPTV_Right,19
+IPTV,IPTV_Down,21
+IPTV,IPTV_Play,23
+IPTV,IPTV_1,25
+IPTV,IPTV_2,27
+IPTV,IPTV_3,29
+IPTV,IPTV_4,31
+IPTV,IPTV_5,33
+IPTV,IPTV_6,35
+IPTV,IPTV_7,37
+IPTV,IPTV_8,39
+IPTV,IPTV_9,41
+IPTV,IPTV_0,43
+IPTV,IPTV_BACK,45
+SetTopBox,TVBOX_Wait,1
+SetTopBox,TVBOX_1,3
+SetTopBox,TVBOX_2,5
+SetTopBox,TVBOX_3,7
+SetTopBox,TVBOX_4,9
+SetTopBox,TVBOX_5,11
+SetTopBox,TVBOX_6,13
+SetTopBox,TVBOX_7,15
+SetTopBox,TVBOX_8,17
+SetTopBox,TVBOX_9,19
+SetTopBox,TVBOX_Lead,21
+SetTopBox,TVBOX_0,23
+SetTopBox,TVBOX_Back,25
+SetTopBox,TVBOX_Up,27
+SetTopBox,TVBOX_Left,29
+SetTopBox,TVBOX_Comfirm,31
+SetTopBox,TVBOX_Right,33
+SetTopBox,TVBOX_Down,35
+SetTopBox,TVBOX_VolAdd,37
+SetTopBox,TVBOX_VolRed,39
+SetTopBox,TVBOX_ChAdd,41
+SetTopBox,TVBOX_ChRed,43
+SetTopBox,TVBOX_Menu,45
+DVD,DVD_Left,1
+DVD,DVD_Up,3
+DVD,DVD_Ok,5
+DVD,DVD_Down,7
+DVD,DVD_Right,9
+DVD,DVD_Power,11
+DVD,DVD_Mute,13
+DVD,DVD_FBack,15
+DVD,DVD_Play,17
+DVD,DVD_FForwad,19
+DVD,DVD_Last,21
+DVD,DVD_Stop,23
+DVD,DVD_Next,25
+DVD,DVD_Format,27
+DVD,DVD_Pause,29
+DVD,DVD_Title,31
+DVD,DVD_SK,33
+DVD,DVD_Menu,35
+DVD,DVD_Back,37
+Fan,FAN_On_Off,1
+Fan,FAN_On_speed,3
+Fan,FAN_Shake,5
+Fan,FAN_Mode,7
+Fan,FAN_Timer,9
+Fan,FAN_Light,11
+Fan,FAN_Anion,13
+Fan,FAN_1,15
+Fan,FAN_2,17
+Fan,FAN_3,19
+Fan,FAN_4,21
+Fan,FAN_5,23
+Fan,FAN_6,25
+Fan,FAN_7,27
+Fan,FAN_8,29
+Fan,FAN_9,31
+Fan,FAN_Sleep,33
+Fan,FAN_Cold,35
+Fan,FAN_AirVol,37
+Fan,FAN_LowSpeed,39
+Fan,FAN_MiddleSpeed,41
+Fan,FAN_HighSpeed,43
+Projector,PJT_On,1
+Projector,PJT_Off,3
+Projector,PJT_Computer,5
+Projector,PJT_Video,7
+Projector,PJT_SignalSource,9
+Projector,PJT_FocusAdd,11
+Projector,PJT_FocusRed,13
+Projector,PJT_PictureAdd,15
+Projector,PJT_PictureRed,17
+Projector,PJT_Menu,19
+Projector,PJT_Confirm,21
+Projector,PJT_Up,23
+Projector,PJT_Left,25
+Projector,PJT_Right,27
+Projector,PJT_Down,29
+Projector,PJT_Quit,31
+Projector,PJT_VolAdd,33
+Projector,PJT_VolRed,35
+Projector,PJT_Mute,37
+Projector,PJT_Auto,39
+Projector,PJT_Pause,41
+Projector,PJT_MCD,43
+Camera,SLR_TPIC,1
+AirPurifier,AIR_Power,1
+AirPurifier,AIR_Auto,3
+AirPurifier,AIR_AirVol,5
+AirPurifier,AIR_Timer,7
+AirPurifier,AIR_Mode,9
+AirPurifier,AIR_Anion,11
+AirPurifier,AIR_Comfort,13
+AirPurifier,AIR_mute,15
+AirPurifier,AIR_LEDOFF,17
+AirPurifier,AIR_Force,19
+AirPurifier,AIR_Nature,21
+AirPurifier,AIR_Close,23
+AirPurifier,AIR_Sleep,25
+AirPurifier,AIR_smart,27
+AirPurifier,AIR_Light1,29
+AirPurifier,AIR_Light2,31
+AirPurifier,AIR_Light3,33
+AirPurifier,AIR_UV,35
+Speaker,Audio_left,1
+Speaker,Audio_up,3
+Speaker,Audio_ok,5
+Speaker,Audio_down,7
+Speaker,Audio_right,9
+Speaker,Audio_power,11
+Speaker,Audio_audioP,13
+Speaker,Audio_mute,15
+Speaker,Audio_audioM,17
+Speaker,Audio_back,19
+Speaker,Audio_play,21
+Speaker,Audio_forward,23
+Speaker,Audio_pre,25
+Speaker,Audio_stop,27
+Speaker,Audio_next,29
+Speaker,Audio_pause,31
+Speaker,Audio_menu,33
+Speaker,Audio_return,35
+WaterHeater,WH_Power,1
+WaterHeater,WH_Set,3
+WaterHeater,WH_TemAdd,5
+WaterHeater,WH_TemRed,7
+WaterHeater,WH_Mode,9
+WaterHeater,WH_Confirm,11
+WaterHeater,WH_Timer,13
+WaterHeater,WH_Ant,15
+WaterHeater,WH_Time,17
+WaterHeater,WH_Stem,19
+VacuumCleaner,Sweeper_poweron,1
+VacuumCleaner,Sweeper_poweroff,3
+VacuumCleaner,Sweeper_up,5
+VacuumCleaner,Sweeper_down,7
+VacuumCleaner,Sweeper_left,9
+VacuumCleaner,Sweeper_right,11
+VacuumCleaner,Sweeper_ok,13
+VacuumCleaner,Sweeper_charge,15
+VacuumCleaner,Sweeper_mode,17
+VacuumCleaner,Sweeper_home,19
+VacuumCleaner,Sweeper_time,21
+VacuumCleaner,Sweeper_section,23
+VacuumCleaner,Sweeper_corner,25
+VacuumCleaner,Sweeper_local,27
+VacuumCleaner,Sweeper_auto,29
+VacuumCleaner,Sweeper_point,31
+VacuumCleaner,Sweeper_seg,33
+VacuumCleaner,Sweeper_clean,35
+VacuumCleaner,Sweeper_schedule,37
+VacuumCleaner,Sweeper_speed,39
+VacuumCleaner,Sweeper_setting,41
+Light,Light_PowerOn,1
+Light,Light_PowerOff,3
+Light,Light_lumaP,5
+Light,Light_lumaM,7
+Light,Light_Mode,9
+Light,Light_setting,11
+Light,Light_timerP,13
+Light,Light_TimerM,15
+Light,Light_ColorP,17
+Light,Light_ColorM,19
+Light,Light_1,21
+Light,Light_2,23
+Light,Light_3,25
+Light,Light_4,27
+Light,Light_5,29
+Light,Light_6,31
+Light,Light_A,33
+Light,Light_B,35
+Light,Light_C,37
+Light,Light_D,39
+Light,Light_全灯,10001
+Light,Light_常夜灯,10002
+Light,Light_白い色,10003
+Light,Light_暖かい色,10004
+Light,Light_おまかせ,10005
+Light,Light_おやすみ30分,10006
+Light,Light_ON / OFF,10007
+Light,Light_切/入,10008
+Light,Light_1分,10009
+Light,Light_10分,10010
+Light,Light_30分,10011
+Light,Light_60分,10012
+Light,Light_連続点灯,10013
+Light,Light_センター,10014
+Light,Light_勉強,10015
+Light,Light_1枚点灯,10016
+Light,Light_2枚点灯,10017
+Light,Light_エコナビ,10018
+Light,Light_普段,10019
+Light,Light_くつろぎ,10020
+Light,Light_シアター,10021
+Light,Light_明るさ調整,10022
+Light,Light_お好みの明るさ,10023
+Light,Light_LED,10024
+Light,Light_お好み,10025
+Light,Light_明るさ設定,10026
+Light,Light_スポット切/入,10027
+Light,Light_すっきり,10028
+Light,Light_スリープ,10029
+Light,Light_メモリー,10030
+Light,Light_スリープタイマー60分/30分,10031
+Light,Light_順送り,10032
+Light,Light_全灯/常夜灯/OFF,10033
+Light,Light_30分切,10034
+Light,Light_シーン,10035
+Light,Light_R↑,10036
+Light,Light_R↓,10037
+Light,Light_G↑,10038
+Light,Light_G↓,10039
+Light,Light_B↑,10040
+Light,Light_B↓,10041
+Light,Light_キレイ/シアター,10042
+Light,Light_勉強/くつろぎ,10043
+Light,Light_カラー,10044
+Light,Light_おやすみアシスト,10045
+Light,Light_ゆっくりおやすみタイマー,10046
+Light,Light_調光,10047
+Light,Light_おやすみ切タイマー30分,10048
+Light,Light_おやすみ切タイマー60分,10049
+Light,Light_微灯,10050
+Light,Light_半灯,10051
+Light,Light_昼白色,10052
+Light,Light_中間色,10053
+Light,Light_電球色,10054
+Light,Light_蛍光灯,10055
+Light,Light_図書館,10056
+Light,Light_食卓,10057
+Light,Light_電球,10058
+Light,Light_節電,10059
+Light,Light_おやすみ30-60分,10060
+Light,Light_おこのみ,10061
+Light,Light_全灯/消灯,10062
+Light,Light_おこのみ1,10063
+Light,Light_おこのみ2,10064
+Light,Light_切タイマー,10065
+Light,Light_タイマー,10066
+Light,Light_メモリ,10067
+Light,Light_点灯モード,10068
+Light,Light_おやすみ,10069
+Light,Light_入/切,10070
+Light,Light_読書,10071
+Light,Light_食事,10072
+Light,Light_昼光色,10073
+Light,Light_おやすみﾀｲﾏｰ 10分,10074
+Light,Light_おやすみﾀｲﾏｰ 30分,10075
+Light,Light_おやすみﾀｲﾏｰ 解除,10076
+Light,Light_メモリ点灯/常夜灯,10077
+Light,Light_上照明 白色,10078
+Light,Light_上照明 暖色,10079
+Light,Light_メモリ設定,10080
+Light,Light_ゆらぎ,10081
+Light,Light_るすばん,10082
+Light,Light_だんらん,10083
+Light,Light_作業,10084
+Light,Light_点灯タイマー,10085
+Light,Light_ECO,10086
+Light,Light_TIMER RESET,10087
+Light,Light_OFF TIMER 30,10088
+Light,Light_OFF TIMER 60,10089
+Light,Light_OFF TIMER RESET,10090
+Light,Light_scene,10091
+Light,Light_100,10092
+Light,Light_90,10093
+Light,Light_80,10094
+Light,Light_70,10095
+Light,Light_60,10096
+Light,Light_50,10097
+Light,Light_40,10098
+Light,Light_30,10099
+Light,Light_20,10100
+Light,Light_10,10101
+Light,Light_1ch ON,10102
+Light,Light_1ch OFF,10103
+Light,Light_2ch ON,10104
+Light,Light_2ch OFF,10105
+Light,Light_3ch ON,10106
+Light,Light_3ch OFF,10107
+Light,Light_4ch ON,10108
+Light,Light_4ch OFF,10109
+Light,Light_5ch ON,10110
+Light,Light_5ch OFF,10111
+Light,Light_6ch ON,10112
+Light,Light_6ch OFF,10113
+Light,Light_7ch ON,10114
+Light,Light_7ch OFF,10115
+Light,Light_8ch ON,10116
+Light,Light_8ch OFF,10117
+Light,Light_9ch ON,10118
+Light,Light_9ch OFF,10119
+Light,Light_ON/OFF,10120
+Light,Light_白色,10121
+Light,Light_オフタイマー60,10122
+Light,Light_オフタイマー30,10123
+Light,Light_明るさ1,10124
+Light,Light_明るさ2,10125
+Light,Light_保安灯,10126
+Light,Light_シーン1,10127
+Light,Light_シーン2,10128
+Light,Light_オフタイマー30分,10129
+Light,Light_オフタイマー60分,10130
+Light,Light_おやすみタイマー30分切,10131
+Light,Light_R1,10132
+Light,Light_G1,10133
+Light,Light_B1,10134
+Light,Light_W,10135
+Light,Light_R2,10136
+Light,Light_G2,10137
+Light,Light_B2,10138
+Light,Light_FLASH,10139
+Light,Light_R3,10140
+Light,Light_G3,10141
+Light,Light_B3,10142
+Light,Light_STROBE,10143
+Light,Light_R4,10144
+Light,Light_G4,10145
+Light,Light_B4,10146
+Light,Light_FADE,10147
+Light,Light_R5,10148
+Light,Light_G5,10149
+Light,Light_B5,10150
+Light,Light_SMOOTH,10151
+Light,Light_30分OFF,10152
+Light,Light_60分OFF,10153
+Light,Light_タイマー解除,10154
+Light,Light_30OFF,10155
+Light,Light_60OFF,10156
+Light,Light_豆球,10157
+Light,Light_全灯順送り,10158
+Light,Light_30minオフタイマー,10159
+Light,Light_シーン3,10160
+Light,Light_シーン4,10161
+Light,Light_シーン5,10162
+Light,Light_省エネ,10163
+Light,Light_Low,10164
+Light,Light_パターン再生/停止,10165
+Light,Light_電源,10166
+Light,Light_W1,10167
+Light,Light_W2,10168
+Light,Light_W3,10169
+Light,Light_W4,10170
+Light,Light_W5,10171
+Light,Light_QUICK,10172
+Light,Light_SLOW,10173
+Light,Light_AUTO,10174
+Light,Light_FADE7,10175
+Light,Light_FADE3,10176
+Light,Light_JUMP7,10177
+Light,Light_JUMP3,10178
+Light,Light_30/60分off,10179
+Light,Light_メモリー1,10180
+Light,Light_メモリー2,10181
+Light,Light_offタイマー,10182
+Light,Light_30分off,10183
+Light,Light_60分off,10184
+Light,Light_メモリー点灯,10185
+Light,Light_TIMER 4H,10186
+Light,Light_TIMER 8H,10187
+Light,Light_Multi Colour,10188
+Light,Light_キャンドルモード,10189
+Light,Light_照明モード,10190
+Light,Light_タイマー 2H,10191
+Light,Light_タイマー 8H,10192
+Light,Light_2Mins,10193
+Light,Light_5Mins,10194
+Light,Light_10Mins,10195
+Light,Light_色調切替,10196
+Light,Light_2分,10197
+Light,Light_5分,10198
+Light,Light_10%,10199
+Light,Light_40%,10200
+Light,Light_80%,10201
+Light,Light_100%,10202
+Light,Light_10Min,10203
+Light,Light_30Min,10204
+Light,Light_60Min,10205
+Light,Light_120Min,10206
+Light,Light_照明電源,10207
+Light,Light_照明切替,10208
+Light,Light_ファン電源ON,10209
+Light,Light_ファン電源OFF,10210
+Light,Light_風量調節↑,10211
+Light,Light_風量調節↓,10212
+Light,Light_風向切替,10213
+Light,Light_60minタイマー,10214
+Light,Light_留守モード,10215
+Light,Light_常夜灯,10300
+Light,Light_光色 青+,10301
+Light,Light_光色 赤+,10302
+Light,Light_オフタイマー,10303
+Light,Light_30 分後に消灯する,10304
+Light,Light_60 分後に消灯する,10305
+Light,Light_30 分後に常夜灯が消灯する,10306
+Light,Light_60 分後に常夜灯が消灯する,10307
+Light,Light_CH 変更を通知する,10308
+Light,Light_順送り,10309
+Light,Light_調光１,10310
+Light,Light_調光２,10311
+Light,Light_調光３,10312
+Light,Light_調光記憶 1,10313
+Light,Light_調光記憶 2,10314
+Light,Light_調光記憶 3,10315
+Light,Light_暖かい色,10316
+Light,Light_さわやか,10317
+Light,Light_蛍光灯,10318
+Light,Light_図書館,10319
+Light,Light_食卓,10320
+Light,Light_八重桜,10321
+Light,Light_ソメイヨシノ,10322
+Light,Light_ひろびろ光,10323
+Light,Light_ラク見え,10324
+Light,Light_節電 1,10325
+Light,Light_節電 2,10326
+Light,Light_ECO これっきり,10327
+Light,Light_光量 5%,10328
+Light,Light_光量 10%,10329
+Light,Light_光量 15%,10330
+Light,Light_光量 20%,10331
+Light,Light_光量 25%,10332
+Light,Light_光量 30%,10333
+Light,Light_光量 35%,10334
+Light,Light_光量 40%,10335
+Light,Light_光量 45%,10336
+Light,Light_光量 50%,10337
+Light,Light_光量 55%,10338
+Light,Light_光量 60%,10339
+Light,Light_光量 65%,10340
+Light,Light_光量 70%,10341
+Light,Light_光量 75%,10342
+Light,Light_光量 80%,10343
+Light,Light_光量 85%,10344
+Light,Light_光量 90%,10345
+Light,Light_光量 95%,10346
+Light,Light_光量 100%,10347
+Light,Light_赤色量 5%,10348
+Light,Light_赤色量 10%,10349
+Light,Light_赤色量 15%,10350
+Light,Light_赤色量 20%,10351
+Light,Light_赤色量 25%,10352
+Light,Light_赤色量 30%,10353
+Light,Light_赤色量 35%,10354
+Light,Light_赤色量 40%,10355
+Light,Light_赤色量 45%,10356
+Light,Light_赤色量 50%,10357
+Light,Light_赤色量 55%,10358
+Light,Light_赤色量 60%,10359
+Light,Light_赤色量 65%,10360
+Light,Light_赤色量 70%,10361
+Light,Light_赤色量 75%,10362
+Light,Light_赤色量 80%,10363
+Light,Light_赤色量 85%,10364
+Light,Light_赤色量 90%,10365
+Light,Light_赤色量 95%,10366
+Light,Light_赤色量 100%,10367

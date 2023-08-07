@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAssistantAddOn.Core", "src\HomeAssistant\HomeAssistantAddOn.Core\HomeAssistantAddOn.Core.csproj", "{D5E6CC47-CDAF-4DE3-8DCB-D27A2B055CC2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAssistantAddOn.Mqtt", "src\HomeAssistant\HomeAssistantAddOn.Mqtt\HomeAssistantAddOn.Mqtt.csproj", "{846BC676-8B36-462D-BE67-B386BF3756FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HomeAssistant", "HomeAssistant", "{1C309B10-486B-46D3-8B63-AB7E0D2C11BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwitchBotMqttApp", "src\SwitchBotMqttApp\SwitchBotMqttApp.csproj", "{E31E305E-FB7A-43E7-881D-815B035BDC7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5E6CC47-CDAF-4DE3-8DCB-D27A2B055CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E6CC47-CDAF-4DE3-8DCB-D27A2B055CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E6CC47-CDAF-4DE3-8DCB-D27A2B055CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E6CC47-CDAF-4DE3-8DCB-D27A2B055CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846BC676-8B36-462D-BE67-B386BF3756FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846BC676-8B36-462D-BE67-B386BF3756FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846BC676-8B36-462D-BE67-B386BF3756FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846BC676-8B36-462D-BE67-B386BF3756FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31E305E-FB7A-43E7-881D-815B035BDC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31E305E-FB7A-43E7-881D-815B035BDC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31E305E-FB7A-43E7-881D-815B035BDC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31E305E-FB7A-43E7-881D-815B035BDC7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D5E6CC47-CDAF-4DE3-8DCB-D27A2B055CC2} = {1C309B10-486B-46D3-8B63-AB7E0D2C11BD}
+		{846BC676-8B36-462D-BE67-B386BF3756FF} = {1C309B10-486B-46D3-8B63-AB7E0D2C11BD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6F114C65-85D4-4CFB-B28F-8D7ECF11595E}
+	EndGlobalSection
+EndGlobal

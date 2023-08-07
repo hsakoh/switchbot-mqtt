@@ -1,0 +1,545 @@
+﻿using HomeAssistantAddOn.Mqtt;
+using SwitchBotMqttApp.Logics;
+using SwitchBotMqttApp.Models.DeviceConfiguration;
+using SwitchBotMqttApp.Models.DeviceDefinitions;
+using SwitchBotMqttApp.Models.Enums;
+using SwitchBotMqttApp.Models.HomeAssistant;
+using SwitchBotMqttApp.Models.Mqtt;
+using System.Collections.Concurrent;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+
+namespace SwitchBotMqttApp.Services;
+
+public class MqttCoreService : ManagedServiceBase
+{
+    private readonly ILogger<MqttCoreService> _logger;
+    private readonly DeviceConfigurationManager _deviceConfigurationManager;
+    private readonly DeviceDefinitionsManager _deviceDefinitionsManager;
+    private readonly MqttService _mqttService;
+    private readonly SwitchBotApiClient _switchBotApiClient;
+
+    public MqttCoreService(
+        ILogger<MqttCoreService> logger
+        , DeviceConfigurationManager deviceConfigurationManager
+        , DeviceDefinitionsManager deviceDefinitionsManager
+        , MqttService mqttService
+        , SwitchBotApiClient switchBotApiClient)
+    {
+        _logger = logger;
+        _deviceConfigurationManager = deviceConfigurationManager;
+        _deviceDefinitionsManager = deviceDefinitionsManager;
+        _mqttService = mqttService;
+        _switchBotApiClient = switchBotApiClient;
+    }
+
+    public DevicesConfig CurrentDevicesConfig { get; set; } = default!;
+
+    public override async Task StartAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            Status = ServiceStatus.Starting;
+            CurrentDevicesConfig = await _deviceConfigurationManager.GetFileAsync(cancellationToken);
+            CommandPayloadDictionary.Clear();
+
+            await _mqttService.StartAsync();
+
+            foreach (var deviceConf in CurrentDevicesConfig.PhysicalDevices.Where(d => d.Enable).Select(d => (DeviceBase)d)
+                                            .Union(CurrentDevicesConfig.VirtualInfraredRemoteDevices.Where(d => d.Enable)))
+            {
+                var deviceDef = _deviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == deviceConf.DeviceType);
+                var deviceMqtt = new DeviceMqtt(
+                    identifiers: new[] { deviceConf.DeviceId },
+                    name: deviceConf.DeviceName,
+                    manufacturer: $"SwitchBot{(deviceConf is VirtualInfraredRemoteDevice ? "(VirtualInfraredRemoteDevice)" : "")}",
+                    model: deviceDef.ApiDeviceTypeString);
+
+
+                if (deviceConf is PhysicalDevice physicalDevice
+                    && physicalDevice.Fields.Any(s => s.Enable))
+                {
+                    await PublishFieldEntities(deviceDef, deviceMqtt, physicalDevice, cancellationToken);
+
+                }
+                await PublishCommandEntities(deviceMqtt, deviceConf);
+            }
+
+            await PublishSceneEntities(cancellationToken);
+
+            _logger.LogInformation("started");
+            Status = ServiceStatus.Started;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
+            Status = ServiceStatus.Failed;
+        }
+    }
+
+    public override async Task StopAsync(CancellationToken cancellationToken = default)
+    {
+        await _mqttService.StopAsync();
+        _logger.LogInformation("stopped");
+        Status = ServiceStatus.Stoped;
+        CommandPayloadDictionary.Clear();
+    }
+
+    private async Task PublishFieldEntities(DeviceDefinition deviceDef, DeviceMqtt deviceMqtt, PhysicalDevice physicalDevice, CancellationToken cancellationToken)
+    {
+        var fieldDefs = _deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+        var statusEntities = physicalDevice.Fields.Where(s => s.Enable)
+            .Select(s =>
+            {
+                var fieldDef = fieldDefs.Where(f => f.FieldName == s.FieldName).First();
+                if (fieldDef.IsBinary)
+                {
+                    return (MqttEntityBase)new BinarySensorConfig(
+                        deviceMqtt
+                        , key: fieldDef.FieldName
+                        , name: fieldDef.DisplayName ?? fieldDef.FieldName
+                        , objectId: $"{fieldDef.FieldSourceType.ToEnumMemberValue()!}_{fieldDef.FieldName}_{deviceMqtt.Identifiers[0]}"
+                        , stateTopic: MqttEntityHelper.GetStateTopicByType(deviceMqtt.Identifiers[0], fieldDef.FieldSourceType)
+                        , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+                        , icon: fieldDef.Icon
+                        , deviceClass: fieldDef.BinarySensorDeviceClass!.Value
+                        , payloadOn: fieldDef.OnValue!
+                        , payloadOff:fieldDef.OffValue!
+                        , value_template: null
+                    );
+                }
+                else
+                {
+                    string? value_template = null;
+                    if(fieldDef.FieldName == "timeOfSample")
+                    {
+                        value_template = UnixTimeValueTemplateFormat.Replace("%FIELD%", "timeOfSample");
+                    }
+                    return new SensorConfig(
+                        deviceMqtt
+                        , key: fieldDef.FieldName
+                        , name: fieldDef.DisplayName ?? fieldDef.FieldName
+                        , objectId: $"{fieldDef.FieldSourceType.ToEnumMemberValue()!}_{fieldDef.FieldName}_{deviceMqtt.Identifiers[0]}"
+                        , stateTopic: MqttEntityHelper.GetStateTopicByType(deviceMqtt.Identifiers[0], fieldDef.FieldSourceType)
+                        , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+                        , icon: fieldDef.Icon
+                        , deviceClass: fieldDef.SensorDeviceClass ?? SensorDeviceClass.None
+                        , entity_category: fieldDef.EntityCategory
+                        , state_class: fieldDef.StateClass
+                        , unit_of_measurement: fieldDef.UnitOfMeasurement
+                        , value_template: value_template
+                    );
+                }
+
+            }).ToList();
+        foreach (var e in statusEntities)
+        {
+            await PublishEntityAsync(e, true);
+        }
+
+        var statusTimestamp = new SensorConfig(deviceMqtt
+            , key: "status_timestamp"
+            , name: "Status Lastupdate"
+            , objectId: $"{FieldSourceType.Status.ToEnumMemberValue()!}_status_timestamp_{deviceMqtt.Identifiers[0]}"
+            , stateTopic: MqttEntityHelper.GetSensorStateTopic(deviceMqtt.Identifiers[0])
+            , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+            , deviceClass: SensorDeviceClass.Timestamp
+            , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "timestamp")
+            );
+        await PublishEntityAsync(statusTimestamp, true);
+
+        if (deviceDef.IsSupportWebhook && physicalDevice.UseWebhook)
+        {
+            var webhookTimestamp = new SensorConfig(deviceMqtt
+                , key: "webhook_timestamp"
+                , name: "Webhook Lastupdate"
+                , objectId: $"{FieldSourceType.Webhook.ToEnumMemberValue()!}_webhook_timestamp_{deviceMqtt.Identifiers[0]}"
+                , stateTopic: MqttEntityHelper.GetWebhookTopic(deviceMqtt.Identifiers[0])
+                , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+                , deviceClass: SensorDeviceClass.Timestamp
+                , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "timestamp")
+            );
+            await PublishEntityAsync(webhookTimestamp, true);
+        }
+
+        //subscribe update action
+        await PublishEntityAsync(MqttEntityHelper.CreateSensorUpdateButtonEntity(deviceMqtt, physicalDevice), true);
+        _mqttService.Subscribe(MqttEntityHelper.GetSensorUpdateTopic(physicalDevice.DeviceId), async (payload) => await PollingAndPublishStatusAsync(physicalDevice, CancellationToken.None));
+
+
+        //publish inital status
+        await PollingAndPublishStatusAsync(physicalDevice, cancellationToken);
+    }
+
+    private const string UnixTimeValueTemplateFormat = "{% set ts = value_json.get('%FIELD%', {})  %} {% if ts %}\n  {{ (ts / 1000) | timestamp_local | as_datetime }}\n{% else %}\n  {{ this.state }}\n{% endif %}";
+
+    private async Task PublishEntityAsync(MqttEntityBase payload, bool retain)
+    {
+        await _mqttService.PublishAsync(payload.Topic, payload, retain);
+    }
+
+    private async Task PublishCommandEntities(DeviceMqtt deviceMqtt, DeviceBase deviceConf)
+    {
+        List<ButtonConfig> buttonEntities = new();
+        List<DeviceMqtt> commandDeviceEntities = new();
+        List<NumberConfig> numberEntities = new();
+        List<SelectConfig> selectEntities = new();
+        List<TextConfig> textEntities = new();
+        int commandIndex = 0;
+        foreach (var command in deviceConf.Commands.Where(c => c.Enable))
+        {
+            commandIndex++;
+            CommandDefinition commandDef;
+            if (command.CommandType == CommandType.Command)
+            {
+                //Difiend command
+                commandDef = _deviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+            }
+            else
+            {
+                //Costmize or Tag command
+                commandDef = new CommandDefinition()
+                {
+                    DeviceType = deviceConf.DeviceType,
+                    CommandType = command.CommandType,
+                    Command = command.Command,
+                    ButtonDeviceClass = ButtonDeviceClass.None,
+                    Description = command.DisplayName,
+                    DisplayName = command.DisplayName,
+                    DisplayNameJa = command.DisplayName,
+                    Icon = null,
+                    PayloadType = PayloadType.Default,
+                };
+            }
+
+            switch (commandDef.PayloadType)
+            {
+                case PayloadType.SingleValue:
+                case PayloadType.Json:
+                case PayloadType.JoinColon:
+                case PayloadType.JoinComma:
+                case PayloadType.JoinSemiColon:
+                    var deviceMqttForCommand = new DeviceMqtt(
+                            identifiers: new[] { $"{deviceConf.DeviceId}{command.Command}" },
+                            name: $"{deviceConf.DeviceName}-{command.Command}",
+                            manufacturer: deviceMqtt.Manufacturer,
+                            model: deviceMqtt.Model);
+                    commandDeviceEntities.Add(deviceMqttForCommand);
+                    buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
+
+                    var paramDefs = _deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                    CommandPayloadDictionary[deviceConf.DeviceId] = new ConcurrentDictionary<string, object>();
+                    foreach (var paramDef in paramDefs)
+                    {
+                        CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name] = paramDef.DefaultValue ?? string.Empty;
+
+                        switch (paramDef.ParameterType)
+                        {
+                            case ParameterType.Long:
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, null, null, NumberMode.Box));
+                                break;
+                            case ParameterType.Range:
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin, paramDef.RangeMax, NumberMode.Slider));
+                                break;
+                            case ParameterType.Select:
+                                selectEntities.Add(MqttEntityHelper.CreateCommandParamSelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef));
+                                {
+                                    CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]
+                                        = paramDef.OptionToDescription((string)CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]);
+                                }
+                                break;
+                            case ParameterType.SelectOrRange:
+                                selectEntities.Add(MqttEntityHelper.CreateCommandParamSelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, "-S"));
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin, paramDef.RangeMax, NumberMode.Slider, "-N"));
+                                {
+                                    CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]
+                                        = paramDef.OptionToDescription((string)CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]);
+                                }
+                                break;
+                            case ParameterType.String:
+                                textEntities.Add(MqttEntityHelper.CreateCommandParamTextEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case PayloadType.Default:
+                default:
+                    buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqtt, deviceConf, commandIndex, command, commandDef));
+                    break;
+            }
+        }
+
+        //subscribe command actions
+        _mqttService.Subscribe(MqttEntityHelper.GetCommandTopic(deviceConf.DeviceId), async (payload) => await ReceiveCommandAsync(payload, deviceConf));
+
+        foreach (var e in buttonEntities)
+        {
+            await PublishEntityAsync(e, true);
+        }
+        foreach (var e in numberEntities)
+        {
+            await PublishEntityAsync(e, true);
+        }
+        foreach (var e in selectEntities)
+        {
+            await PublishEntityAsync(e, true);
+        }
+        foreach (var e in textEntities)
+        {
+            await PublishEntityAsync(e, true);
+        }
+
+        //publish params default value
+        await SyncParamState(deviceConf, true);
+    }
+
+    private async Task SyncParamState(DeviceBase device, bool isInitial)
+    {
+        if (CommandPayloadDictionary.ContainsKey(device.DeviceId))
+        {
+            await _mqttService.PublishAsync(MqttEntityHelper.GetCommandParamStateTopic(device.DeviceId), CommandPayloadDictionary[device.DeviceId], isInitial);
+        }
+    }
+
+    private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object>> CommandPayloadDictionary = new();
+
+    private async Task ReceiveCommandAsync(string payloadRaw, DeviceBase device)
+    {
+        try
+        {
+            var payload = JsonSerializer.Deserialize<MqttCommandPayload>(payloadRaw)!;
+
+            var commandType = payload.CommandType.ToEnumFromEnumMember<CommandType>()!;
+
+            var commandConf = device.Commands.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
+            var commandDef = _deviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
+
+            if (commandConf == null)
+            {
+                _logger.LogWarning("unknown command {DeviceId},{Payload}", device.DeviceId, payloadRaw);
+                return;
+            }
+
+            if (payload.ParamName != MqttEntityHelper.ButtonPrefix)
+            {
+                CommandPayloadDictionary[device.DeviceId][payload.ParamName] = payload.ParamValue;
+                await SyncParamState(device, false);
+                return;
+            }
+            if (commandConf.CommandType == CommandType.Customize
+                || commandConf.CommandType == CommandType.Tag
+                || commandDef!.PayloadType == PayloadType.Default)
+            {
+                await _switchBotApiClient.SendDefaultDeviceControlCommandAsync(device, commandConf, CancellationToken.None);
+                return;
+            }
+            var paramDefs = _deviceDefinitionsManager.CommandPayloadDefinitions.Where(p => p.DeviceType == device.DeviceType && p.CommandType == commandType && p.Command == payload.Command).OrderBy(p => p.Index).ToList();
+            var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
+            if (commandDef.PayloadType == PayloadType.SingleValue)
+            {
+                //TODO SingleValueでも文字列と数値 とかあるかもしれない
+                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
+                return;
+            }
+
+            if (commandDef.PayloadType == PayloadType.Json)
+            {
+                var json = JsonNode.Parse("{}")!;
+                paramDefs.ForEach(paramDef =>
+                {
+                    if (paramDef.ParameterType == ParameterType.Long
+                        || paramDef.ParameterType == ParameterType.Range)
+                    {
+                        json[paramDef.Name] = JsonValue.Create<long>((long)payloadDict[paramDef.Name]);
+                    }
+                    else if (paramDef.ParameterType == ParameterType.Select)
+                    {
+                        json[paramDef.Name] = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
+                    }
+                    else if (paramDef.ParameterType == ParameterType.SelectOrRange)
+                    {
+                        if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue))
+                        {
+                            json[paramDef.Name] = JsonValue.Create<long>(longValue);
+                        }
+                        else
+                        {
+                            json[paramDef.Name] = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
+                        }
+                    }
+                    else
+                    {
+                        json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
+                    }
+                });
+                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, json, CancellationToken.None);
+            }
+            else
+            {
+                var parameters = string.Join(
+                    commandDef.PayloadType switch
+                    {
+                        PayloadType.JoinColon => ':',
+                        PayloadType.JoinComma => ',',
+                        PayloadType.JoinSemiColon => ':',
+                        _ => throw new InvalidOperationException()
+                    }
+                    , paramDefs.Select(p =>
+                    {
+                        if (p.ParameterType == ParameterType.SelectOrRange)
+                        {
+                            if (long.TryParse((string)payloadDict[p.Name], out var longValue))
+                            {
+                                return longValue;
+                            }
+                            else
+                            {
+                                return p.DescriptionToOption((string)payloadDict[p.Name]);
+                            }
+                        }
+                        if (p.ParameterType == ParameterType.Select)
+                        {
+                            return p.DescriptionToOption((string)payloadDict[p.Name]);
+                        }
+                        return payloadDict[p.Name];
+                    }));
+                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, parameters, CancellationToken.None);
+            }
+
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "subscribe action {DeviceId},{Payload}", device.DeviceId, payloadRaw);
+        }
+    }
+    public async Task PublishWebhookAsync(JsonNode webhookContent)
+    {
+        var deviceMac = webhookContent["deviceMac"]?.GetValue<string>();
+        PhysicalDevice? physicalDevice = CurrentDevicesConfig.PhysicalDevices.FirstOrDefault(d => d.DeviceId == deviceMac);
+        if (physicalDevice == null)
+        {
+            _logger.LogWarning("unknown deviceMac {deviceMac}", deviceMac);
+            return;
+        }
+        if (!physicalDevice.UseWebhook)
+        {
+            _logger.LogInformation("disable webhook device {deviceId},{deviceName},{json}", physicalDevice.DeviceId, physicalDevice.DeviceId, webhookContent);
+            return;
+        }
+        var webhook = JsonNode.Parse("{}")!;
+        var both = JsonNode.Parse("{}")!;
+        var fieldDefs = _deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+        foreach (var kv in webhookContent.AsObject())
+        {
+            var fieldDef = fieldDefs.FirstOrDefault(f => f.WebhookKey == kv.Key);
+            if (fieldDef == null)
+            {
+                _logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                continue;
+            }
+
+            var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
+            if (!field.Enable)
+            {
+                _logger.LogTrace("disable webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                continue;
+            }
+
+            if (fieldDef.FieldSourceType == FieldSourceType.Webhook)
+            {
+                webhook[fieldDef.FieldName] = kv.Value!.Copy();
+            }
+            else
+            {
+                if (kv.Key == "deviceType") //modify device name
+                {
+                    both[fieldDef.FieldName] = _deviceDefinitionsManager.DeviceDefinitions.First(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>()).ApiDeviceTypeString;
+                }
+                else
+                {
+                    both[fieldDef.FieldName] = kv.Value!.Copy();
+                }
+            }
+        }
+        webhook["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        await _mqttService.PublishAsync(MqttEntityHelper.GetWebhookTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
+        if (both.AsObject().Any())
+        {
+            await _mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
+        }
+    }
+
+    public async Task PollingAndPublishStatusAsync(PhysicalDevice physicalDevice, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var rawStatus = await _switchBotApiClient.GetDeviceStatus(physicalDevice.DeviceId, cancellationToken);
+            var status = JsonNode.Parse("{}")!;
+            var both = JsonNode.Parse("{}")!;
+
+            var fieldDefs = _deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+            foreach (var kv in rawStatus.AsObject())
+            {
+                var fieldDef = fieldDefs.FirstOrDefault(f => f.StatusKey == kv.Key);
+                if (fieldDef == null)
+                {
+                    _logger.LogWarning("unknown status paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    continue;
+                }
+
+                var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
+                if (!field.Enable)
+                {
+                    _logger.LogTrace("disable polling paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    continue;
+                }
+                if (fieldDef.FieldSourceType == FieldSourceType.Status)
+                {
+                    status[fieldDef.FieldName] = kv.Value!.Copy();
+                }
+                else
+                {
+                    both[fieldDef.FieldName] = kv.Value!.Copy();
+                }
+            }
+            status["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            await _mqttService.PublishAsync(MqttEntityHelper.GetSensorStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
+            if (both.AsObject().Any())
+            {
+                await _mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "polling {deviceType},{deviceId}", physicalDevice.DeviceType, physicalDevice.DeviceId);
+        }
+    }
+
+    private async Task PublishSceneEntities(CancellationToken cancellationToken)
+    {
+        var sceneList = await _switchBotApiClient.GetSceneList(cancellationToken);
+        foreach (var scene in sceneList)
+        {
+            //subscribe update action
+            await PublishEntityAsync(MqttEntityHelper.CreateSceneEntity(scene.SceneName, scene.SceneId), true);
+        }
+        _mqttService.Subscribe(MqttEntityHelper.GetSceneCommandTopic(), async (payload) =>
+        {
+            try
+            {
+                await _switchBotApiClient.ExecuteManualSceneAsync(payload, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "payload", payload);
+            }
+        }
+        );
+    }
+}
+public static class JsonNodeExtensions
+{
+    public static T Copy<T>(this T node) where T : JsonNode => node.Deserialize<T>()!;
+}

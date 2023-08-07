@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "SwitchBotMqttApp": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:8099",
+      "externalUrlConfiguration": true,
+      "applicationUrl": "http://localhost:8098;http://localhost:8099",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "OVERRIDE_DATA_PATH": "..\\..\\data\\"
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+﻿@page "/servicemanagement"
+@using SwitchBotMqttApp.Logics;
+@using SwitchBotMqttApp.Services;
+
+<PageTitle>Service Management</PageTitle>
+
+@inject MqttCoreService DeviceManagerService
+@inject PollingService PollingService
+@inject WebhookService WebhookService
+@inject SwitchBotApiClient SwitchBotApiClient
+
+<div class="container">
+    <div class="row bg-primary-subtle text-black fw-bold">
+        <div class="col-3">Service</div>
+        <div class="col-1">Status</div>
+        <div class="col-1">Control</div>
+    </div>
+    @foreach (var service in new ManagedServiceBase[]{ DeviceManagerService,PollingService,WebhookService })
+    {
+        <div class="row">
+            <div class="col-3">
+                @service.GetType().Name
+            </div>
+            <div class="col-1">
+                @service.Status
+            </div>
+            <div class="col-2">
+                @{
+                    (bool canStart, bool canStop) = service.Status switch
+                    {
+                        ManagedServiceBase.ServiceStatus.Stoped => (true, false),
+                        ManagedServiceBase.ServiceStatus.Initial => (true, false),
+                        ManagedServiceBase.ServiceStatus.Started => (false, true),
+                        ManagedServiceBase.ServiceStatus.Starting => (false, false),
+                        ManagedServiceBase.ServiceStatus.Failed => (false, true),
+                        _ => (false, false),
+                    };
+                }
+                <button @onclick="()=>service.StartAsync()" class="btn btn-outline-primary btn-sm" disabled="@(canStart?null:"disabled")">
+                    Start
+                </button>
+                <button @onclick="()=>service.StopAsync()" class="btn btn-outline-primary btn-sm" disabled="@(canStop?null:"disabled")">
+                    Stop
+                </button>
+            </div>
+        </div>
+    }
+    <div class="row bg-light">
+        <div class="col-12">
+            Number of API calls today (UTC base) (Reset if the application is restarted.)
+            <div class="fw-bold"> @($"{SwitchBotApiClient.GetApiCallCount(DateOnly.FromDateTime(DateTime.UtcNow)):#,0}")</div>
+        </div>
+    </div>
+</div>

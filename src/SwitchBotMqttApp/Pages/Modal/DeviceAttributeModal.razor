@@ -1,0 +1,16 @@
+﻿﻿<div>
+    <div class="row">
+        <div class="col-12 border">
+            <pre>
+                @Response
+            </pre>
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    [Parameter] public string Response { get; set; } = default!;
+
+}

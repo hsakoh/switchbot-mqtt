@@ -1,0 +1,43 @@
+DeviceType,ApiDeviceTypeString,CustomizedDeviceTypeString,WebhookDeviceTypeString,PhysicalOrVirtual,IsSupportPolling,IsSupportWebhook,IsSupportCommand,Description,DisplayName,DisplayNameJa
+Bot,Bot,,WoHand,PhysicalDevice,TRUE,TRUE,TRUE,,Bot,ボット
+Curtain,Curtain,,WoCurtain,PhysicalDevice,TRUE,TRUE,TRUE,,Curtain,カーテン
+Hub,Hub,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub,
+HubPlus,Hub Plus,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub Plus,ハブプラス
+HubMini,Hub Mini,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub Mini,ハブミニ
+Hub2,Hub 2,,WoHub2,PhysicalDevice,TRUE,TRUE,FALSE,,Hub 2,ハブ 2
+Meter,Meter,,WoMeter,PhysicalDevice,TRUE,TRUE,FALSE,,Meter,温湿度計
+MeterPlus,MeterPlus,,WoMeterPlus,PhysicalDevice,TRUE,TRUE,FALSE,,MeterPlus,温湿度計プラス
+OutdoorMeter,WoIOSensor,,WoIOSensor,PhysicalDevice,TRUE,TRUE,FALSE,,WoIOSensor,防水温湿度計
+Lock,Smart Lock,,WoLock,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock,ロック
+Keypad,Keypad,,WoKeypad,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad,キーパッド
+KeypadTouch,Keypad Touch,,WoKeypadTouch,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad Touch,指紋認証パッド
+Remote,Remote,,,PhysicalDevice,FALSE,FALSE,FALSE,,Remote,
+MotionSensor,Motion Sensor,,WoPresence,PhysicalDevice,TRUE,TRUE,FALSE,,Motion Sensor,人感センサー
+ContactSensor,Contact Sensor,,WoContact,PhysicalDevice,TRUE,TRUE,FALSE,,Contact Sensor,開閉センサー
+CeilingLight,Ceiling Light,,WoCeiling,PhysicalDevice,TRUE,TRUE,TRUE,,Ceiling Light,シーリングライト
+CeilingLightPro,Ceiling Light Pro,,WoCeilingPro,PhysicalDevice,TRUE,TRUE,TRUE,,Ceiling Light Pro,シーリングライトプロ
+PlugMiniUs,Plug Mini (US),,WoPlugUS,PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (US),プラグミニ(US)
+PlugMiniJp,Plug Mini (JP),,WoPlugJP,PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (JP),プラグミニ(JP)
+Plug,Plug,,,PhysicalDevice,TRUE,FALSE,TRUE,,Plug,プラグ
+StripLight,Strip Light,,WoStrip,PhysicalDevice,TRUE,TRUE,TRUE,,Strip Light,テープライト
+ColorBulb,Color Bulb,,WoBulb,PhysicalDevice,TRUE,TRUE,TRUE,,Color Bulb,スマートバルブ
+RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1,ロボット掃除機 S1
+RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
+Humidifier,Humidifier,,,PhysicalDevice,TRUE,FALSE,TRUE,,Humidifier,加湿器
+IndoorCam,Indoor Cam,,WoCamera,PhysicalDevice,FALSE,TRUE,FALSE,,Indoor Cam,屋内カメラ
+PanTiltCam,Pan/Tilt Cam,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam,見守りカメラ/見守りカメラ3MP
+BlindTilt,Blind Tilt,,,PhysicalDevice,TRUE,FALSE,TRUE,,Blind Tilt,ブラインドポール
+AirConditioner,Air Conditioner,DIY Air Conditioner,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Air Conditioner,エアコン
+TV,TV,DIY TV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,TV,テレビ
+IPTV,IPTV,DIY IPTV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,IPTV,メディアストリーミング
+SetTopBox,Set Top Box,DIY Set Top Box,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Set Top Box,セットトップボックス(STB)
+DVD,DVD,DIY DVD,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,DVD,ディスクプレーヤー
+Fan,Fan,DIY Fan,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Fan,扇風機
+Projector,Projector,DIY Projector,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Projector,プロジェクター
+Camera,Camera,DIY Camera,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Camera,カメラ
+Others,Others,,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Others,リモコン
+AirPurifier,Air Purifier,DIY Air Purifier,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Air Purifier,空気清浄機
+Speaker,Speaker,DIY Speaker,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Speaker,スピーカー
+WaterHeater,Water Heater,DIY Water Heater,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Water Heater,ヒーター
+VacuumCleaner,Vacuum Cleaner,DIY Vacuum Cleaner,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Vacuum Cleaner,ロボット掃除機
+Light,Light,DIY Light,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Light,ライト
