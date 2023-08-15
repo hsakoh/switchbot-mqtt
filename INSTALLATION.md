@@ -7,10 +7,11 @@ This add-on is implemented as a Blazor Server App using .NET 6 and has been veri
 ### Add-on Installation On Home Assistant OS
 
 1. Referencing the Docker Image Registered on GitHub Container Registry(recommended)
-    1. Navigate to the add-on store in the Home Assistant UI (Supervisor in the left menu, then Add-on Store on the top tab)
-    1. Select the three vertical dots in the upper right-hand corner and select repositories
-    1. In the Manage add-on repositories screen enter the URL for `https://github.com/hsakoh/ha-addon` and click add
-    1. After adding the repository scroll to the bottom of the list of addons or use seach to find the addon
+    1. [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fhsakoh%2Fha-addon)
+        1. Navigate to the add-on store in the Home Assistant UI (Supervisor in the left menu, then Add-on Store on the top tab)
+        1. Select the three vertical dots in the upper right-hand corner and select repositories
+        1. In the Manage add-on repositories screen enter the URL for `https://github.com/hsakoh/ha-addon` and click add
+        1. After adding the repository scroll to the bottom of the list of addons or use seach to find the addon
     1. Select the addon and click the Install
 1. Pre-Compiling and Publishing the .NET App, then Building the Docker Image on HA-OS
     1. Execute `./_compile_self/dotnet_publish.ps1` at the root of the repository.
@@ -33,7 +34,7 @@ docker build `
 --build-arg BUILD_FROM="homeassistant/amd64-base:latest" `
 --build-arg BUILD_ARCH="amd64" `
 --progress=plain `
---label org.opencontainers.image.source=https://github.com/hsakoh/switchbotmqtt-mqtt
+--label org.opencontainers.image.source=https://github.com/hsakoh/switchbot-mqtt
 ```
 
 1. Configure the contents of `./_docker-compose/options_Example.json`, rename it to `options.json`.
