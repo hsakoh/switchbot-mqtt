@@ -27,11 +27,6 @@ public static class MqttEntityHelper
     {
         return $"switchbot/{deviceId}/status/update";
     }
-
-    public static string GetCommandParamStateTopic(string deviceId)
-    {
-        return $"switchbot/{deviceId}/status/command_params";
-    }
     public static string GetAttributeTopic(string deviceId)
     {
         return $"switchbot/{deviceId}/attribute";
@@ -78,11 +73,11 @@ public static class MqttEntityHelper
     };
 
 
-    public static TextConfig CreateCommandParamTextEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef)
+    public static TextConfig CreateCommandParamTextEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, string defaultValue)
     {
         return new TextConfig(
             deviceMqtt
-            , stateTopic: GetCommandParamStateTopic(deviceConf.DeviceId)
+            , defaultValue: defaultValue
             , objectId: GetCommandParamObjectId(deviceConf.DeviceId, commandIndex, paramDef.Name)
             , commandTopic: GetCommandTopic(deviceConf.DeviceId)
             , commandTemplate: GetCommandTemplate(command, paramDef.Name, paramDef.ParameterType)
@@ -93,11 +88,11 @@ public static class MqttEntityHelper
         );
     }
 
-    public static SelectConfig CreateCommandParamSelectEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, string additionalObjectId = "")
+    public static SelectConfig CreateCommandParamSelectEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, string defaultValue, string additionalObjectId = "")
     {
         return new SelectConfig(
             deviceMqtt
-            , stateTopic: GetCommandParamStateTopic(deviceConf.DeviceId)
+            , defaultValue: defaultValue
             , objectId: GetCommandParamObjectId(deviceConf.DeviceId, commandIndex, paramDef.Name + additionalObjectId)
             , commandTopic: GetCommandTopic(deviceConf.DeviceId)
             , commandTemplate: GetCommandTemplate(command, paramDef.Name, paramDef.ParameterType)
@@ -106,11 +101,11 @@ public static class MqttEntityHelper
         );
     }
 
-    public static NumberConfig CreateCommandParamNumberEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, int? min, int? max, NumberMode numberMode, string additionalObjectId = "")
+    public static NumberConfig CreateCommandParamNumberEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, int? min, int? max, NumberMode numberMode,string? defaultValue, string additionalObjectId = "")
     {
         return new NumberConfig(
             deviceMqtt
-            , stateTopic: GetCommandParamStateTopic(deviceConf.DeviceId)
+            , defaultValue: defaultValue
             , objectId: GetCommandParamObjectId(deviceConf.DeviceId, commandIndex, paramDef.Name + additionalObjectId)
             , commandTopic: GetCommandTopic(deviceConf.DeviceId)
             , commandTemplate: GetCommandTemplate(command, paramDef.Name, paramDef.ParameterType)

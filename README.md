@@ -32,8 +32,8 @@ We have implemented all devices according to the published API specifications, b
 | [Smart Lock](https://us.switch-bot.com/products/switchbot-lock)                                  |   ✅    |    ✅    |    ✅    |      ✅       |
 | Keypad                                                                                           |   ✅    |    ✅    |    ✅    |              |
 | [Keypad Touch](https://switch-bot.com/pages/switchbot-keypad)                                    |   ✅    |    ✅    |    ✅    |              |
-| [Remote](https://switch-bot.com/products/switchbot-remote)                                       |   -    |    -    |    -    |              |
-| [Motion Sensor](https://www.switch-bot.com/products/motion-sensor)                               |   ✅    |    ✅    |    -    |              |
+| [Remote](https://switch-bot.com/products/switchbot-remote)                                       |   -    |    -    |    -    |      -       |
+| [Motion Sensor](https://www.switch-bot.com/products/motion-sensor)                               |   ✅    |    ✅    |    -    |      ✅       |
 | [Contact Sensor](https://www.switch-bot.com/products/contact-sensor)                             |   ✅    |    ✅    |    -    |              |
 | [Ceiling Light](https://www.switchbot.jp/collections/all/products/switchbot-ceiling-light)       |   ✅    |    ✅    |    ✅    |              |
 | [Ceiling Light Pro](https://www.switchbot.jp/collections/all/products/switchbot-ceiling-light)   |   ✅    |    ✅    |    ✅    |              |
@@ -41,7 +41,7 @@ We have implemented all devices according to the published API specifications, b
 | [Plug Mini (JP)](https://www.switchbot.jp/products/switchbot-plug-mini)                          |   ✅    |    ✅    |    ✅    |      ✅       |
 | Plug                                                                                             |   ✅    |    -    |    ✅    |              |
 | [Strip Light](https://www.switch-bot.com/products/switchbot-light-strip)                         |   ✅    |    ✅    |    ✅    |              |
-| [Color Bulb](https://www.switch-bot.com/products/switchbot-color-bulb)                           |   ✅    |    ✅    |    ✅    |              |
+| [Color Bulb](https://www.switch-bot.com/products/switchbot-color-bulb)                           |   ✅    |    ✅    |    ✅    |      ✅       |
 | [Robot Vacuum Cleaner S1](https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner)      |   ✅    |    ✅    |    ✅    |              |
 | [Robot Vacuum Cleaner S1 Plus](https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner) |   ✅    |    ✅    |    ✅    |              |
 | [Humidifier](https://www.switch-bot.com/products/switchbot-smart-humidifier)                     |   ✅    |    -    |    ✅    |              |

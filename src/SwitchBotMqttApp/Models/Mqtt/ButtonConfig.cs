@@ -10,8 +10,7 @@ public class ButtonConfig : MqttControlBase
         DeviceMqtt device, string objectId, string commandTopic, string? commandTemplate, string payloadPress, string name, ButtonDeviceClass? deviceClass, string? icon)
         : base(
             topic: $"homeassistant/button/{objectId}/config"
-            , stateTopic: null
-            , value_template: null
+            , defaultValue: null
             , commandTopic: commandTopic
             , commandTemplate: commandTemplate
             , name: name

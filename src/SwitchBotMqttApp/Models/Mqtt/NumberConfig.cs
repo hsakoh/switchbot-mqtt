@@ -6,12 +6,11 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 public class NumberConfig : MqttControlBase
 {
     public NumberConfig(
-        DeviceMqtt device, string objectId,string stateTopic, string commandTopic, string commandTemplate, string name, NumberDeviceClass deviceClass
+        DeviceMqtt device, string objectId, string? defaultValue, string commandTopic, string commandTemplate, string name, NumberDeviceClass deviceClass
         , decimal? min, decimal? max, NumberMode numberMode, string? unitOfMeasurement)
     : base(
             topic: $"homeassistant/number/{objectId}/config"
-            , stateTopic: stateTopic
-            , value_template: null
+            , defaultValue: defaultValue 
             , commandTopic: commandTopic
             , commandTemplate: commandTemplate
             , name: name

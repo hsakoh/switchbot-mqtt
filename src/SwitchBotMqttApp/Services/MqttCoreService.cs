@@ -228,40 +228,38 @@ public class MqttCoreService : ManagedServiceBase
                     buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
 
                     var paramDefs = _deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
-                    CommandPayloadDictionary[deviceConf.DeviceId] = new ConcurrentDictionary<string, object>();
+                    var payloadDict = CommandPayloadDictionary.GetOrAdd(deviceConf.DeviceId, new ConcurrentDictionary<string, object>());
                     foreach (var paramDef in paramDefs)
                     {
-                        CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name] = paramDef.DefaultValue ?? string.Empty;
-
+                        string? defaultValue = paramDef.DefaultValue;
                         switch (paramDef.ParameterType)
                         {
                             case ParameterType.Long:
-                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, null, null, NumberMode.Box));
+                                defaultValue = paramDef.DefaultValue ?? "0";
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, null, null, NumberMode.Box, defaultValue));
                                 break;
                             case ParameterType.Range:
-                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin, paramDef.RangeMax, NumberMode.Slider));
+                                defaultValue = paramDef.DefaultValue ?? paramDef.RangeMin?.ToString() ?? string.Empty;
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin, paramDef.RangeMax, NumberMode.Slider, defaultValue));
                                 break;
                             case ParameterType.Select:
-                                selectEntities.Add(MqttEntityHelper.CreateCommandParamSelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef));
-                                {
-                                    CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]
-                                        = paramDef.OptionToDescription((string)CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]);
-                                }
+                                defaultValue = paramDef.OptionToDescription(paramDef.DefaultValue);
+                                selectEntities.Add(MqttEntityHelper.CreateCommandParamSelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, defaultValue));
                                 break;
                             case ParameterType.SelectOrRange:
-                                selectEntities.Add(MqttEntityHelper.CreateCommandParamSelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, "-S"));
-                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin, paramDef.RangeMax, NumberMode.Slider, "-N"));
-                                {
-                                    CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]
-                                        = paramDef.OptionToDescription((string)CommandPayloadDictionary[deviceConf.DeviceId][paramDef.Name]);
-                                }
+                                defaultValue = paramDef.OptionToDescription(paramDef.DefaultValue);
+                                selectEntities.Add(MqttEntityHelper.CreateCommandParamSelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef,
+                                    defaultValue, "-S"));
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin, paramDef.RangeMax, NumberMode.Slider, null, "-N"));
                                 break;
                             case ParameterType.String:
-                                textEntities.Add(MqttEntityHelper.CreateCommandParamTextEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef));
+                                defaultValue = paramDef.DefaultValue ?? string.Empty;
+                                textEntities.Add(MqttEntityHelper.CreateCommandParamTextEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, defaultValue));
                                 break;
                             default:
                                 break;
                         }
+                        payloadDict[paramDef.Name] = defaultValue ?? string.Empty;
                     }
                     break;
                 case PayloadType.Default:
@@ -290,17 +288,6 @@ public class MqttCoreService : ManagedServiceBase
         {
             await PublishEntityAsync(e, true);
         }
-
-        //publish params default value
-        await SyncParamState(deviceConf, true);
-    }
-
-    private async Task SyncParamState(DeviceBase device, bool isInitial)
-    {
-        if (CommandPayloadDictionary.ContainsKey(device.DeviceId))
-        {
-            await _mqttService.PublishAsync(MqttEntityHelper.GetCommandParamStateTopic(device.DeviceId), CommandPayloadDictionary[device.DeviceId], isInitial);
-        }
     }
 
     private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object>> CommandPayloadDictionary = new();
@@ -325,7 +312,6 @@ public class MqttCoreService : ManagedServiceBase
             if (payload.ParamName != MqttEntityHelper.ButtonPrefix)
             {
                 CommandPayloadDictionary[device.DeviceId][payload.ParamName] = payload.ParamValue;
-                await SyncParamState(device, false);
                 return;
             }
             if (commandConf.CommandType == CommandType.Customize
@@ -339,7 +325,6 @@ public class MqttCoreService : ManagedServiceBase
             var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
             if (commandDef.PayloadType == PayloadType.SingleValue)
             {
-                //TODO SingleValueでも文字列と数値 とかあるかもしれない
                 await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
                 return;
             }

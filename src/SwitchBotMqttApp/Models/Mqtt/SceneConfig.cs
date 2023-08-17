@@ -8,8 +8,7 @@ public class SceneConfig : MqttControlBase
     public SceneConfig(string sceneId, string commandTopic, string name)
         : base(
             topic: $"homeassistant/scene/{sceneId}/config"
-            , stateTopic: null
-            , value_template: null
+            , defaultValue: null
             , commandTopic: commandTopic
             , commandTemplate: null
             , name: name

@@ -6,12 +6,11 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 public class TextConfig : MqttControlBase
 {
     public TextConfig(
-        DeviceMqtt device, string objectId, string stateTopic, string commandTopic, string commandTemplate, string name
+        DeviceMqtt device, string objectId, string? defaultValue, string commandTopic, string commandTemplate, string name
         , int? min, int? max, TextMode textMode)
     : base(
             topic: $"homeassistant/text/{objectId}/config"
-            , stateTopic: stateTopic
-            , value_template: null
+            , defaultValue: defaultValue == null ? null : $"\"{defaultValue}\""
             , commandTopic: commandTopic
             , commandTemplate: commandTemplate
             , name: name

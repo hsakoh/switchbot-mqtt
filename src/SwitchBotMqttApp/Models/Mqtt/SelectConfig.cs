@@ -6,11 +6,10 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 public class SelectConfig : MqttControlBase
 {
     public SelectConfig(
-        DeviceMqtt device, string objectId, string stateTopic, string commandTopic, string commandTemplate, string name, string[] options)
+        DeviceMqtt device, string objectId, string defaultValue, string commandTopic, string commandTemplate, string name, string[] options)
     : base(
             topic: $"homeassistant/select/{objectId}/config"
-            , stateTopic: stateTopic
-            , value_template: null
+            , defaultValue: defaultValue == null ? null : $"\"{defaultValue}\""
             , commandTopic: commandTopic
             , commandTemplate: commandTemplate
             , name: name

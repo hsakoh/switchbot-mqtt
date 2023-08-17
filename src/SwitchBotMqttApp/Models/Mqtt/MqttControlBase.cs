@@ -4,11 +4,11 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 
 public class MqttControlBase : MqttEntityBase
 {
-    public MqttControlBase(string topic, string? stateTopic, string? value_template, string commandTopic, string? commandTemplate, string name, string uniqueId, string objectId, DeviceMqtt? device, string? deviceClass, string? icon)
+    public MqttControlBase(string topic, string? defaultValue, string commandTopic, string? commandTemplate, string name, string uniqueId, string objectId, DeviceMqtt? device, string? deviceClass, string? icon)
     : base(
             topic: topic
             , name: name
-            , uniqueId: objectId
+            , uniqueId: uniqueId
             , objectId: objectId
             , device: device
             , deviceClass: deviceClass
@@ -16,8 +16,7 @@ public class MqttControlBase : MqttEntityBase
     {
         CommandTopic = commandTopic;
         CommandTemplate = commandTemplate;
-        StateTopic = stateTopic;
-        ValueTemplate = stateTopic == null ? null : value_template ?? $"{{{{value_json.{name}}}}}";
+        ValueTemplate = defaultValue == null ? null : $"{{{{{defaultValue}}}}}";
     }
 
     [JsonProperty("command_topic")]
@@ -28,8 +27,5 @@ public class MqttControlBase : MqttEntityBase
 
     [JsonProperty("value_template")]
     public string? ValueTemplate { get; set; }
-
-    [JsonProperty("state_topic")]
-    public string? StateTopic { get; set; }
 
 }
