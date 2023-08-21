@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   switchbot-mqtt:
-    image: ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.0
+    image: ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.1
     volumes:
-      - ./_data-for-compose:/data
+      - ./:/data
     ports:
       - "8099:8099"
       - "8098:8098"
