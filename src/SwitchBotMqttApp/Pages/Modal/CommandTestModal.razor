@@ -163,7 +163,7 @@
                 || CommandConf.CommandType == CommandType.Tag
                 || CommandDef!.PayloadType == PayloadType.Default)
             {
-                if(CommandConf.CommandType == CommandType.Tag && CommandConf.Command == string.Empty)
+                if (CommandConf.CommandType == CommandType.Tag && string.IsNullOrEmpty(CommandConf.Command))
                 {
                     Response = await SwitchBotApiClient.SendDefaultDeviceControlCommandAsync(Device, new CommandConfig()
                     {
