@@ -50,6 +50,11 @@ public class Program
             {
                 configuration.GetSection("SwitchBot").Bind(settings);
             });
+        builder.Services.AddOptions<EnforceDeviceTypeOptions>().
+            Configure<IConfiguration>((settings, configuration) =>
+            {
+                configuration.GetSection("EnforceDeviceTypes").Bind(settings);
+            });
         builder.Services.AddOptions<WebhookServiceOptions>().
             Configure<IConfiguration>((settings, configuration) =>
             {

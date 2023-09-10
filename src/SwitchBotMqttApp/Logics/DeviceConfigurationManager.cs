@@ -1,4 +1,6 @@
 ﻿using HomeAssistantAddOn.Core;
+using Microsoft.Extensions.Options;
+using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
 using SwitchBotMqttApp.Models.Enums;
 using System.Text;
@@ -17,14 +19,18 @@ public class DeviceConfigurationManager
     private readonly ILogger<DeviceConfigurationManager> _logger;
     private readonly DeviceDefinitionsManager _deviceDefinitionsManager;
     private readonly SwitchBotApiClient _switchBotApiClient;
+    private readonly IOptions<EnforceDeviceTypeOptions> _enforceDeviceTypeOptions;
+
     public DeviceConfigurationManager(
         ILogger<DeviceConfigurationManager> logger
         , DeviceDefinitionsManager deviceDefinitionsManager
-        , SwitchBotApiClient switchBotApiClient)
+        , SwitchBotApiClient switchBotApiClient
+        , IOptions<EnforceDeviceTypeOptions> enforceDeviceTypeOptions)
     {
         _logger = logger;
         _deviceDefinitionsManager = deviceDefinitionsManager;
         _switchBotApiClient = switchBotApiClient;
+        _enforceDeviceTypeOptions = enforceDeviceTypeOptions;
     }
 
     #region File I/O
@@ -62,6 +68,18 @@ public class DeviceConfigurationManager
     public async Task LoadDevicesAsync(DevicesConfig currentData, CancellationToken cancellationToken = default)
     {
         var (response, responseRaw) = await _switchBotApiClient.GetDevicesAsync(cancellationToken);
+
+        foreach(var enforceDeviceType in _enforceDeviceTypeOptions.Value)
+        {
+            foreach (var device in response.DeviceList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
+            {
+                device.DeviceType = enforceDeviceType.DeviceType;
+            }
+            foreach (var device in response.InfraredRemoteList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
+            {
+                device.RemoteType = enforceDeviceType.DeviceType;
+            }
+        }
 
         List<PhysicalDevice> physicalDevices = response.DeviceList.Select(d => new PhysicalDevice()
         {

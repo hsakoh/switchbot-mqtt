@@ -30,7 +30,7 @@ This add-on is implemented as a Blazor Server App using .NET 6 and has been veri
 ```powershell
 docker build `
 "./_compile_self" `
--t ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.2 `
+-t ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.3 `
 --build-arg BUILD_FROM="homeassistant/amd64-base:latest" `
 --build-arg BUILD_ARCH="amd64" `
 --progress=plain `
@@ -62,6 +62,8 @@ In simple terms, if you are using the Mosquitto add-on on Home Assistant OS, you
 |Mqtt:Tls|`false`|If TLS connection is required, set to `true`.|
 |SwitchBot:ApiKey|-|Obtain and configure the token and secret according to the [SwitchBotApi documentation](https://github.com/OpenWonderLabs/SwitchBotAPI#open-token-and-secret-key).|
 |SwitchBot:ApiSecret|-|Same as above.|
+|EnforceDeviceTypes[]:DeviceId|-|There are rare cases where devices, such as new ones, do not include the device type in their responses. In such cases, you can specify a device type to be forcibly recognized based on the device ID.|
+|EnforceDeviceTypes[]:DeviceType|-|Same as above.|
 |WebhookService:UseWebhook|`true`|If receiving Webhooks, set to true.|
 |WebhookService:UseNgrok|`true`|If using Ngrok for Webhook reception, set to true.|
 |WebhookService:NgrokAuthToken|-|If using Ngrok, set up the Ngrok authentication token.|
