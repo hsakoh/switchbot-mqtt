@@ -67,79 +67,87 @@ public class DeviceConfigurationManager
     #region SwitchBotApi
     public async Task LoadDevicesAsync(DevicesConfig currentData, CancellationToken cancellationToken = default)
     {
-        var (response, responseRaw) = await _switchBotApiClient.GetDevicesAsync(cancellationToken);
+        try
+        {
+            var (response, responseRaw) = await _switchBotApiClient.GetDevicesAsync(cancellationToken);
 
-        foreach(var enforceDeviceType in _enforceDeviceTypeOptions.Value)
-        {
-            foreach (var device in response.DeviceList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
+            foreach (var enforceDeviceType in _enforceDeviceTypeOptions.Value)
             {
-                device.DeviceType = enforceDeviceType.DeviceType;
+                foreach (var device in response.DeviceList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
+                {
+                    device.DeviceType = enforceDeviceType.DeviceType;
+                }
+                foreach (var device in response.InfraredRemoteList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
+                {
+                    device.RemoteType = enforceDeviceType.DeviceType;
+                }
             }
-            foreach (var device in response.InfraredRemoteList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
-            {
-                device.RemoteType = enforceDeviceType.DeviceType;
-            }
-        }
 
-        List<PhysicalDevice> physicalDevices = response.DeviceList.Select(d => new PhysicalDevice()
-        {
-            DeviceId = d.DeviceId,
-            DeviceName = d.DeviceName,
-            DeviceType = _deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.ApiDeviceTypeString == d.DeviceType).DeviceType,
-            Description = string.Empty,
-            RawValue = responseRaw.DeviceList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
-        }).ToList();
-        physicalDevices.ForEach(d =>
-        {
-            d.RawValue?.Remove("deviceId");
-            d.RawValue?.Remove("deviceName");
-        });
-        Diff(physicalDevices, currentData.PhysicalDevices, device =>
-        {
-            var fields = _deviceDefinitionsManager.FieldDefinitions.Where(m => m.DeviceType == device.DeviceType);
-            device.Fields = fields.Select(f => new FieldConfig()
+            List<PhysicalDevice> physicalDevices = response.DeviceList.Select(d => new PhysicalDevice()
             {
-                Enable = true,
-                FieldName = f.FieldName,
+                DeviceId = d.DeviceId,
+                DeviceName = d.DeviceName,
+                DeviceType = _deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.ApiDeviceTypeString == d.DeviceType).DeviceType,
+                Description = string.Empty,
+                RawValue = responseRaw.DeviceList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
             }).ToList();
-            var commands = _deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
-            device.Commands = commands.Select(
-                c => new CommandConfig()
+            physicalDevices.ForEach(d =>
+            {
+                d.RawValue?.Remove("deviceId");
+                d.RawValue?.Remove("deviceName");
+            });
+            Diff(physicalDevices, currentData.PhysicalDevices, device =>
+            {
+                var fields = _deviceDefinitionsManager.FieldDefinitions.Where(m => m.DeviceType == device.DeviceType);
+                device.Fields = fields.Select(f => new FieldConfig()
                 {
                     Enable = true,
-                    CommandType = c.CommandType,
-                    Command = c.Command,
-                    DisplayName = c.DisplayName ?? $"{c.Command}",
+                    FieldName = f.FieldName,
                 }).ToList();
-        });
+                var commands = _deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
+                device.Commands = commands.Select(
+                    c => new CommandConfig()
+                    {
+                        Enable = true,
+                        CommandType = c.CommandType,
+                        Command = c.Command,
+                        DisplayName = c.DisplayName ?? $"{c.Command}",
+                    }).ToList();
+            });
 
-        List<VirtualInfraredRemoteDevice> remoteDevices = response.InfraredRemoteList.Select(d => new VirtualInfraredRemoteDevice()
+            List<VirtualInfraredRemoteDevice> remoteDevices = response.InfraredRemoteList.Select(d => new VirtualInfraredRemoteDevice()
+            {
+                DeviceId = d.DeviceId,
+                DeviceName = d.DeviceName,
+                DeviceType = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.RemoteType)?.DeviceType
+                            ?? _deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.CustomizedDeviceTypeString == d.RemoteType).DeviceType,
+                IsCustomized = !_deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.ApiDeviceTypeString == d.RemoteType),
+                RawValue = responseRaw.InfraredRemoteList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
+            }).ToList();
+            remoteDevices.ForEach(d =>
+            {
+                d.RawValue?.Remove("deviceId");
+                d.RawValue?.Remove("deviceName");
+            });
+            Diff(remoteDevices, currentData.VirtualInfraredRemoteDevices, device =>
+            {
+                var master = _deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType);
+                var commands = _deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
+                device.Commands = commands.Select(
+                    c => new CommandConfig()
+                    {
+                        Enable = true,
+                        CommandType = c.CommandType,
+                        Command = c.Command,
+                        DisplayName = c.DisplayName ?? $"{c.Command}",
+                    }).ToList();
+            });
+
+        }
+        catch (Exception ex)
         {
-            DeviceId = d.DeviceId,
-            DeviceName = d.DeviceName,
-            DeviceType = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.RemoteType)?.DeviceType
-                        ?? _deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.CustomizedDeviceTypeString == d.RemoteType).DeviceType,
-            IsCustomized = !_deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.ApiDeviceTypeString == d.RemoteType),
-            RawValue = responseRaw.InfraredRemoteList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
-        }).ToList();
-        remoteDevices.ForEach(d =>
-        {
-            d.RawValue?.Remove("deviceId");
-            d.RawValue?.Remove("deviceName");
-        });
-        Diff(remoteDevices, currentData.VirtualInfraredRemoteDevices, device =>
-        {
-            var master = _deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType);
-            var commands = _deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
-            device.Commands = commands.Select(
-                c => new CommandConfig()
-                {
-                    Enable = true,
-                    CommandType = c.CommandType,
-                    Command = c.Command,
-                    DisplayName = c.DisplayName ?? $"{c.Command}",
-                }).ToList();
-        });
+            _logger.LogError(ex, "{Method} error.", nameof(LoadDevicesAsync));
+        }
     }
 
     private static void Diff<T>(List<T> currentDevices, List<T> configuredDevices, Action<T> appendDefaults) where T : DeviceBase

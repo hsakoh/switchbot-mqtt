@@ -149,17 +149,26 @@ public class SwitchBotApiClient
 
     private HttpRequestMessage CreateSwitchBotRequest(HttpMethod method, string requestUri)
     {
-        HttpRequestMessage requestMessage = new(method, requestUri);
-        var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        var nonce = Guid.NewGuid().ToString();
-        var data = $"{_switchBotOptions.Value.ApiKey}{time}{nonce}";
-        using HMACSHA256 hmac = new(Encoding.UTF8.GetBytes(_switchBotOptions.Value.ApiSecret));
-        var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(data)));
-        requestMessage.Headers.TryAddWithoutValidation("Authorization", _switchBotOptions.Value.ApiKey);
-        requestMessage.Headers.TryAddWithoutValidation("sign", signature);
-        requestMessage.Headers.TryAddWithoutValidation("nonce", nonce);
-        requestMessage.Headers.TryAddWithoutValidation("t", time.ToString());
-        return requestMessage;
+        try
+        {
+            HttpRequestMessage requestMessage = new(method, requestUri);
+            var time = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var nonce = Guid.NewGuid().ToString();
+            var data = $"{_switchBotOptions.Value.ApiKey}{time}{nonce}";
+            using HMACSHA256 hmac = new(Encoding.UTF8.GetBytes(_switchBotOptions.Value.ApiSecret));
+            var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.UTF8.GetBytes(data)));
+            requestMessage.Headers.TryAddWithoutValidation("Authorization", _switchBotOptions.Value.ApiKey);
+            requestMessage.Headers.TryAddWithoutValidation("sign", signature);
+            requestMessage.Headers.TryAddWithoutValidation("nonce", nonce);
+            requestMessage.Headers.TryAddWithoutValidation("t", time.ToString());
+            return requestMessage;
+
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "signature generation error. ApiKey:{ApiKey},ApiSecret:{ApiSecret}", _switchBotOptions.Value.ApiSecret, _switchBotOptions.Value.ApiKey);
+            throw;
+        }
     }
 
     public async Task<string?> SendDefaultDeviceControlCommandAsync(DeviceBase device, CommandConfig command, CancellationToken cancellationToken)

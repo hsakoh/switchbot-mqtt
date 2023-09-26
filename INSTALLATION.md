@@ -30,7 +30,7 @@ This add-on is implemented as a Blazor Server App using .NET 6 and has been veri
 ```powershell
 docker build `
 "./_compile_self" `
--t ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.3 `
+-t ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.4 `
 --build-arg BUILD_FROM="homeassistant/amd64-base:latest" `
 --build-arg BUILD_ARCH="amd64" `
 --progress=plain `
