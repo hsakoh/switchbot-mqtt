@@ -190,7 +190,11 @@
                     if (paramDef.ParameterType == ParameterType.Long
                         || paramDef.ParameterType == ParameterType.Range)
                     {
-                        json[paramDef.Name] = JsonValue.Create<long>(long.Parse(commandParam.value));
+                        if (long.TryParse(commandParam.value, out var longValue)
+                            && longValue != paramDef.RangeMin -1)
+                        {
+                            json[paramDef.Name] = JsonValue.Create<long>(longValue);
+                        }
                     }
                     else if (paramDef.ParameterType == ParameterType.SelectOrRange)
                     {

@@ -236,7 +236,7 @@ public class MqttCoreService : ManagedServiceBase
                         {
                             case ParameterType.Long:
                                 defaultValue = paramDef.DefaultValue ?? "0";
-                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, null, null, NumberMode.Box, defaultValue));
+                                numberEntities.Add(MqttEntityHelper.CreateCommandParamNumberEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, paramDef.RangeMin - 1, paramDef.RangeMax, NumberMode.Box, defaultValue));
                                 break;
                             case ParameterType.Range:
                                 defaultValue = paramDef.DefaultValue ?? paramDef.RangeMin?.ToString() ?? string.Empty;
@@ -337,7 +337,11 @@ public class MqttCoreService : ManagedServiceBase
                     if (paramDef.ParameterType == ParameterType.Long
                         || paramDef.ParameterType == ParameterType.Range)
                     {
-                        json[paramDef.Name] = JsonValue.Create<long>((long)payloadDict[paramDef.Name]);
+                        if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue)
+                            && longValue != paramDef.RangeMin - 1)
+                        {
+                            json[paramDef.Name] = JsonValue.Create<long>(longValue);
+                        }
                     }
                     else if (paramDef.ParameterType == ParameterType.Select)
                     {

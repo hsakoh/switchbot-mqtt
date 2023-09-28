@@ -101,7 +101,7 @@ public static class MqttEntityHelper
         );
     }
 
-    public static NumberConfig CreateCommandParamNumberEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, int? min, int? max, NumberMode numberMode,string? defaultValue, string additionalObjectId = "")
+    public static NumberConfig CreateCommandParamNumberEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, long? min, long? max, NumberMode numberMode,string? defaultValue, string additionalObjectId = "")
     {
         return new NumberConfig(
             deviceMqtt

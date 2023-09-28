@@ -16,8 +16,8 @@ public class CommandPayloadDefinition
     public string? Icon { get; set; } = default!;
     public string? Options { get; set; } = default!;
     public string? OptionsDescription { get; set; } = default!;
-    public int? RangeMin { get; set; } = default!;
-    public int? RangeMax { get; set; } = default!;
+    public long? RangeMin { get; set; } = default!;
+    public long? RangeMax { get; set; } = default!;
     public NumberDeviceClass? NumberDeviceClass { get; set; } = default!;
     public NumberMode? NumberMode { get; set; } = default!;
     public string? UnitOfMeasurement { get; set; } = default!;
