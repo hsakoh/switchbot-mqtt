@@ -27,7 +27,7 @@ We have implemented all devices according to the published API specifications, b
 | [Hub Mini](https://www.switch-bot.com/products/switchbot-hub-mini)                               |   -    |    -    |    -    |              |
 | [Hub 2](https://us.switch-bot.com/pages/switchbot-hub-2)                                         |   ✅    |    ✅    |    -    |      ✅       |
 | [Meter](https://www.switch-bot.com/products/switchbot-meter)                                     |   ✅    |    ✅    |    -    |              |
-| [MeterPlus](https://www.switch-bot.com/products/switchbot-meter-plus)                            |   ✅    |    ✅    |    -    |              |
+| [MeterPlus](https://www.switch-bot.com/products/switchbot-meter-plus)                            |   ✅    |    ✅    |    -    |      ✅       |
 | [Outdoor Meter](https://www.switch-bot.com/products/switchbot-indoor-outdoor-thermo-hygrometer)  |   ✅    |    ✅    |    -    |              |
 | [Smart Lock](https://us.switch-bot.com/products/switchbot-lock)                                  |   ✅    |    ✅    |    ✅    |      ✅       |
 | Keypad                                                                                           |   ✅    |    ✅    |    ✅    |              |
