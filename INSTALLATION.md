@@ -71,6 +71,11 @@ In simple terms, if you are using the Mosquitto add-on on Home Assistant OS, you
 |AutoStartServices|`false`|If various internal services should start automatically when the add-on is started, set to true.|
 |LogLevel|`Trace`|Set the log level. Specify one of the following values:<br>Trace, Debug, Information, Warning, Error, Critical, None|
 
+If you have trouble saving `EnforceDeviceTypes`, try entering it on the YAML input screen in the following format.
+```
+EnforceDeviceTypes: []
+```
+
 ## Webhook Reception
 
 This add-on supports integration with [Ngrok](https://ngrok.com/) for webhook reception.
