@@ -60,8 +60,8 @@ In simple terms, if you are using the Mosquitto add-on on Home Assistant OS, you
 |Mqtt:Id|-|If authentication is required, specify the ID|
 |Mqtt:Pw|-|If authentication is required, specify the PW.|
 |Mqtt:Tls|`false`|If TLS connection is required, set to `true`.|
-|SwitchBot:ApiKey|-|Obtain and configure the token and secret according to the [SwitchBotApi documentation](https://github.com/OpenWonderLabs/SwitchBotAPI#open-token-and-secret-key).|
-|SwitchBot:ApiSecret|-|Same as above.|
+|SwitchBot:ApiKey|-|Obtain and configure the **open token** according to the [SwitchBotApi documentation](https://github.com/OpenWonderLabs/SwitchBotAPI#open-token-and-secret-key).The token is 96 characters long.|
+|SwitchBot:ApiSecret|-|Obtain and configure the **secret key** according to the [SwitchBotApi documentation](https://github.com/OpenWonderLabs/SwitchBotAPI#open-token-and-secret-key).The secret is 32 characters long.|
 |EnforceDeviceTypes[]:DeviceId|-|There are rare cases where devices, such as new ones, do not include the device type in their responses. In such cases, you can specify a device type to be forcibly recognized based on the device ID.|
 |EnforceDeviceTypes[]:DeviceType|-|Same as above.|
 |WebhookService:UseWebhook|`true`|If receiving Webhooks, set to true.|
