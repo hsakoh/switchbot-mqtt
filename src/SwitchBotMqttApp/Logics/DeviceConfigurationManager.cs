@@ -154,7 +154,7 @@ public class DeviceConfigurationManager
     {
         foreach (var currentDevice in currentDevices)
         {
-            var configuredDevice = configuredDevices.SingleOrDefault(d => d.DeviceId == currentDevice.DeviceId);
+            var configuredDevice = configuredDevices.SingleOrDefault(d => d.DeviceId == currentDevice.DeviceId && d.ConfigureStatus != ConfigureStatus.Deleting);
             if (configuredDevice == null)
             {
                 currentDevice.ConfigureStatus = ConfigureStatus.New;

@@ -1,6 +1,6 @@
 name: "SwitchBot-Mqtt"
 description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
-version: "1.0.6"
+version: "1.0.7"
 slug: "switchbot_mqtt"
 url: "https://github.com/hsakoh/switchbot-mqtt"
 startup: application
@@ -24,6 +24,8 @@ options:
     ApiKey: ''
     ApiSecret: ''
   EnforceDeviceTypes:
+    - DeviceId : 'E2F67E000000(Example)'
+      DeviceType : 'Curtain'
   WebhookService: 
     UseWebhook: true
     UseNgrok: true

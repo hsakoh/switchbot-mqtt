@@ -522,7 +522,7 @@ public class MqttCoreService : ManagedServiceBase
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "payload", payload);
+                _logger.LogError(ex, "{payload}", payload);
             }
         }
         );
