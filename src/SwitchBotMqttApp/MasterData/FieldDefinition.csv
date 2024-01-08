@@ -55,7 +55,7 @@ OutdoorMeter,hubDeviceId,Status,hubDeviceId,,String,"device's parent Hub ID. 000
 OutdoorMeter,timeOfSample,Webhook,,timeOfSample,String,"the time stamp when the event is sent",false,,,,,Timestamp,,,,,
 Lock,battery,Both,battery,battery,Integer,"the current battery level, 0-100",false,,,,,Battery,,measurement,%,,
 Lock,version,Status,version,,String,"the current firmware version, e.g. V4.2",false,,,,mdi:information,,diagnostic,,,,
-Lock,lockState,Both,lockState,lockState,String,"determines if locked or not,the state of the device, `LOCKED` stands for the motor is rotated to locking position; `UNLOCKED` stands for the motor is rotated to unlocking position; `JAMMED` stands for the motor is jammed while rotating",true,Lock,locked,unlocked,,,,,,,
+Lock,lockState,Both,lockState,lockState,String,"determines if locked or not,the state of the device, `LOCKED` stands for the motor is rotated to locking position; `UNLOCKED` stands for the motor is rotated to unlocking position; `JAMMED` stands for the motor is jammed while rotating",true,Lock,unlocked,locked,,,,,,,
 Lock,doorState,Status,doorState,,String,"determines if the door is closed or not",true,Door,opened,closed,,,,,,,
 Lock,calibrate,Status,calibrate,,Boolean,"determines if Lock has been calibrated or not",false,,,,mdi:check-circle,,,,,,
 Lock,deviceId,Both,deviceId,deviceMac,String,"the MAC address of the device. device ID ",false,,,,mdi:information,,diagnostic,,,,

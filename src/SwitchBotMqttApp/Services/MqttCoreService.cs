@@ -451,6 +451,11 @@ public class MqttCoreService : ManagedServiceBase
                     both[fieldDef.FieldName] = kv.Value!.Copy();
                 }
             }
+            if(fieldDef.DeviceType == DeviceType.Lock
+                && fieldDef.FieldName == "lockState")
+            {
+                both[fieldDef.FieldName] = both[fieldDef.FieldName]!.GetValue<string>().ToLower();
+            }
         }
         webhook["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         await _mqttService.PublishAsync(MqttEntityHelper.GetWebhookTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
