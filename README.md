@@ -22,6 +22,7 @@ We have implemented all devices according to the published API specifications, b
 |--------------------------------------------------------------------------------------------------|:------:|:-------:|:-------:|:------------:|
 | [Bot](https://www.switch-bot.com/products/switchbot-bot)                                         |   ✅    |    ✅    |    ✅    |              |
 | [Curtain](https://www.switch-bot.com/products/switchbot-curtain)                                 |   ✅    |    ✅    |    ✅    |      ✅       |
+| [Curtain3](https://www.switch-bot.com/products/switchbot-curtain-3)                              |   ✅    |    ✅    |    ✅    |              |
 | Hub                                                                                              |   -    |    -    |    -    |              |
 | Hub Plus                                                                                         |   -    |    -    |    -    |              |
 | [Hub Mini](https://www.switch-bot.com/products/switchbot-hub-mini)                               |   -    |    -    |    -    |              |
@@ -48,6 +49,7 @@ We have implemented all devices according to the published API specifications, b
 | [Indoor Cam](https://switch-bot.com/pages/switchbot-indoor-cam)                                  |   -    |    ✅    |    -    |              |
 | [Pan/Tilt Cam](https://switch-bot.com/pages/switchbot-pan-tilt-cam-2k)                           |   -    |    ✅    |    -    |              |
 | [Blind Tilt](https://us.switch-bot.com/pages/switchbot-blind-tilt)                               |   ✅    |    -    |    ✅    |              |
+| [Battery Circulator Fan](https://www.switchbot.jp/products/switchbot-smart-circulator-fan)       |   ✅    |    ✅    |    ✅    |              |
 
 ### Virtual Infrared Remote Devices
 

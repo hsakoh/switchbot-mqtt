@@ -1,6 +1,7 @@
 DeviceType,ApiDeviceTypeString,CustomizedDeviceTypeString,WebhookDeviceTypeString,PhysicalOrVirtual,IsSupportPolling,IsSupportWebhook,IsSupportCommand,Description,DisplayName,DisplayNameJa
 Bot,Bot,,WoHand,PhysicalDevice,TRUE,TRUE,TRUE,,Bot,ボット
 Curtain,Curtain,,WoCurtain,PhysicalDevice,TRUE,TRUE,TRUE,,Curtain,カーテン
+Curtain3,Curtain3,,WoCurtain3,PhysicalDevice,TRUE,TRUE,TRUE,,Curtain3,カーテン３
 Hub,Hub,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub,
 HubPlus,Hub Plus,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub Plus,ハブプラス
 HubMini,Hub Mini,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub Mini,ハブミニ
@@ -27,6 +28,7 @@ Humidifier,Humidifier,,,PhysicalDevice,TRUE,FALSE,TRUE,,Humidifier,加湿器
 IndoorCam,Indoor Cam,,WoCamera,PhysicalDevice,FALSE,TRUE,FALSE,,Indoor Cam,屋内カメラ
 PanTiltCam,Pan/Tilt Cam,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam,見守りカメラ/見守りカメラ3MP
 BlindTilt,Blind Tilt,,,PhysicalDevice,TRUE,FALSE,TRUE,,Blind Tilt,ブラインドポール
+BatteryCirculatorFan,Battery Circulator Fan,,WoFan2,PhysicalDevice,TRUE,TRUE,TRUE,,Battery Circulator Fan,サーキュレーター
 AirConditioner,Air Conditioner,DIY Air Conditioner,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Air Conditioner,エアコン
 TV,TV,DIY TV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,TV,テレビ
 IPTV,IPTV,DIY IPTV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,IPTV,メディアストリーミング

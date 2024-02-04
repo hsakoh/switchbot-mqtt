@@ -9,6 +9,7 @@ public enum DeviceType
     //PhysicalDevice
     Bot,
     Curtain,
+    Curtain3,
     Hub,
     HubPlus,
     HubMini,
@@ -35,6 +36,7 @@ public enum DeviceType
     IndoorCam,
     PanTiltCam,
     BlindTilt,
+    BatteryCirculatorFan,
 
     //VirtualInfraredRemoteDevice
     AirConditioner,
