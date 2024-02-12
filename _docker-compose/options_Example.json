@@ -2,7 +2,7 @@
   "LogLevel": "Trace",
   "AutoStartServices": false,
   "Mqtt": {
-    "UseAutoConfig": false,
+    "AutoConfig": false,
     "Host": "homeassistant",
     "Port": 1883,
     "Id": "",

@@ -1,7 +1,7 @@
 ﻿namespace HomeAssistantAddOn.Mqtt;
 public class MqttOptions
 {
-    public bool UseAutoConfig { get; set; } = true;
+    public bool AutoConfig { get; set; } = true;
 
     public string? Host { get; set; } = null;
 

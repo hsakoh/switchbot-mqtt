@@ -41,7 +41,7 @@ public class MqttService : IDisposable
         }
         var options = _optionsMonitor.CurrentValue;
         SupervisorApi.ServiceMqtt? serviceMqtt = null;
-        if (options.UseAutoConfig)
+        if (options.AutoConfig)
         {
             var response = await _supervisorApi.GetServicesMqtt();
             if (response?.Result != "ok")
@@ -55,7 +55,7 @@ public class MqttService : IDisposable
             .WithClientOptions((builder) =>
             {
                 var options = _optionsMonitor.CurrentValue;
-                if (options.UseAutoConfig)
+                if (options.AutoConfig)
                 {
                     builder
                         .WithTcpServer(serviceMqtt!.Host, serviceMqtt.Port)
