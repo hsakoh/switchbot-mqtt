@@ -183,10 +183,19 @@
             }
             else if (CommandDef.PayloadType == PayloadType.Json)
             {
-                var json = JsonNode.Parse("{}")!;
+                var jsonRoot = JsonNode.Parse("{}")!;
                 CommandParams.ForEach(commandParam =>
                 {
                     var paramDef = commandParam.def;
+                    var json = jsonRoot!;
+                    if (!string.IsNullOrEmpty(paramDef.Path))
+                    {
+                        if (jsonRoot[paramDef.Path] == null)
+                        {
+                            jsonRoot[paramDef.Path] = JsonNode.Parse("{}")!;
+                        }
+                        json = jsonRoot[paramDef.Path]!;
+                    }
                     if (paramDef.ParameterType == ParameterType.Long
                         || paramDef.ParameterType == ParameterType.Range)
                     {
@@ -212,7 +221,7 @@
                         json[paramDef.Name] = JsonValue.Create<string>(commandParam.value);
                     }
                 });
-                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, json, CancellationToken.None);
+                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, jsonRoot, CancellationToken.None);
             }
             else
             {

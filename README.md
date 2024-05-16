@@ -36,6 +36,7 @@ We have implemented all devices according to the published API specifications, b
 | [Remote](https://switch-bot.com/products/switchbot-remote)                                       |   -    |    -    |    -    |      -       |
 | [Motion Sensor](https://www.switch-bot.com/products/motion-sensor)                               |   ✅    |    ✅    |    -    |      ✅       |
 | [Contact Sensor](https://www.switch-bot.com/products/contact-sensor)                             |   ✅    |    ✅    |    -    |              |
+| [Water Leak Detector](https://us.switch-bot.com/pages/switchbot-water-leak-detector)                             |   ✅    |    ✅    |    -    |              |
 | [Ceiling Light](https://www.switchbot.jp/collections/all/products/switchbot-ceiling-light)       |   ✅    |    ✅    |    ✅    |              |
 | [Ceiling Light Pro](https://www.switchbot.jp/collections/all/products/switchbot-ceiling-light)   |   ✅    |    ✅    |    ✅    |              |
 | [Plug Mini (US)](https://switch-bot.com/pages/switchbot-plug-mini)                               |   ✅    |    ✅    |    ✅    |              |
@@ -45,6 +46,7 @@ We have implemented all devices according to the published API specifications, b
 | [Color Bulb](https://www.switch-bot.com/products/switchbot-color-bulb)                           |   ✅    |    ✅    |    ✅    |      ✅       |
 | [Robot Vacuum Cleaner S1](https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner)      |   ✅    |    ✅    |    ✅    |              |
 | [Robot Vacuum Cleaner S1 Plus](https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner) |   ✅    |    ✅    |    ✅    |              |
+| [Floor Cleaning Robot S10](https://us.switch-bot.com/products/switchbot-floor-cleaning-robot-s10) |   ✅    |    ✅    |    ✅    |              |
 | [Humidifier](https://www.switch-bot.com/products/switchbot-smart-humidifier)                     |   ✅    |    -    |    ✅    |              |
 | [Indoor Cam](https://switch-bot.com/pages/switchbot-indoor-cam)                                  |   -    |    ✅    |    -    |              |
 | [Pan/Tilt Cam](https://switch-bot.com/pages/switchbot-pan-tilt-cam-2k)                           |   -    |    ✅    |    -    |              |

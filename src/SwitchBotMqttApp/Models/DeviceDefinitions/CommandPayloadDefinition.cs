@@ -9,6 +9,7 @@ public class CommandPayloadDefinition
     public CommandType CommandType { get; set; } = default!;
     public string Command { get; set; } = default!;
     public string Name { get; set; } = default!;
+    public string? Path { get; set; } = default!;
     public int Index { get; set; } = default!;
 
     public string Description { get; set; } = default!;

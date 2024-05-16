@@ -15,6 +15,7 @@ KeypadTouch,Keypad Touch,,WoKeypadTouch,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad To
 Remote,Remote,,,PhysicalDevice,FALSE,FALSE,FALSE,,Remote,
 MotionSensor,Motion Sensor,,WoPresence,PhysicalDevice,TRUE,TRUE,FALSE,,Motion Sensor,人感センサー
 ContactSensor,Contact Sensor,,WoContact,PhysicalDevice,TRUE,TRUE,FALSE,,Contact Sensor,開閉センサー
+WaterDetector,Water Detector,,Water Detector,PhysicalDevice,TRUE,TRUE,FALSE,,Water Leak Detector,水漏れセンサー
 CeilingLight,Ceiling Light,,WoCeiling,PhysicalDevice,TRUE,TRUE,TRUE,,Ceiling Light,シーリングライト
 CeilingLightPro,Ceiling Light Pro,,WoCeilingPro,PhysicalDevice,TRUE,TRUE,TRUE,,Ceiling Light Pro,シーリングライトプロ
 PlugMiniUs,Plug Mini (US),,WoPlugUS,PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (US),プラグミニ(US)
@@ -24,6 +25,7 @@ StripLight,Strip Light,,WoStrip,PhysicalDevice,TRUE,TRUE,TRUE,,Strip Light,テ�
 ColorBulb,Color Bulb,,WoBulb,PhysicalDevice,TRUE,TRUE,TRUE,,Color Bulb,スマートバルブ
 RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1,ロボット掃除機 S1
 RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
+RobotVacuumCleanerS10,Robot Vacuum Cleaner S10,,Robot Vacuum Cleaner S10,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S10,ロボット掃除機 S10
 Humidifier,Humidifier,,,PhysicalDevice,TRUE,FALSE,TRUE,,Humidifier,加湿器
 IndoorCam,Indoor Cam,,WoCamera,PhysicalDevice,FALSE,TRUE,FALSE,,Indoor Cam,屋内カメラ
 PanTiltCam,Pan/Tilt Cam,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam,見守りカメラ/見守りカメラ3MP

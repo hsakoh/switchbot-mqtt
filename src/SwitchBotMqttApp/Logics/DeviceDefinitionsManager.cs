@@ -137,22 +137,23 @@ public class DeviceDefinitionsManager
             Map(m => m.CommandType).Index(1).TypeConverter<EnumConverter<CommandType>>();
             Map(m => m.Command).Index(2);
             Map(m => m.Name).Index(3);
-            Map(m => m.Index).Index(4);
-            Map(m => m.Description).Index(5);
-            Map(m => m.ParameterType).Index(6).TypeConverter<EnumConverter<ParameterType>>();
-            Map(m => m.Icon).Index(7);
-            Map(m => m.Options).Index(8);
-            Map(m => m.OptionsDescription).Index(9);
-            Map(m => m.RangeMin).Index(10);
-            Map(m => m.RangeMax).Index(11);
-            Map(m => m.NumberDeviceClass).Index(12).TypeConverter<EnumConverter<NumberDeviceClass>>();
-            Map(m => m.NumberMode).Index(13).TypeConverter<EnumConverter<NumberMode>>();
-            Map(m => m.UnitOfMeasurement).Index(14);
-            Map(m => m.LengthMin).Index(15);
-            Map(m => m.LengthMax).Index(16);
-            Map(m => m.DefaultValue).Index(17);
-            Map(m => m.DisplayName).Index(18);
-            Map(m => m.DisplayNameJa).Index(19);
+            Map(m => m.Path).Index(4);
+            Map(m => m.Index).Index(5);
+            Map(m => m.Description).Index(6);
+            Map(m => m.ParameterType).Index(7).TypeConverter<EnumConverter<ParameterType>>();
+            Map(m => m.Icon).Index(8);
+            Map(m => m.Options).Index(9);
+            Map(m => m.OptionsDescription).Index(10);
+            Map(m => m.RangeMin).Index(11);
+            Map(m => m.RangeMax).Index(12);
+            Map(m => m.NumberDeviceClass).Index(13).TypeConverter<EnumConverter<NumberDeviceClass>>();
+            Map(m => m.NumberMode).Index(14).TypeConverter<EnumConverter<NumberMode>>();
+            Map(m => m.UnitOfMeasurement).Index(15);
+            Map(m => m.LengthMin).Index(16);
+            Map(m => m.LengthMax).Index(17);
+            Map(m => m.DefaultValue).Index(18);
+            Map(m => m.DisplayName).Index(19);
+            Map(m => m.DisplayNameJa).Index(20);
         }
     }
 

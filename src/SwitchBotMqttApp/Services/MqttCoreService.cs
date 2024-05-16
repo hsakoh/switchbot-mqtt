@@ -331,9 +331,18 @@ public class MqttCoreService : ManagedServiceBase
 
             if (commandDef.PayloadType == PayloadType.Json)
             {
-                var json = JsonNode.Parse("{}")!;
+                var jsonRoot = JsonNode.Parse("{}")!;
                 paramDefs.ForEach(paramDef =>
                 {
+                    var json = jsonRoot;
+                    if (!string.IsNullOrEmpty(paramDef.Path))
+                    {
+                        if (jsonRoot[paramDef.Path] == null)
+                        {
+                            jsonRoot[paramDef.Path] = JsonNode.Parse("{}")!;
+                        }
+                        json = jsonRoot[paramDef.Path]!;
+                    }
                     if (paramDef.ParameterType == ParameterType.Long
                         || paramDef.ParameterType == ParameterType.Range)
                     {
@@ -363,7 +372,7 @@ public class MqttCoreService : ManagedServiceBase
                         json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
                     }
                 });
-                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, json, CancellationToken.None);
+                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
             }
             else
             {
