@@ -10,6 +10,7 @@ Meter,Meter,,WoMeter,PhysicalDevice,TRUE,TRUE,FALSE,,Meter,温湿度計
 MeterPlus,MeterPlus,,WoMeterPlus,PhysicalDevice,TRUE,TRUE,FALSE,,MeterPlus,温湿度計プラス
 OutdoorMeter,WoIOSensor,,WoIOSensor,PhysicalDevice,TRUE,TRUE,FALSE,,WoIOSensor,防水温湿度計
 Lock,Smart Lock,,WoLock,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock,ロック
+LockPro,Smart Lock Pro,,WoLockPro,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock,ロック Pro
 Keypad,Keypad,,WoKeypad,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad,キーパッド
 KeypadTouch,Keypad Touch,,WoKeypadTouch,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad Touch,指紋認証パッド
 Remote,Remote,,,PhysicalDevice,FALSE,FALSE,FALSE,,Remote,

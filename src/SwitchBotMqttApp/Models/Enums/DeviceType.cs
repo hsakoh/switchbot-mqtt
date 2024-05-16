@@ -18,6 +18,7 @@ public enum DeviceType
     MeterPlus,
     OutdoorMeter,
     Lock,
+    LockPro,
     Keypad,
     KeypadTouch,
     Remote,
