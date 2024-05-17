@@ -72,6 +72,7 @@ public class Program
             {
                 Proxy = new WebProxy("localhost", 8888)
             });
+        //builder.Services.AddHttpClient(nameof(SwitchBotApiClient));
 #else
         builder.Services.AddHttpClient(nameof(SwitchBotApiClient));
 #endif

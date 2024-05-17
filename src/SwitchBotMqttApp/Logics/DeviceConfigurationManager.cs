@@ -83,14 +83,26 @@ public class DeviceConfigurationManager
                 }
             }
 
-            List<PhysicalDevice> physicalDevices = response.DeviceList.Select(d => new PhysicalDevice()
+            List<PhysicalDevice> physicalDevices = new();
+            foreach(var d in response.DeviceList)
             {
-                DeviceId = d.DeviceId,
-                DeviceName = d.DeviceName,
-                DeviceType = _deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.ApiDeviceTypeString == d.DeviceType).DeviceType,
-                Description = string.Empty,
-                RawValue = responseRaw.DeviceList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
-            }).ToList();
+                var deviceType = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.DeviceType)?.DeviceType;
+                if(deviceType == null)
+                {
+                    _logger.LogWarning("{Method} unknown device type. {MacAddress},{DeviceType},{DeviceName}", nameof(LoadDevicesAsync), d.DeviceId, d.DeviceType, d.DeviceName);
+                }
+                else
+                {
+                    physicalDevices.Add(new PhysicalDevice()
+                    {
+                        DeviceId = d.DeviceId,
+                        DeviceName = d.DeviceName,
+                        DeviceType = deviceType!.Value,
+                        Description = string.Empty,
+                        RawValue = responseRaw.DeviceList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
+                    });
+                }
+            }
             physicalDevices.ForEach(d =>
             {
                 d.RawValue?.Remove("deviceId");
