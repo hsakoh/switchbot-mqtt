@@ -37,7 +37,7 @@ RobotVacuumCleanerS10,Command,startClean,fanLevel,param,2,"the vacuum level, 1-4
 RobotVacuumCleanerS10,Command,startClean,waterLevel,param,3,"the mop moisture level, 1-2.",Range,mdi:water,,,1,2,,,,,,1,,
 RobotVacuumCleanerS10,Command,startClean,times,param,4,"the number of cycles, 1-2639999, in theory.",Range,mdi:counter,,,1,2639999,,,,,,1,,
 RobotVacuumCleanerS10,Command,setVolume,volume,,1,"set volume, 1-100",Range,mdi:volume-high,,,1,100,,,,,,100,,
-RobotVacuumCleanerS10,Command,selfClean,mode,,1,"mode",Select,mdi:cogs,0|1|2,wash the mop|dry itself|terminate,,,,,,,,0,,
+RobotVacuumCleanerS10,Command,selfClean,mode,,1,"mode",Select,mdi:cogs,1|2|3,wash the mop|dry itself|terminate,,,,,,,,0,,
 RobotVacuumCleanerS10,Command,changeParam,fanLevel,,1,"the vacuum level, 1-4.",Range,mdi:cogs,,,1,4,,slider,,,,1,,
 RobotVacuumCleanerS10,Command,changeParam,waterLevel,,2,"the mop moisture level, 1-2.",Range,mdi:water,,,1,2,,,,,,1,,
 RobotVacuumCleanerS10,Command,changeParam,times,,3,"the number of cycles, 1-2639999, in theory.",Range,mdi:counter,,,1,2639999,,,,,,1,,
