@@ -454,7 +454,7 @@ public class MqttCoreService : ManagedServiceBase
                 if (kv.Key == "deviceType") //modify device name
                 {
                     both[fieldDef.FieldName] = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
-                        ?? _deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString.ToString();
+                        ?? _deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
                 }
                 else
                 {
