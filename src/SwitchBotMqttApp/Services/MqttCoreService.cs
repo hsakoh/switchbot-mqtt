@@ -461,8 +461,25 @@ public class MqttCoreService : ManagedServiceBase
                     both[fieldDef.FieldName] = kv.Value!.Copy();
                 }
             }
-            if(fieldDef.DeviceType == DeviceType.Lock
-                && fieldDef.FieldName == "lockState")
+            if (
+                (
+                    (fieldDef.DeviceType == DeviceType.Lock
+                    || fieldDef.DeviceType == DeviceType.LockPro)
+                    && fieldDef.FieldName == "lockState")
+                ||
+                (
+                    (fieldDef.DeviceType == DeviceType.PlugMiniJp
+                    || fieldDef.DeviceType == DeviceType.PlugMiniUs)
+                    && fieldDef.FieldName == "powerState")
+                ||
+                (
+                    (fieldDef.DeviceType == DeviceType.CeilingLight
+                    || fieldDef.DeviceType == DeviceType.CeilingLightPro
+                    || fieldDef.DeviceType == DeviceType.StripLight
+                    || fieldDef.DeviceType == DeviceType.ColorBulb
+                    || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan)
+                    && fieldDef.FieldName == "power")
+              )
             {
                 both[fieldDef.FieldName] = both[fieldDef.FieldName]!.GetValue<string>().ToLower();
             }
