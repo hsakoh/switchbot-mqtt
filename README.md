@@ -13,6 +13,7 @@ You can perform manual scene executions that were configured in the SwitchBot ap
 
 ![aarch64-shield](https://img.shields.io/badge/aarch64-yes-green.svg)
 ![amd64-shield](https://img.shields.io/badge/amd64-yes-green.svg)
+![armv7-shield](https://img.shields.io/badge/armv7-yes-green.svg)
 
 ### Physical Devices
 
