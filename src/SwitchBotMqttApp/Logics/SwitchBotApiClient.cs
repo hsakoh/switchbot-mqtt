@@ -52,13 +52,13 @@ public class SwitchBotApiClient
     {
         using var requestMessage = CreateSwitchBotRequest(HttpMethod.Post, "webhook/queryWebhook");
 
-        requestMessage.Content = new StringContent(JsonSerializer.Serialize(
+        var json = JsonSerializer.Serialize(
             new
             {
                 action = "queryUrl"
-            }), Encoding.UTF8, "application/json");
-
-        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhooksResponse>(requestMessage, cancellationToken, new int[] { StatusCode.SystemError });
+            });
+        requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhooksResponse>(requestMessage, cancellationToken, new int[] { StatusCode.SystemError }, bodyForLogging: json);
         body.Urls ??= Array.Empty<string>();
         return body;
     }
@@ -67,15 +67,15 @@ public class SwitchBotApiClient
     {
         using var requestMessage = CreateSwitchBotRequest(HttpMethod.Post, "webhook/queryWebhook");
 
-        requestMessage.Content = new StringContent(JsonSerializer.Serialize(
+        var json = JsonSerializer.Serialize(
             new
             {
                 action = "queryDetails"
                 ,
                 urls = webhookUrls
-            }), Encoding.UTF8, "application/json");
-
-        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhookDetail[]>(requestMessage, cancellationToken, new int[] { StatusCode.SystemError });
+            });
+        requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhookDetail[]>(requestMessage, cancellationToken, new int[] { StatusCode.SystemError }, bodyForLogging: json);
         return body ?? Array.Empty<QueryWebhookDetail>();
     }
 
@@ -83,7 +83,7 @@ public class SwitchBotApiClient
     {
         using var requestMessage = CreateSwitchBotRequest(HttpMethod.Post, "webhook/updateWebhook");
 
-        requestMessage.Content = new StringContent(JsonSerializer.Serialize(
+        var json = JsonSerializer.Serialize(
             new
             {
                 action = "updateWebhook",
@@ -92,41 +92,43 @@ public class SwitchBotApiClient
                     url = webhookUrl,
                     enable,
                 }
-            }), Encoding.UTF8, "application/json");
-
-        _ = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken);
+            });
+        requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        _ = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken, bodyForLogging: json);
     }
 
     public async Task ConfigureWebhook(string webhookUrl, CancellationToken cancellationToken)
     {
         using var requestMessage = CreateSwitchBotRequest(HttpMethod.Post, "webhook/setupWebhook");
 
-        requestMessage.Content = new StringContent(JsonSerializer.Serialize(
+        var json = JsonSerializer.Serialize(
             new
             {
                 action = "setupWebhook",
                 url = webhookUrl,
                 deviceList = "ALL",
-            }), Encoding.UTF8, "application/json");
-        _ = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken);
+            });
+        requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        _ = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken, bodyForLogging: json);
     }
 
     public async Task DeleteWebhookAsync(string webhookUrl, CancellationToken cancellationToken)
     {
         using var requestMessage = CreateSwitchBotRequest(HttpMethod.Post, "webhook/deleteWebhook");
 
-        requestMessage.Content = new StringContent(JsonSerializer.Serialize(
+        var json = JsonSerializer.Serialize(
             new
             {
                 action = "deleteWebhook",
                 url = webhookUrl,
-            }), Encoding.UTF8, "application/json");
-        _ = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken);
+            });
+        requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        _ = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken, bodyForLogging: json);
     }
 
-    private async Task<(TBody body, string raw)> SendAndEnsureSuccessAsync<TBody>(HttpRequestMessage requestMessage, CancellationToken cancellationToken, int[]? additionalStatus = null)
+    private async Task<(TBody body, string raw)> SendAndEnsureSuccessAsync<TBody>(HttpRequestMessage requestMessage, CancellationToken cancellationToken, int[]? additionalStatus = null, string? bodyForLogging = null)
     {
-        _logger.LogTrace("Send {Method},{Url}", requestMessage.Method, requestMessage.RequestUri);
+        _logger.LogTrace("Send {Method},{Url},{Body}", requestMessage.Method, requestMessage.RequestUri, bodyForLogging);
         ApiCallCount.AddOrUpdate(DateOnly.FromDateTime(DateTime.UtcNow), 1, (_, i) => { return i += 1; });
         using var responseMessage = await _switchBotHttpClient.SendAsync(requestMessage, cancellationToken);
         var responseString = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
@@ -180,14 +182,15 @@ public class SwitchBotApiClient
     {
         using var requestMessage = CreateSwitchBotRequest(HttpMethod.Post, $"devices/{device.DeviceId}/commands");
 
-        requestMessage.Content = new StringContent(JsonSerializer.Serialize(
+        var json = JsonSerializer.Serialize(
             new
             {
                 commandType = command.CommandType.ToEnumMemberValue(),
                 command = command.Command,
                 parameter = value,
-            }), Encoding.UTF8, "application/json");
-        var (_, raw) = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken);
+            });
+        requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+        var (_, raw) = await SendAndEnsureSuccessAsync<object>(requestMessage, cancellationToken, bodyForLogging: json);
         return raw;
     }
 
