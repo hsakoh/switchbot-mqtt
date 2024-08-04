@@ -296,6 +296,7 @@ public class MqttCoreService : ManagedServiceBase
     {
         try
         {
+            _logger.LogTrace("receive command {DeviceId},{Payload}", device.DeviceId, payloadRaw);
             var payload = JsonSerializer.Deserialize<MqttCommandPayload>(payloadRaw)!;
 
             var commandType = payload.CommandType.ToEnumFromEnumMember<CommandType>()!;
