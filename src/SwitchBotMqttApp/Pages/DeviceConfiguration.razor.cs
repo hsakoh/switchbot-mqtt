@@ -162,7 +162,7 @@ public class DeviceConfigurationModel
 
     public int EstimateApiCallPerDay => (int)Data.PhysicalDevices.Where(s => s.UsePolling == true).Sum(s => TimeSpan.FromDays(1) / s.PollingInterval);
 
-    private readonly Dictionary<DeviceBase, CustomCommand> addingCustomCommand = new();
+    private readonly Dictionary<DeviceBase, CustomCommand> addingCustomCommand = [];
     public Dictionary<DeviceBase, CustomCommand> AddingCustomCommand
     {
         get

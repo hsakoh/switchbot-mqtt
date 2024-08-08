@@ -8,6 +8,7 @@ using MQTTnet.Server;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.Security.Authentication;
 
 namespace HomeAssistantAddOn.Mqtt;
 public class MqttService : IDisposable
@@ -66,7 +67,9 @@ public class MqttService : IDisposable
                     }
                     if (serviceMqtt.Ssl)
                     {
-                        builder.WithTls();
+                        builder.WithTlsOptions(opt =>{
+                            opt.WithSslProtocols(SslProtocols.Tls12);
+                        });
                     }
                 }
                 else
@@ -80,7 +83,9 @@ public class MqttService : IDisposable
                     }
                     if (options.Tls)
                     {
-                        builder.WithTls();
+                        builder.WithTlsOptions(opt => {
+                            opt.WithSslProtocols(SslProtocols.Tls12);
+                        });
                     }
                 }
             })
@@ -106,7 +111,7 @@ public class MqttService : IDisposable
             , _ =>
             {
                 _mqttClient.SubscribeAsync(topic);
-                return new List<Func<string, Task>> { subscribeTask };
+                return [subscribeTask];
             }
             , (_, list) =>
             {

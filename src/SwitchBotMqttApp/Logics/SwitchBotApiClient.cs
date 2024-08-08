@@ -58,8 +58,8 @@ public class SwitchBotApiClient
                 action = "queryUrl"
             });
         requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
-        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhooksResponse>(requestMessage, cancellationToken, new int[] { StatusCode.SystemError }, bodyForLogging: json);
-        body.Urls ??= Array.Empty<string>();
+        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhooksResponse>(requestMessage, cancellationToken, [StatusCode.SystemError], bodyForLogging: json);
+        body.Urls ??= [];
         return body;
     }
 
@@ -75,8 +75,8 @@ public class SwitchBotApiClient
                 urls = webhookUrls
             });
         requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
-        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhookDetail[]>(requestMessage, cancellationToken, new int[] { StatusCode.SystemError }, bodyForLogging: json);
-        return body ?? Array.Empty<QueryWebhookDetail>();
+        var (body, _) = await SendAndEnsureSuccessAsync<QueryWebhookDetail[]>(requestMessage, cancellationToken, [StatusCode.SystemError], bodyForLogging: json);
+        return body ?? [];
     }
 
     public async Task UpdateWebhookAsync(string webhookUrl, bool enable, CancellationToken cancellationToken)

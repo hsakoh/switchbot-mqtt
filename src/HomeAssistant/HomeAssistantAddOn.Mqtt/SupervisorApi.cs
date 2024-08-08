@@ -3,13 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace HomeAssistantAddOn.Mqtt;
 
-public class SupervisorApi
+public class SupervisorApi(IHttpClientFactory httpClientFactory)
 {
-    private readonly HttpClient _httpClient;
-    public SupervisorApi(IHttpClientFactory httpClientFactory)
-    {
-        _httpClient = httpClientFactory.CreateClient(nameof(SupervisorApi));
-    }
+    private readonly HttpClient _httpClient = httpClientFactory.CreateClient(nameof(SupervisorApi));
 
     public async Task<SupoervisorResponse<ServiceMqtt>?> GetServicesMqtt()
     {

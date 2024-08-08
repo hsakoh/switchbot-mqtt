@@ -5,7 +5,7 @@ namespace SwitchBotMqttApp.Models.DeviceConfiguration;
 public class DevicesConfig
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<PhysicalDevice> PhysicalDevices { get; set; } = new List<PhysicalDevice>();
+    public List<PhysicalDevice> PhysicalDevices { get; set; } = [];
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public List<VirtualInfraredRemoteDevice> VirtualInfraredRemoteDevices { get; set; } = new List<VirtualInfraredRemoteDevice>();
+    public List<VirtualInfraredRemoteDevice> VirtualInfraredRemoteDevices { get; set; } = [];
 }

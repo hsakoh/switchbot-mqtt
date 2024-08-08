@@ -3,11 +3,8 @@
 namespace SwitchBotMqttApp.Models.Mqtt;
 
 
-public class SceneConfig : MqttControlBase
-{
-    public SceneConfig(string sceneId, string commandTopic, string name)
-        : base(
-            topic: $"homeassistant/scene/{sceneId}/config"
+public class SceneConfig(string sceneId, string commandTopic, string name) : MqttControlBase(
+        topic: $"homeassistant/scene/{sceneId}/config"
             , defaultValue: null
             , commandTopic: commandTopic
             , commandTemplate: null
@@ -17,9 +14,7 @@ public class SceneConfig : MqttControlBase
             , device: null
             , deviceClass: null
             , icon: null)
-    {
-        PayloadOn = sceneId;
-    }
+{
     [JsonProperty("payload_on")]
-    public string PayloadOn { get; set; }
+    public string PayloadOn { get; set; } = sceneId;
 }
