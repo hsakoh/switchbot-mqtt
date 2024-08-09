@@ -2,17 +2,16 @@
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwitchBotMqttApp.Components.Pages.Modal;
 using SwitchBotMqttApp.Logics;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
 using SwitchBotMqttApp.Models.Enums;
-using SwitchBotMqttApp.Pages.Modal;
 using System.Text.Json;
 
-namespace SwitchBotMqttApp.Pages;
-
+namespace SwitchBotMqttApp.Components.Pages;
 public partial class DeviceConfiguration : ComponentBase
 {
-    [CascadingParameter] 
+    [CascadingParameter]
     public IModalService Modal { get; set; } = default!;
 
     [Inject]
@@ -116,7 +115,7 @@ public partial class DeviceConfiguration : ComponentBase
         });
     }
 
-    public void ExecuteDefaultCommand(DeviceBase device,CommandConfig command)
+    public void ExecuteDefaultCommand(DeviceBase device, CommandConfig command)
     {
         var parameters = new ModalParameters
         {
@@ -154,25 +153,7 @@ public partial class DeviceConfiguration : ComponentBase
 
 public class DeviceConfigurationModel
 {
-    private DevicesConfig data = default!;
-    public DevicesConfig Data
-    {
-        get
-        {
-            return data;
-        }
-        set
-        {
-            data = value;
-            value.VirtualInfraredRemoteDevices.ForEach(d =>
-            {
-                if (!addingCustomCommand.ContainsKey(d))
-                {
-                    addingCustomCommand.Add(d, new CustomCommand());
-                }
-            });
-        }
-    }
+    public DevicesConfig Data { get; set; } = default!;
 
     public bool Fetching { get; set; } = false;
 
@@ -184,6 +165,13 @@ public class DeviceConfigurationModel
 
     public CustomCommand GetAddingCustomCommand(DeviceBase device)
     {
+        Data.VirtualInfraredRemoteDevices.ForEach(d =>
+            {
+                if (!addingCustomCommand.ContainsKey(d))
+                {
+                    addingCustomCommand.Add(d, new CustomCommand());
+                }
+            });
         return addingCustomCommand[device];
     }
 
