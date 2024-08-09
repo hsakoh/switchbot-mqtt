@@ -478,12 +478,14 @@
                                     @CommandType.Customize
                                 </div>
                                 <div class="col-3">
-                                    <InputText @bind-Value="Model.AddingCustomCommand[device].CommandCustomize" placeholder="{user-defined button name}" size="30" />
+                                    <InputText @bind-Value="Model.GetAddingCustomCommand(device).CommandCustomize" name="@(device.DeviceId+".CommandCustomize")" placeholder="{user-defined button name}" size="30" />
                                 </div>
-                                <div class="col-4"><InputText @bind-Value="Model.AddingCustomCommand[device].DisplayNameCustomize" size="30" /></div>
+                                <div class="col-4">
+                                    <InputText @bind-Value="Model.GetAddingCustomCommand(device).DisplayNameCustomize" name="@(device.DeviceId+".DisplayNameCustomize")" size="30" />
+                                </div>
                                 <div class="col-1">@PayloadType.Default</div>
                                 <div class="col-2">
-                                    <button @onclick="()=>ExecuteDefaultCommand(device,new CommandConfig(){CommandType = CommandType.Customize,Command = Model.AddingCustomCommand[device].CommandCustomize})" class="btn btn-outline-warning btn-sm">
+                                    <button @onclick="()=>ExecuteDefaultCommand(device,new CommandConfig(){CommandType = CommandType.Customize,Command = Model.GetAddingCustomCommand(device).CommandCustomize})" class="btn btn-outline-warning btn-sm">
                                         <i class="oi oi-media-play">Test</i>
                                     </button>
                                 </div>
@@ -500,22 +502,24 @@
                                         @CommandType.Tag
                                     </div>
                                     <div class="col-3">
-                                        <InputSelect @bind-Value="Model.AddingCustomCommand[device].CommandTag" style="max-width:90%">
+                                        <InputSelect @bind-Value="Model.GetAddingCustomCommand(device).CommandTag" name="@(device.DeviceId+".CommandTag")" style="max-width:90%">
                                             <option value="">{text input(or keyset choice)}</option>
                                             @foreach (var keySet in DeviceDefinitionsManager.KeySetDefinitions.Where(k => k.DeviceType == device.DeviceType))
                                             {
                                                 <option value="@keySet.KeyTag">@keySet.KeyName (@keySet.KeyTag)</option>
                                             }
                                         </InputSelect>
-                                        @if (string.IsNullOrEmpty(Model.AddingCustomCommand[device].CommandTag))
+                                        @if (string.IsNullOrEmpty(Model.GetAddingCustomCommand(device).CommandTag))
                                         {
-                                            <InputText @bind-Value="Model.AddingCustomCommand[device].CommandTagTextInput" size="30" />
+                                            <InputText @bind-Value="Model.GetAddingCustomCommand(device).CommandTagTextInput" name="@(device.DeviceId+".CommandTagTextInput")" size="30" />
                                         }
                                     </div>
-                                    <div class="col-4"><InputText @bind-Value="Model.AddingCustomCommand[device].DisplayNameTag" size="30" /></div>
+                                    <div class="col-4">
+                                        <InputText @bind-Value="Model.GetAddingCustomCommand(device).DisplayNameTag" name="@(device.DeviceId+".DisplayNameTag")" size="30" />
+                                    </div>
                                     <div class="col-1">@PayloadType.Default</div>
                                     <div class="col-2">
-                                        <button @onclick="()=>ExecuteDefaultCommand(device,new CommandConfig(){CommandType = CommandType.Tag,Command = Model.AddingCustomCommand[device].CommandTag})" class="btn btn-outline-warning btn-sm">
+                                        <button @onclick="()=>ExecuteDefaultCommand(device,new CommandConfig(){CommandType = CommandType.Tag,Command = Model.GetAddingCustomCommand(device).CommandTag})" class="btn btn-outline-warning btn-sm">
                                             <i class="oi oi-media-play">Test</i>
                                         </button>
                                     </div>

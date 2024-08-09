@@ -98,8 +98,8 @@ public partial class DeviceConfiguration : ComponentBase
         device.Commands.Add(new CommandConfig()
         {
             CommandType = CommandType.Customize,
-            Command = Model.AddingCustomCommand[device].CommandCustomize,
-            DisplayName = Model.AddingCustomCommand[device].DisplayNameCustomize,
+            Command = Model.GetAddingCustomCommand(device).CommandCustomize,
+            DisplayName = Model.GetAddingCustomCommand(device).DisplayNameCustomize,
             Enable = true,
         });
     }
@@ -108,10 +108,10 @@ public partial class DeviceConfiguration : ComponentBase
         device.Commands.Add(new CommandConfig()
         {
             CommandType = CommandType.Tag,
-            Command = string.IsNullOrEmpty(Model.AddingCustomCommand[device].CommandTag)?
-                Model.AddingCustomCommand[device].CommandTagTextInput
-                : Model.AddingCustomCommand[device].CommandTag,
-            DisplayName = Model.AddingCustomCommand[device].DisplayNameTag,
+            Command = string.IsNullOrEmpty(Model.GetAddingCustomCommand(device).CommandTag) ?
+                Model.GetAddingCustomCommand(device).CommandTagTextInput
+                : Model.GetAddingCustomCommand(device).CommandTag,
+            DisplayName = Model.GetAddingCustomCommand(device).DisplayNameTag,
             Enable = true,
         });
     }
@@ -154,7 +154,25 @@ public partial class DeviceConfiguration : ComponentBase
 
 public class DeviceConfigurationModel
 {
-    public DevicesConfig Data { get; set; } = default!;
+    private DevicesConfig data = default!;
+    public DevicesConfig Data
+    {
+        get
+        {
+            return data;
+        }
+        set
+        {
+            data = value;
+            value.VirtualInfraredRemoteDevices.ForEach(d =>
+            {
+                if (!addingCustomCommand.ContainsKey(d))
+                {
+                    addingCustomCommand.Add(d, new CustomCommand());
+                }
+            });
+        }
+    }
 
     public bool Fetching { get; set; } = false;
 
@@ -163,19 +181,10 @@ public class DeviceConfigurationModel
     public int EstimateApiCallPerDay => (int)Data.PhysicalDevices.Where(s => s.UsePolling == true).Sum(s => TimeSpan.FromDays(1) / s.PollingInterval);
 
     private readonly Dictionary<DeviceBase, CustomCommand> addingCustomCommand = [];
-    public Dictionary<DeviceBase, CustomCommand> AddingCustomCommand
+
+    public CustomCommand GetAddingCustomCommand(DeviceBase device)
     {
-        get
-        {
-            Data.VirtualInfraredRemoteDevices.ForEach(d =>
-            {
-                if (!addingCustomCommand.ContainsKey(d))
-                {
-                    addingCustomCommand.Add(d, new CustomCommand());
-                }
-            });
-            return addingCustomCommand;
-        }
+        return addingCustomCommand[device];
     }
 
     public class CustomCommand
