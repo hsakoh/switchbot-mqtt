@@ -27,35 +27,35 @@
         <div class="row">
             <div class="col-2 border bg-primary-subtle">Command</div>
             <div class="col-10 border">
-            @if (CommandConf.CommandType == CommandType.Customize)
-            {
-                <InputText @bind-Value="CommandConf.Command" size="5" />
-            }
-            else if (CommandConf.CommandType == CommandType.Tag)
-            {
-                <div>
-                    <InputSelect @bind-Value="CommandConf.Command" style="max-width:100%">
-                            <option value="">{text input(or keyset choice)}</option>
-                        @foreach (var keySet in DeviceDefinitionsManager.KeySetDefinitions.Where(k => k.DeviceType == Device.DeviceType))
-                        {
-                            <option value="@keySet.KeyTag">@keySet.KeyName (@keySet.KeyTag)</option>
-                        }
-                    </InputSelect>
-                </div>
-                @if (string.IsNullOrEmpty(CommandConf.Command))
+                @if (CommandConf.CommandType == CommandType.Customize)
                 {
-                    <InputText @bind-Value="CommandTextInput" size="30" />
+                    <InputText @bind-Value="CommandConf.Command" size="5" />
                 }
-            }
-            else
-            {
-                @CommandConf.Command
-            }
+                else if (CommandConf.CommandType == CommandType.Tag)
+                {
+                    <div>
+                        <InputSelect @bind-Value="CommandConf.Command" style="max-width:100%">
+                            <option value="">{text input(or keyset choice)}</option>
+                            @foreach (var keySet in DeviceDefinitionsManager.KeySetDefinitions.Where(k => k.DeviceType == Device.DeviceType))
+                            {
+                                <option value="@keySet.KeyTag">@keySet.KeyName (@keySet.KeyTag)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    @if (string.IsNullOrEmpty(CommandConf.Command))
+                    {
+                        <InputText @bind-Value="CommandTextInput" size="30" />
+                    }
+                }
+                else
+                {
+                    @CommandConf.Command
+                }
             </div>
         </div>
         @if (CommandConf.CommandType == CommandType.Customize
-            || CommandConf.CommandType == CommandType.Tag
-            || CommandDef!.PayloadType == PayloadType.Default)
+        || CommandConf.CommandType == CommandType.Tag
+        || CommandDef!.PayloadType == PayloadType.Default)
         {
             <div class="row">
                 <div class="col-2 border bg-primary-subtle">Parameter</div>
@@ -166,11 +166,11 @@
                 if (CommandConf.CommandType == CommandType.Tag && string.IsNullOrEmpty(CommandConf.Command))
                 {
                     Response = await SwitchBotApiClient.SendDefaultDeviceControlCommandAsync(Device, new CommandConfig()
-                    {
-                        CommandType = CommandType.Tag,
-                        Command = CommandTextInput,
-                        
-                    }, CancellationToken.None);
+                        {
+                            CommandType = CommandType.Tag,
+                            Command = CommandTextInput,
+
+                        }, CancellationToken.None);
                 }
                 else
                 {
@@ -200,7 +200,7 @@
                         || paramDef.ParameterType == ParameterType.Range)
                     {
                         if (long.TryParse(commandParam.value, out var longValue)
-                            && longValue != paramDef.RangeMin -1)
+                            && longValue != paramDef.RangeMin - 1)
                         {
                             json[paramDef.Name] = JsonValue.Create<long>(longValue);
                         }

@@ -3,13 +3,10 @@ using SwitchBotMqttApp.Models.HomeAssistant;
 
 namespace SwitchBotMqttApp.Models.Mqtt;
 
-public class TextConfig : MqttControlBase
-{
-    public TextConfig(
-        DeviceMqtt device, string objectId, string? defaultValue, string commandTopic, string commandTemplate, string name
-        , int? min, int? max, TextMode textMode)
-    : base(
-            topic: $"homeassistant/text/{objectId}/config"
+public class TextConfig(
+    DeviceMqtt device, string objectId, string? defaultValue, string commandTopic, string commandTemplate, string name
+        , int? min, int? max, TextMode textMode) : MqttControlBase(
+        topic: $"homeassistant/text/{objectId}/config"
             , defaultValue: defaultValue == null ? null : $"\"{defaultValue}\""
             , commandTopic: commandTopic
             , commandTemplate: commandTemplate
@@ -19,18 +16,13 @@ public class TextConfig : MqttControlBase
             , device: device
             , deviceClass: null
             , icon: null)
-    {
-        Min = min;
-        Max = max;
-        Mode = textMode.ToEnumMemberValue()!;
-    }
-
+{
     [JsonProperty("min")]
-    public int? Min { get; set; }
+    public int? Min { get; set; } = min;
 
     [JsonProperty("max")]
-    public int? Max { get; set; }
+    public int? Max { get; set; } = max;
 
     [JsonProperty("mode")]
-    public string Mode { get; set; }
+    public string Mode { get; set; } = textMode.ToEnumMemberValue()!;
 }

@@ -1,12 +1,11 @@
 using Blazored.Modal;
 using FluffySpoon.Ngrok;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.HttpOverrides;
+using SwitchBotMqttApp.Components;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Logics;
 using SwitchBotMqttApp.Services;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using static HomeAssistantAddOn.Mqtt.SupervisorApi;
 
@@ -37,9 +36,12 @@ public class Program
                 options.SingleLine = true;
                 options.TimestampFormat = "HH:mm:ss ";
             });
-        builder.Services.AddRazorPages();
-        builder.Services.AddServerSideBlazor();
+        // Add services to the container.
+        builder.Services.AddControllers();
+        builder.Services.AddRazorComponents()
+            .AddInteractiveServerComponents();
         builder.Services.AddBlazoredModal();
+
         builder.Services.AddOptions<CommonOptions>().
             Configure<IConfiguration>((settings, configuration) =>
             {
@@ -116,19 +118,18 @@ public class Program
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
-        //app.UseHttpsRedirection();
 
         app.UseStaticFiles();
 
         app.UseRouting();
 
         app.MapControllers();
-        app.MapBlazorHub();
-        app.MapFallbackToPage("/_Host");
+        app.MapRazorComponents<App>()
+            .AddInteractiveServerRenderMode();
+
+        app.UseAntiforgery();
 
         app.Run();
     }

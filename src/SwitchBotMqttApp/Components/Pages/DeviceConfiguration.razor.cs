@@ -2,17 +2,16 @@
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using SwitchBotMqttApp.Components.Pages.Modal;
 using SwitchBotMqttApp.Logics;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
 using SwitchBotMqttApp.Models.Enums;
-using SwitchBotMqttApp.Pages.Modal;
 using System.Text.Json;
 
-namespace SwitchBotMqttApp.Pages;
-
+namespace SwitchBotMqttApp.Components.Pages;
 public partial class DeviceConfiguration : ComponentBase
 {
-    [CascadingParameter] 
+    [CascadingParameter]
     public IModalService Modal { get; set; } = default!;
 
     [Inject]
@@ -98,8 +97,8 @@ public partial class DeviceConfiguration : ComponentBase
         device.Commands.Add(new CommandConfig()
         {
             CommandType = CommandType.Customize,
-            Command = Model.AddingCustomCommand[device].CommandCustomize,
-            DisplayName = Model.AddingCustomCommand[device].DisplayNameCustomize,
+            Command = Model.GetAddingCustomCommand(device).CommandCustomize,
+            DisplayName = Model.GetAddingCustomCommand(device).DisplayNameCustomize,
             Enable = true,
         });
     }
@@ -108,15 +107,15 @@ public partial class DeviceConfiguration : ComponentBase
         device.Commands.Add(new CommandConfig()
         {
             CommandType = CommandType.Tag,
-            Command = string.IsNullOrEmpty(Model.AddingCustomCommand[device].CommandTag)?
-                Model.AddingCustomCommand[device].CommandTagTextInput
-                : Model.AddingCustomCommand[device].CommandTag,
-            DisplayName = Model.AddingCustomCommand[device].DisplayNameTag,
+            Command = string.IsNullOrEmpty(Model.GetAddingCustomCommand(device).CommandTag) ?
+                Model.GetAddingCustomCommand(device).CommandTagTextInput
+                : Model.GetAddingCustomCommand(device).CommandTag,
+            DisplayName = Model.GetAddingCustomCommand(device).DisplayNameTag,
             Enable = true,
         });
     }
 
-    public void ExecuteDefaultCommand(DeviceBase device,CommandConfig command)
+    public void ExecuteDefaultCommand(DeviceBase device, CommandConfig command)
     {
         var parameters = new ModalParameters
         {
@@ -162,20 +161,18 @@ public class DeviceConfigurationModel
 
     public int EstimateApiCallPerDay => (int)Data.PhysicalDevices.Where(s => s.UsePolling == true).Sum(s => TimeSpan.FromDays(1) / s.PollingInterval);
 
-    private readonly Dictionary<DeviceBase, CustomCommand> addingCustomCommand = new();
-    public Dictionary<DeviceBase, CustomCommand> AddingCustomCommand
+    private readonly Dictionary<DeviceBase, CustomCommand> addingCustomCommand = [];
+
+    public CustomCommand GetAddingCustomCommand(DeviceBase device)
     {
-        get
-        {
-            Data.VirtualInfraredRemoteDevices.ForEach(d =>
+        Data.VirtualInfraredRemoteDevices.ForEach(d =>
             {
                 if (!addingCustomCommand.ContainsKey(d))
                 {
                     addingCustomCommand.Add(d, new CustomCommand());
                 }
             });
-            return addingCustomCommand;
-        }
+        return addingCustomCommand[device];
     }
 
     public class CustomCommand

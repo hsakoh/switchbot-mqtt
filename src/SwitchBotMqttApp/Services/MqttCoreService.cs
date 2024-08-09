@@ -11,28 +11,13 @@ using System.Text.Json.Nodes;
 
 namespace SwitchBotMqttApp.Services;
 
-public class MqttCoreService : ManagedServiceBase
-{
-    private readonly ILogger<MqttCoreService> _logger;
-    private readonly DeviceConfigurationManager _deviceConfigurationManager;
-    private readonly DeviceDefinitionsManager _deviceDefinitionsManager;
-    private readonly MqttService _mqttService;
-    private readonly SwitchBotApiClient _switchBotApiClient;
-
-    public MqttCoreService(
-        ILogger<MqttCoreService> logger
+public class MqttCoreService(
+    ILogger<MqttCoreService> logger
         , DeviceConfigurationManager deviceConfigurationManager
         , DeviceDefinitionsManager deviceDefinitionsManager
         , MqttService mqttService
-        , SwitchBotApiClient switchBotApiClient)
-    {
-        _logger = logger;
-        _deviceConfigurationManager = deviceConfigurationManager;
-        _deviceDefinitionsManager = deviceDefinitionsManager;
-        _mqttService = mqttService;
-        _switchBotApiClient = switchBotApiClient;
-    }
-
+        , SwitchBotApiClient switchBotApiClient) : ManagedServiceBase
+{
     public DevicesConfig CurrentDevicesConfig { get; set; } = default!;
 
     public override async Task StartAsync(CancellationToken cancellationToken = default)
@@ -40,17 +25,17 @@ public class MqttCoreService : ManagedServiceBase
         try
         {
             Status = ServiceStatus.Starting;
-            CurrentDevicesConfig = await _deviceConfigurationManager.GetFileAsync(cancellationToken);
+            CurrentDevicesConfig = await deviceConfigurationManager.GetFileAsync(cancellationToken);
             CommandPayloadDictionary.Clear();
 
-            await _mqttService.StartAsync();
+            await mqttService.StartAsync();
 
             foreach (var deviceConf in CurrentDevicesConfig.PhysicalDevices.Where(d => d.Enable).Select(d => (DeviceBase)d)
                                             .Union(CurrentDevicesConfig.VirtualInfraredRemoteDevices.Where(d => d.Enable)))
             {
-                var deviceDef = _deviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == deviceConf.DeviceType);
+                var deviceDef = deviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == deviceConf.DeviceType);
                 var deviceMqtt = new DeviceMqtt(
-                    identifiers: new[] { deviceConf.DeviceId },
+                    identifiers: [deviceConf.DeviceId],
                     name: deviceConf.DeviceName,
                     manufacturer: $"SwitchBot{(deviceConf is VirtualInfraredRemoteDevice ? "(VirtualInfraredRemoteDevice)" : "")}",
                     model: deviceDef.ApiDeviceTypeString);
@@ -67,27 +52,27 @@ public class MqttCoreService : ManagedServiceBase
 
             await PublishSceneEntities(cancellationToken);
 
-            _logger.LogInformation("started");
+            logger.LogInformation("started");
             Status = ServiceStatus.Started;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
+            logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
             Status = ServiceStatus.Failed;
         }
     }
 
     public override async Task StopAsync(CancellationToken cancellationToken = default)
     {
-        await _mqttService.StopAsync();
-        _logger.LogInformation("stopped");
+        await mqttService.StopAsync();
+        logger.LogInformation("stopped");
         Status = ServiceStatus.Stoped;
         CommandPayloadDictionary.Clear();
     }
 
     private async Task PublishFieldEntities(DeviceDefinition deviceDef, DeviceMqtt deviceMqtt, PhysicalDevice physicalDevice, CancellationToken cancellationToken)
     {
-        var fieldDefs = _deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+        var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
         var statusEntities = physicalDevice.Fields.Where(s => s.Enable)
             .Select(s =>
             {
@@ -164,7 +149,7 @@ public class MqttCoreService : ManagedServiceBase
 
         //subscribe update action
         await PublishEntityAsync(MqttEntityHelper.CreateSensorUpdateButtonEntity(deviceMqtt, physicalDevice), true);
-        _mqttService.Subscribe(MqttEntityHelper.GetSensorUpdateTopic(physicalDevice.DeviceId), async (payload) => await PollingAndPublishStatusAsync(physicalDevice, CancellationToken.None));
+        mqttService.Subscribe(MqttEntityHelper.GetSensorUpdateTopic(physicalDevice.DeviceId), async (payload) => await PollingAndPublishStatusAsync(physicalDevice, CancellationToken.None));
 
 
         //publish inital status
@@ -175,16 +160,16 @@ public class MqttCoreService : ManagedServiceBase
 
     private async Task PublishEntityAsync(MqttEntityBase payload, bool retain)
     {
-        await _mqttService.PublishAsync(payload.Topic, payload, retain);
+        await mqttService.PublishAsync(payload.Topic, payload, retain);
     }
 
     private async Task PublishCommandEntities(DeviceMqtt deviceMqtt, DeviceBase deviceConf)
     {
-        List<ButtonConfig> buttonEntities = new();
-        List<DeviceMqtt> commandDeviceEntities = new();
-        List<NumberConfig> numberEntities = new();
-        List<SelectConfig> selectEntities = new();
-        List<TextConfig> textEntities = new();
+        List<ButtonConfig> buttonEntities = [];
+        List<DeviceMqtt> commandDeviceEntities = [];
+        List<NumberConfig> numberEntities = [];
+        List<SelectConfig> selectEntities = [];
+        List<TextConfig> textEntities = [];
         int commandIndex = 0;
         foreach (var command in deviceConf.Commands.Where(c => c.Enable))
         {
@@ -193,7 +178,7 @@ public class MqttCoreService : ManagedServiceBase
             if (command.CommandType == CommandType.Command)
             {
                 //Difiend command
-                commandDef = _deviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                commandDef = deviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
             }
             else
             {
@@ -220,14 +205,14 @@ public class MqttCoreService : ManagedServiceBase
                 case PayloadType.JoinComma:
                 case PayloadType.JoinSemiColon:
                     var deviceMqttForCommand = new DeviceMqtt(
-                            identifiers: new[] { $"{deviceConf.DeviceId}{command.Command}" },
+                            identifiers: [$"{deviceConf.DeviceId}{command.Command}"],
                             name: $"{deviceConf.DeviceName}-{command.Command}",
                             manufacturer: deviceMqtt.Manufacturer,
                             model: deviceMqtt.Model);
                     commandDeviceEntities.Add(deviceMqttForCommand);
                     buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
 
-                    var paramDefs = _deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                    var paramDefs = deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
                     var payloadDict = CommandPayloadDictionary.GetOrAdd(deviceConf.DeviceId, new ConcurrentDictionary<string, object>());
                     foreach (var paramDef in paramDefs)
                     {
@@ -270,7 +255,7 @@ public class MqttCoreService : ManagedServiceBase
         }
 
         //subscribe command actions
-        _mqttService.Subscribe(MqttEntityHelper.GetCommandTopic(deviceConf.DeviceId), async (payload) => await ReceiveCommandAsync(payload, deviceConf));
+        mqttService.Subscribe(MqttEntityHelper.GetCommandTopic(deviceConf.DeviceId), async (payload) => await ReceiveCommandAsync(payload, deviceConf));
 
         foreach (var e in buttonEntities)
         {
@@ -296,17 +281,17 @@ public class MqttCoreService : ManagedServiceBase
     {
         try
         {
-            _logger.LogTrace("receive command {DeviceId},{Payload}", device.DeviceId, payloadRaw);
+            logger.LogTrace("receive command {DeviceId},{Payload}", device.DeviceId, payloadRaw);
             var payload = JsonSerializer.Deserialize<MqttCommandPayload>(payloadRaw)!;
 
             var commandType = payload.CommandType.ToEnumFromEnumMember<CommandType>()!;
 
             var commandConf = device.Commands.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
-            var commandDef = _deviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
+            var commandDef = deviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
 
             if (commandConf == null)
             {
-                _logger.LogWarning("unknown command {DeviceId},{Payload}", device.DeviceId, payloadRaw);
+                logger.LogWarning("unknown command {DeviceId},{Payload}", device.DeviceId, payloadRaw);
                 return;
             }
 
@@ -319,14 +304,14 @@ public class MqttCoreService : ManagedServiceBase
                 || commandConf.CommandType == CommandType.Tag
                 || commandDef!.PayloadType == PayloadType.Default)
             {
-                await _switchBotApiClient.SendDefaultDeviceControlCommandAsync(device, commandConf, CancellationToken.None);
+                await switchBotApiClient.SendDefaultDeviceControlCommandAsync(device, commandConf, CancellationToken.None);
                 return;
             }
-            var paramDefs = _deviceDefinitionsManager.CommandPayloadDefinitions.Where(p => p.DeviceType == device.DeviceType && p.CommandType == commandType && p.Command == payload.Command).OrderBy(p => p.Index).ToList();
+            var paramDefs = deviceDefinitionsManager.CommandPayloadDefinitions.Where(p => p.DeviceType == device.DeviceType && p.CommandType == commandType && p.Command == payload.Command).OrderBy(p => p.Index).ToList();
             var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
             if (commandDef.PayloadType == PayloadType.SingleValue)
             {
-                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
+                await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
                 return;
             }
 
@@ -373,7 +358,7 @@ public class MqttCoreService : ManagedServiceBase
                         json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
                     }
                 });
-                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
+                await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
             }
             else
             {
@@ -404,13 +389,13 @@ public class MqttCoreService : ManagedServiceBase
                         }
                         return payloadDict[p.Name];
                     }));
-                await _switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, parameters, CancellationToken.None);
+                await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, parameters, CancellationToken.None);
             }
 
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "subscribe action {DeviceId},{Payload}", device.DeviceId, payloadRaw);
+            logger.LogError(e, "subscribe action {DeviceId},{Payload}", device.DeviceId, payloadRaw);
         }
     }
     public async Task PublishWebhookAsync(JsonNode webhookContent)
@@ -419,30 +404,30 @@ public class MqttCoreService : ManagedServiceBase
         PhysicalDevice? physicalDevice = CurrentDevicesConfig.PhysicalDevices.FirstOrDefault(d => d.DeviceId == deviceMac);
         if (physicalDevice == null)
         {
-            _logger.LogWarning("unknown deviceMac {deviceMac}", deviceMac);
+            logger.LogWarning("unknown deviceMac {deviceMac}", deviceMac);
             return;
         }
         if (!physicalDevice.UseWebhook)
         {
-            _logger.LogInformation("disable webhook device {deviceId},{deviceName},{json}", physicalDevice.DeviceId, physicalDevice.DeviceId, webhookContent);
+            logger.LogInformation("disable webhook device {deviceId},{deviceName},{json}", physicalDevice.DeviceId, physicalDevice.DeviceId, webhookContent);
             return;
         }
         var webhook = JsonNode.Parse("{}")!;
         var both = JsonNode.Parse("{}")!;
-        var fieldDefs = _deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+        var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
         foreach (var kv in webhookContent.AsObject())
         {
             var fieldDef = fieldDefs.FirstOrDefault(f => f.WebhookKey == kv.Key);
             if (fieldDef == null)
             {
-                _logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                 continue;
             }
 
             var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
             if (!field.Enable)
             {
-                _logger.LogTrace("disable webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                logger.LogTrace("disable webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                 continue;
             }
 
@@ -454,8 +439,8 @@ public class MqttCoreService : ManagedServiceBase
             {
                 if (kv.Key == "deviceType") //modify device name
                 {
-                    both[fieldDef.FieldName] = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
-                        ?? _deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
+                    both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
+                        ?? deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
                 }
                 else
                 {
@@ -486,10 +471,10 @@ public class MqttCoreService : ManagedServiceBase
             }
         }
         webhook["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        await _mqttService.PublishAsync(MqttEntityHelper.GetWebhookTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
-        if (both.AsObject().Any())
+        await mqttService.PublishAsync(MqttEntityHelper.GetWebhookTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
+        if (both.AsObject().Count != 0)
         {
-            await _mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
+            await mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
         }
     }
 
@@ -497,24 +482,24 @@ public class MqttCoreService : ManagedServiceBase
     {
         try
         {
-            var rawStatus = await _switchBotApiClient.GetDeviceStatus(physicalDevice.DeviceId, cancellationToken);
+            var rawStatus = await switchBotApiClient.GetDeviceStatus(physicalDevice.DeviceId, cancellationToken);
             var status = JsonNode.Parse("{}")!;
             var both = JsonNode.Parse("{}")!;
 
-            var fieldDefs = _deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+            var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
             foreach (var kv in rawStatus.AsObject())
             {
                 var fieldDef = fieldDefs.FirstOrDefault(f => f.StatusKey == kv.Key);
                 if (fieldDef == null)
                 {
-                    _logger.LogWarning("unknown status paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    logger.LogWarning("unknown status paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
 
                 var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
                 if (!field.Enable)
                 {
-                    _logger.LogTrace("disable polling paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    logger.LogTrace("disable polling paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
                 if (fieldDef.FieldSourceType == FieldSourceType.Status)
@@ -527,35 +512,35 @@ public class MqttCoreService : ManagedServiceBase
                 }
             }
             status["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            await _mqttService.PublishAsync(MqttEntityHelper.GetSensorStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
-            if (both.AsObject().Any())
+            await mqttService.PublishAsync(MqttEntityHelper.GetSensorStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
+            if (both.AsObject().Count != 0)
             {
-                await _mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
+                await mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "polling {deviceType},{deviceId}", physicalDevice.DeviceType, physicalDevice.DeviceId);
+            logger.LogError(ex, "polling {deviceType},{deviceId}", physicalDevice.DeviceType, physicalDevice.DeviceId);
         }
     }
 
     private async Task PublishSceneEntities(CancellationToken cancellationToken)
     {
-        var sceneList = await _switchBotApiClient.GetSceneList(cancellationToken);
+        var sceneList = await switchBotApiClient.GetSceneList(cancellationToken);
         foreach (var scene in sceneList)
         {
             //subscribe update action
             await PublishEntityAsync(MqttEntityHelper.CreateSceneEntity(scene.SceneName, scene.SceneId), true);
         }
-        _mqttService.Subscribe(MqttEntityHelper.GetSceneCommandTopic(), async (payload) =>
+        mqttService.Subscribe(MqttEntityHelper.GetSceneCommandTopic(), async (payload) =>
         {
             try
             {
-                await _switchBotApiClient.ExecuteManualSceneAsync(payload, CancellationToken.None);
+                await switchBotApiClient.ExecuteManualSceneAsync(payload, CancellationToken.None);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "{payload}", payload);
+                logger.LogError(ex, "{payload}", payload);
             }
         }
         );

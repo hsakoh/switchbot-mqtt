@@ -30,8 +30,8 @@ This add-on is implemented as a Blazor Server App using .NET 6 and has been veri
 ```powershell
 docker build `
 "./_compile_self" `
--t ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.19 `
---build-arg BUILD_FROM="homeassistant/amd64-base:latest" `
+-t ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.20 `
+--build-arg BUILD_FROM="ghcr.io/home-assistant/amd64-base:latest" `
 --build-arg BUILD_ARCH="amd64" `
 --progress=plain `
 --label org.opencontainers.image.source=https://github.com/hsakoh/switchbot-mqtt

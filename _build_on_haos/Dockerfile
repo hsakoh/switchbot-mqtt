@@ -1,5 +1,5 @@
 ARG BUILD_FROM
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as builder
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine as builder
 
 WORKDIR /src
 COPY /src .
@@ -15,7 +15,7 @@ ENV BUILD_ARCH=$BUILD_ARCH
 # Install requirements for add-on
 RUN \
   apk add --no-cache \
-    bash ca-certificates-bundle libgcc libssl3 libstdc++ zlib aspnetcore6-runtime
+    bash ca-certificates-bundle libgcc libssl3 libstdc++ zlib aspnetcore8-runtime
 
 COPY --from=builder /app/$BUILD_ARCH /app
 WORKDIR /app

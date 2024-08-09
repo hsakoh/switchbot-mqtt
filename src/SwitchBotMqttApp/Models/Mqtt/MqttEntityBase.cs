@@ -2,35 +2,24 @@
 
 namespace SwitchBotMqttApp.Models.Mqtt;
 
-public class MqttEntityBase
+public class MqttEntityBase(string topic, string name, string uniqueId, string objectId, DeviceMqtt? device, string? deviceClass, string? icon)
 {
-    public MqttEntityBase(string topic, string name, string uniqueId, string objectId, DeviceMqtt? device, string? deviceClass, string? icon)
-    {
-        Topic = topic;
-        Name = name;
-        UniqueId = uniqueId;
-        ObjectId = objectId;
-        Device = device;
-        DeviceClass = deviceClass;
-        Icon = icon;
-    }
-
     [JsonIgnore]
-    public string Topic { get; set; }
+    public string Topic { get; set; } = topic;
 
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = name;
     [JsonProperty("unique_id")]
-    public string UniqueId { get; set; }
+    public string UniqueId { get; set; } = uniqueId;
     [JsonProperty("object_id")]
-    public string ObjectId { get; set; }
+    public string ObjectId { get; set; } = objectId;
     [JsonProperty("device")]
-    public DeviceMqtt? Device { get; set; }
+    public DeviceMqtt? Device { get; set; } = device;
 
     [JsonProperty("device_class")]
-    public string? DeviceClass { get; set; }
+    public string? DeviceClass { get; set; } = deviceClass;
 
     [JsonProperty("icon")]
-    public string? Icon { get; set; }
+    public string? Icon { get; set; } = icon;
 
 }

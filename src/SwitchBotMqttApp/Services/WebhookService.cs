@@ -66,7 +66,7 @@ public class WebhookService : ManagedServiceBase
 
             if (webhooks.Urls.Contains(webhookUrl))
             {
-                var details = await _switchBotApiClient.GetWebhookAsync(new string[] { webhookUrl }, cancellationToken);
+                var details = await _switchBotApiClient.GetWebhookAsync([webhookUrl], cancellationToken);
                 if (!details.First().Enable)
                 {
                     await _switchBotApiClient.UpdateWebhookAsync(webhookUrl, enable: true, cancellationToken);

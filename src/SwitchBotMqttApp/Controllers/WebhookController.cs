@@ -6,18 +6,9 @@ using System.Text.Json.Serialization;
 
 namespace SwitchBotMqttApp.Controllers;
 
-public class WebhookController : Controller
+public class WebhookController(ILogger<WebhookController> logger
+        , MqttCoreService mqttCoreService) : Controller
 {
-    private readonly ILogger<WebhookController> _logger;
-    private readonly MqttCoreService _mqttCoreService;
-
-    public WebhookController(ILogger<WebhookController> logger
-        , MqttCoreService mqttCoreService)
-    {
-        _logger = logger;
-        _mqttCoreService = mqttCoreService;
-    }
-
     [Route("/webhook")]
     [HttpPost]
     public async Task<IActionResult> WebhookAsync()
@@ -26,14 +17,14 @@ public class WebhookController : Controller
         var json = await sr.ReadToEndAsync();
         try
         {
-            _logger.LogInformation("{json}", json);
+            logger.LogInformation("{json}", json);
             var inputRaw = JsonSerializer.Deserialize<WebhookRaw>(json);
-            await _mqttCoreService.PublishWebhookAsync(inputRaw!.Context);
+            await mqttCoreService.PublishWebhookAsync(inputRaw!.Context);
             return Ok();
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "webhook action {Payload}", json);
+            logger.LogError(e, "webhook action {Payload}", json);
             return StatusCode(500);
         }
     }

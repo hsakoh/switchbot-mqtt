@@ -8,7 +8,11 @@ using System.Text.Json;
 
 namespace SwitchBotMqttApp.Logics;
 
-public class DeviceConfigurationManager
+public class DeviceConfigurationManager(
+    ILogger<DeviceConfigurationManager> logger
+        , DeviceDefinitionsManager deviceDefinitionsManager
+        , SwitchBotApiClient switchBotApiClient
+        , IOptions<EnforceDeviceTypeOptions> enforceDeviceTypeOptions)
 {
     private static readonly string DeviceConfigurationFilePath = Path.Combine(Utility.GetBaseDataDirectory(), "switchbot_config.json");
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
@@ -16,22 +20,6 @@ public class DeviceConfigurationManager
         WriteIndented = true,
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
     };
-    private readonly ILogger<DeviceConfigurationManager> _logger;
-    private readonly DeviceDefinitionsManager _deviceDefinitionsManager;
-    private readonly SwitchBotApiClient _switchBotApiClient;
-    private readonly IOptions<EnforceDeviceTypeOptions> _enforceDeviceTypeOptions;
-
-    public DeviceConfigurationManager(
-        ILogger<DeviceConfigurationManager> logger
-        , DeviceDefinitionsManager deviceDefinitionsManager
-        , SwitchBotApiClient switchBotApiClient
-        , IOptions<EnforceDeviceTypeOptions> enforceDeviceTypeOptions)
-    {
-        _logger = logger;
-        _deviceDefinitionsManager = deviceDefinitionsManager;
-        _switchBotApiClient = switchBotApiClient;
-        _enforceDeviceTypeOptions = enforceDeviceTypeOptions;
-    }
 
     #region File I/O
     public async Task<DevicesConfig> GetFileAsync(CancellationToken cancellationToken = default)
@@ -40,10 +28,10 @@ public class DeviceConfigurationManager
         {
             var json = await File.ReadAllTextAsync(DeviceConfigurationFilePath, cancellationToken);
             var data = JsonSerializer.Deserialize<DevicesConfig>(json, JsonSerializerOptions)!;
-            _logger.LogInformation("device configuration file found. {PhysicalDeviceCount},{VirtualInfraredRemoteDevicesCount}", data.PhysicalDevices.Count, data.VirtualInfraredRemoteDevices.Count);
+            logger.LogInformation("device configuration file found. {PhysicalDeviceCount},{VirtualInfraredRemoteDevicesCount}", data.PhysicalDevices.Count, data.VirtualInfraredRemoteDevices.Count);
             return data;
         }
-        _logger.LogInformation("device configuration file missing.");
+        logger.LogInformation("device configuration file missing.");
         return new DevicesConfig();
     }
 
@@ -56,11 +44,11 @@ public class DeviceConfigurationManager
         {
             var dest = Path.Combine(Path.GetDirectoryName(DeviceConfigurationFilePath)!, $"switchbot_config_{DateTimeOffset.UtcNow:yyyyMMddHHmmss}.json");
             File.Copy(DeviceConfigurationFilePath, dest);
-            _logger.LogInformation("old device configuration file renamed to {oldfilepath}", dest);
+            logger.LogInformation("old device configuration file renamed to {oldfilepath}", dest);
         }
         var json = JsonSerializer.Serialize(data, JsonSerializerOptions);
         await File.WriteAllTextAsync(DeviceConfigurationFilePath, json, Encoding.UTF8, cancellationToken);
-        _logger.LogInformation("device configuration file saved.");
+        logger.LogInformation("device configuration file saved.");
     }
     #endregion
 
@@ -69,9 +57,9 @@ public class DeviceConfigurationManager
     {
         try
         {
-            var (response, responseRaw) = await _switchBotApiClient.GetDevicesAsync(cancellationToken);
+            var (response, responseRaw) = await switchBotApiClient.GetDevicesAsync(cancellationToken);
 
-            foreach (var enforceDeviceType in _enforceDeviceTypeOptions.Value)
+            foreach (var enforceDeviceType in enforceDeviceTypeOptions.Value)
             {
                 foreach (var device in response.DeviceList.Where(s => s.DeviceId == enforceDeviceType.DeviceId))
                 {
@@ -83,13 +71,13 @@ public class DeviceConfigurationManager
                 }
             }
 
-            List<PhysicalDevice> physicalDevices = new();
+            List<PhysicalDevice> physicalDevices = [];
             foreach(var d in response.DeviceList)
             {
-                var deviceType = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.DeviceType)?.DeviceType;
+                var deviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.DeviceType)?.DeviceType;
                 if(deviceType == null)
                 {
-                    _logger.LogWarning("{Method} unknown device type. {MacAddress},{DeviceType},{DeviceName}", nameof(LoadDevicesAsync), d.DeviceId, d.DeviceType, d.DeviceName);
+                    logger.LogWarning("{Method} unknown device type. {MacAddress},{DeviceType},{DeviceName}", nameof(LoadDevicesAsync), d.DeviceId, d.DeviceType, d.DeviceName);
                 }
                 else
                 {
@@ -110,13 +98,13 @@ public class DeviceConfigurationManager
             });
             Diff(physicalDevices, currentData.PhysicalDevices, device =>
             {
-                var fields = _deviceDefinitionsManager.FieldDefinitions.Where(m => m.DeviceType == device.DeviceType);
+                var fields = deviceDefinitionsManager.FieldDefinitions.Where(m => m.DeviceType == device.DeviceType);
                 device.Fields = fields.Select(f => new FieldConfig()
                 {
                     Enable = true,
                     FieldName = f.FieldName,
                 }).ToList();
-                var commands = _deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
+                var commands = deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
                 device.Commands = commands.Select(
                     c => new CommandConfig()
                     {
@@ -131,9 +119,9 @@ public class DeviceConfigurationManager
             {
                 DeviceId = d.DeviceId,
                 DeviceName = d.DeviceName,
-                DeviceType = _deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.RemoteType)?.DeviceType
-                            ?? _deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.CustomizedDeviceTypeString == d.RemoteType).DeviceType,
-                IsCustomized = !_deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.ApiDeviceTypeString == d.RemoteType),
+                DeviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.RemoteType)?.DeviceType
+                            ?? deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.CustomizedDeviceTypeString == d.RemoteType).DeviceType,
+                IsCustomized = !deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.ApiDeviceTypeString == d.RemoteType),
                 RawValue = responseRaw.InfraredRemoteList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
             }).ToList();
             remoteDevices.ForEach(d =>
@@ -143,8 +131,8 @@ public class DeviceConfigurationManager
             });
             Diff(remoteDevices, currentData.VirtualInfraredRemoteDevices, device =>
             {
-                var master = _deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType);
-                var commands = _deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
+                var master = deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType);
+                var commands = deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
                 device.Commands = commands.Select(
                     c => new CommandConfig()
                     {
@@ -158,7 +146,7 @@ public class DeviceConfigurationManager
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "{Method} error.", nameof(LoadDevicesAsync));
+            logger.LogError(ex, "{Method} error.", nameof(LoadDevicesAsync));
         }
     }
 
