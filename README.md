@@ -75,4 +75,4 @@ We have implemented all devices according to the published API specifications, b
 
 ## Installation Method
 
-For installation instructions, please refer to [here](INSTALLATION.md).
+For installation instructions, please refer to [here](https://github.com/hsakoh/switchbot-mqtt/wiki).

@@ -6,6 +6,7 @@ COPY /src .
 RUN dotnet restore "SwitchBotMqttApp/SwitchBotMqttApp.csproj"
 RUN dotnet publish "SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r linux-musl-arm64 -p:PublishSingleFile=true --self-contained false -c Release -o /app/aarch64 --no-restore
 RUN dotnet publish "SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r linux-musl-x64 -p:PublishSingleFile=true --self-contained false -c Release -o /app/amd64 --no-restore
+RUN dotnet publish "SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r linux-musl-arm -p:PublishSingleFile=true --self-contained false -c Release -o /app/armv7 --no-restore
 
 FROM $BUILD_FROM as final
 
