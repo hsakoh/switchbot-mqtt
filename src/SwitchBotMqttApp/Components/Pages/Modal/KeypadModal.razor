@@ -1,0 +1,298 @@
+﻿@using Microsoft.Extensions.Options
+@using SwitchBotMqttApp.Configurations
+@using SwitchBotMqttApp.Logics;
+@using SwitchBotMqttApp.Models.DeviceConfiguration;
+@using SwitchBotMqttApp.Models.DeviceDefinitions;
+@using SwitchBotMqttApp.Models.Enums;
+@using System.Text.Json.Nodes;
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@using System.Security.Cryptography
+@using System.Text
+@using static SwitchBotMqttApp.Models.SwitchBotApi.GetDevicesResponseBody.Devicelist
+@inject IOptions<SwitchBotOptions> SwitchBotOptions;
+@inject SwitchBotApiClient SwitchBotApiClient;
+@inject DeviceDefinitionsManager DeviceDefinitionsManager;
+@inject ILogger<KeypadModal> logger;
+@inject IJSRuntime JsRuntime
+
+﻿<div>
+    <div class="row">
+        <div class="col-2 border bg-primary-subtle">DeviceType</div>
+        <div class="col-10 border">@Device.DeviceType</div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-primary-subtle">DeviceName</div>
+        <div class="col-10 border">@Device.DeviceName</div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-primary-subtle">DeviceId</div>
+        <div class="col-10 border">@Device.DeviceId</div>
+    </div>
+    <div class="row pt-3">
+        <table class="table align-middle">
+            <thead>
+                <tr class="table-primary">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    @if (DecryptPassword)
+                    {
+                        <th>Passcode</th>
+                    }
+                    else
+                    {
+                        <th>Encrypted Passcode&IV</th>
+                    }
+                    <th>Status</th>
+                    <th>CreateTime(UTC)</th>
+                    <th>
+                        <label for="DecryptPassword">Decrypt</label>
+                        <input type="checkbox" id="DecryptPassword" @bind-value="@DecryptPassword" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var key in KeyList)
+                {
+                    <tr>
+                        <td>@key.Id</td>
+                        <td>@key.Name</td>
+                        <td>@key.Type</td>
+                        @if (DecryptPassword)
+                        {
+                            <td>@GetDecryptedPassword(key.Password, key.Iv)</td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div style="max-width:10vw;overflow-wrap: anywhere;">
+                                    <span>@key.Password</span>
+                                    <span>@key.Iv</span>
+                                </div>
+                            </td>
+                        }
+                        <td>@key.Status</td>
+                        <td>@($"{DateTimeOffset.FromUnixTimeMilliseconds(key.CreateTime):yyyy/MM/dd HH:mm:ss}")</td>
+                        <td>
+                            <button @onclick="()=>DeleteKey(key.Id)" class="btn btn-outline-danger btn-sm">
+                                <span class="mdi fs-5 mdi-key-remove"></span>
+                                DeleteKey
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row pt-3">
+        <div class="col-2 border bg-info-subtle"><span class="mdi fs-5 mdi-form-textbox"></span>Name</div>
+        <div class="col-10 border">
+            <div class="fs-6">a unique name for the passcode. duplicates under the same device are not allowed.</div>
+            <InputText @bind-Value="CreateKeyValues.Name"></InputText>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-info-subtle"><span class="mdi fs-5 mdi-key-chain"></span>Type</div>
+        <div class="col-10 border">
+            <div class="fs-6">type of the passcode.</div>
+            <InputSelect @bind-Value="CreateKeyValues.Type" @bind-Value:after="OnChangeType" style="max-width:100%">
+                <option value="permanent">a permanent passcode.</option>
+                <option value="timeLimit">a temporary passcode.</option>
+                <option value="disposable">a one-time passcode</option>
+                <option value="urgent">an emergency passcode</option>
+            </InputSelect>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-info-subtle"><span class="mdi fs-5 mdi-numeric"></span>Passcode</div>
+        <div class="col-10 border">
+            <div class="fs-6">a 6 to 12-digit passcode in plain text</div>
+            <InputText @bind-Value="CreateKeyValues.Password" minlength="6" maxlength="12"></InputText>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-info-subtle"><span class="mdi fs-5 mdi-clock-start"></span>StartTime</div>
+        <div class="col-10 border">
+            <div class="fs-6">set the time the passcode becomes valid from, mandatory for one-time passcode and temporary passcode.</div>
+            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="CreateKeyValues.StartTime"></InputDate>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-info-subtle"><span class="mdi fs-5 mdi-clock-end"></span>EndTime</div>
+        <div class="col-10 border">
+            <div class="fs-6">set the time the passcode becomes expired, mandatory for one-time passcode and temporary passcode.</div>
+            <InputDate Type="InputDateType.DateTimeLocal" @bind-Value="CreateKeyValues.EndTime"></InputDate>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 border bg-info-subtle"></div>
+        <div class="col-10 border">
+            <div class="fs-6">create a new passcode</div>
+            <button @onclick="CreateKey" class="btn btn-outline-info btn-sm">
+                <span class="mdi fs-5 mdi-key-plus"></span>
+                Create Key
+            </button>
+        </div>
+    </div>
+
+    <div class="row pt-3">
+        <div class="col-2 border bg-warning-subtle">
+            Result
+        </div>
+        <div class="col-10 border">
+            <InputTextArea @bind-Value="Response" style="width:100%;"></InputTextArea>
+        </div>
+    </div>
+
+    <div class="pt-3">
+        <button @onclick="ReloadKeyList" class="btn btn-primary">ReloadKeyList</button>
+        <button @onclick="Close" class="btn btn-secondary">Close</button>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    [Parameter] public DeviceBase Device { get; set; } = default!;
+
+    private List<KeyListItem> KeyList { get; set; } = default!;
+
+    [Parameter] public bool DecryptPassword { get; set; } = false;
+
+    [Parameter] public Input CreateKeyValues { get; set; } = new();
+
+    [Parameter] public string? Response { get; set; } = default!;
+
+    public class Input
+    {
+        public string Name { get; set; } = default!;
+        public string Type { get; set; } = default!;
+        public string Password { get; set; } = default!;
+        public DateTimeOffset? StartTime { get; set; } = default!;
+        public DateTimeOffset? EndTime { get; set; } = default!;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        if (Device?.RawValue?.ContainsKey("keyList") ?? false)
+        {
+            KeyList = Device.RawValue["keyList"]!.Deserialize<List<KeyListItem>>()!;
+        }
+        return Task.CompletedTask;
+    }
+    async Task ReloadKeyList()
+    {
+        try
+        {
+            var (response, responseRaw) = await SwitchBotApiClient.GetDevicesAsync(CancellationToken.None);
+            var deivce = response.DeviceList.Where(rd => rd!.DeviceId == Device.DeviceId).FirstOrDefault();
+            var newDeviceRaw = responseRaw.DeviceList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == Device.DeviceId).FirstOrDefault()?.AsObject();
+            Device.RawValue = newDeviceRaw;
+            KeyList = deivce!.KeyList.ToList();
+            Response = newDeviceRaw!.ToJsonString(JsonSerializerOptions);
+        }
+        catch (Exception ex)
+        {
+            Response = ex.Message;
+        }
+        StateHasChanged();
+    }
+    async Task Close() => await BlazoredModal.CloseAsync();
+
+    async Task DeleteKey(int id)
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            try
+            {
+                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(
+                    Device
+                    , Device.Commands.First(c => c.Command == "deleteKey")
+                    , new
+                    {
+                        id = id
+                    }
+                    , CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                Response = ex.Message;
+            }
+        }
+    }
+
+    async Task CreateKey()
+    {
+        try
+        {
+            Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(
+                Device
+                , Device.Commands.First(c => c.Command == "createKey")
+                , new
+                {
+                    name = CreateKeyValues.Name,
+                    type = string.IsNullOrEmpty(CreateKeyValues.Type) ? "permanent" : CreateKeyValues.Type,
+                    password = CreateKeyValues.Password,
+                    startTime = CreateKeyValues.StartTime?.ToUnixTimeSeconds() ?? null,
+                    endTime = CreateKeyValues.EndTime?.ToUnixTimeSeconds() ?? null,
+                }
+                , CancellationToken.None);
+        }
+        catch (Exception ex)
+        {
+            Response = ex.Message;
+        }
+    }
+
+    void OnChangeType()
+    {
+
+        switch (CreateKeyValues.Type)
+        {
+            case "permanent":
+            case "urgent":
+                CreateKeyValues.StartTime = null;
+                CreateKeyValues.EndTime = null;
+                break;
+            default:
+                CreateKeyValues.StartTime = DateTimeOffset.UtcNow;
+                CreateKeyValues.EndTime = DateTimeOffset.UtcNow.AddDays(1);
+                break;
+        }
+    }
+
+    string GetDecryptedPassword(string encryptedPassword, string iv)
+    {
+        try
+        {
+            using Aes aes = Aes.Create();
+            aes.Mode = CipherMode.CBC;
+            using var decryptor = aes.CreateDecryptor(Convert.FromHexString(SwitchBotOptions.Value.ApiSecret), Convert.FromHexString(iv));
+            using var ms = new MemoryStream();
+            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Write);
+            using var bw = new BinaryWriter(cs);
+            var value = Convert.FromBase64String(encryptedPassword);
+            bw.Write(value);
+            bw.Flush();
+            bw.Close();
+            cs.Flush();
+            cs.Close();
+            var bytes = ms.ToArray();
+            return Encoding.UTF8.GetString(bytes);
+
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Decrypt password failed");
+            return "failed";
+        }
+    }
+
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+        {
+            WriteIndented = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+        };
+}

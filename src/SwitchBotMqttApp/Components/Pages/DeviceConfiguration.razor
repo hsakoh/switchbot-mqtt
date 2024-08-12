@@ -69,7 +69,18 @@
                         <td style="text-align: center">
                             <InputCheckbox @bind-Value="device.Enable" class="big-checkbox" />
                         </td>
-                        <td>@deviceDef.ApiDeviceTypeString</td>
+                        <td>
+                            @if (device.DeviceType == DeviceType.Keypad || device.DeviceType == DeviceType.KeypadTouch)
+                            {
+                                <button @onclick="()=>ShowKeypadModal(device)" class="btn btn-outline-info btn-sm">
+                                    <i class="oi oi-key">@deviceDef.ApiDeviceTypeString</i>
+                                </button>
+                            }
+                            else
+                            {
+                                @deviceDef.ApiDeviceTypeString
+                            }
+                        </td>
                         <td>@device.DeviceName</td>
                         <td>
                             <button @onclick="()=>ShowDeviceAttribute(device)" class="btn btn-outline-warning btn-sm">

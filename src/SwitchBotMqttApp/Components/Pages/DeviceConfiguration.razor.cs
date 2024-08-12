@@ -144,6 +144,20 @@ public partial class DeviceConfiguration : ComponentBase
         Modal.Show<DeviceAttributeModal>("Device Attribute", parameters, options);
     }
 
+    public void ShowKeypadModal(DeviceBase device)
+    {
+        var parameters = new ModalParameters
+        {
+            { nameof(KeypadModal.Device), device },
+        };
+        var options = new ModalOptions()
+        {
+            Size = ModalSize.ExtraLarge
+        };
+
+        Modal.Show<KeypadModal>("Keypad", parameters, options);
+    }
+
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         WriteIndented = true,
