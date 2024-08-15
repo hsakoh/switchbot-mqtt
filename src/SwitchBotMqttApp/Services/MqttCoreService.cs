@@ -1,4 +1,5 @@
-﻿using HomeAssistantAddOn.Mqtt;
+﻿using CliWrap;
+using HomeAssistantAddOn.Mqtt;
 using SwitchBotMqttApp.Logics;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
 using SwitchBotMqttApp.Models.DeviceDefinitions;
@@ -8,6 +9,7 @@ using SwitchBotMqttApp.Models.Mqtt;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using static HomeAssistantAddOn.Mqtt.SupervisorApi;
 
 namespace SwitchBotMqttApp.Services;
 
@@ -197,6 +199,31 @@ public class MqttCoreService(
                 };
             }
 
+            // Keypad deleteKey
+            if ((deviceConf.DeviceType == DeviceType.Keypad
+                || deviceConf.DeviceType == DeviceType.KeypadTouch)
+                && command.Command == "deleteKey")
+            {
+                var deviceMqttForCommand = new DeviceMqtt(
+                        identifiers: [$"{deviceConf.DeviceId}{command.Command}"],
+                        name: $"{deviceConf.DeviceName}-{command.Command}",
+                        manufacturer: deviceMqtt.Manufacturer,
+                        model: deviceMqtt.Model);
+                commandDeviceEntities.Add(deviceMqttForCommand);
+                buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
+                buttonEntities.Add(MqttEntityHelper.CreateKeypadReloadButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
+
+                var paramDef = deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command).First();
+                var payloadDict = CommandPayloadDictionary.GetOrAdd(deviceConf.DeviceId, new ConcurrentDictionary<string, object>());
+
+                var (response, responseRaw) = await switchBotApiClient.GetDevicesAsync(CancellationToken.None);
+                var deivce = response.DeviceList.Where(rd => rd!.DeviceId == deviceConf.DeviceId).FirstOrDefault();
+                var keys = deivce!.KeyList.Select(key => $"{key.Id}:{key.Name}:{key.Type}").ToArray();
+                selectEntities.Add(MqttEntityHelper.CreateKeypadDeleteKeySelectEntity(deviceConf, commandIndex, command, deviceMqttForCommand, paramDef, keys));
+                payloadDict[paramDef.Name] = "";
+                break;
+            }
+
             switch (commandDef.PayloadType)
             {
                 case PayloadType.SingleValue:
@@ -295,6 +322,42 @@ public class MqttCoreService(
                 return;
             }
 
+            // Keypad deleteKey
+            if ((device.DeviceType == DeviceType.Keypad
+                || device.DeviceType == DeviceType.KeypadTouch)
+                && payload.Command == "deleteKey")
+            {
+                if (payload.ParamValue == "reloadkeys")
+                {
+                    var paramDef = deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == device.DeviceType && c.CommandType == commandType && c.Command == payload.Command).First();
+                    var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
+
+                    var (response, responseRaw) = await switchBotApiClient.GetDevicesAsync(CancellationToken.None);
+                    var deivce = response.DeviceList.Where(rd => rd!.DeviceId == device.DeviceId).FirstOrDefault();
+                    var keys = deivce!.KeyList.Select(key => $"{key.Id}:{key.Name}:{key.Type}").ToArray();
+                    var commandIndex = device.Commands.Where(c => c.Enable).ToList().IndexOf(commandConf) + 1;
+
+                    var deviceMqtt = new DeviceMqtt(
+                        identifiers: [device.DeviceId],
+                        name: device.DeviceName,
+                        manufacturer: $"SwitchBot",
+                        model: deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == device.DeviceType).ApiDeviceTypeString);
+                    var deviceMqttForCommand = new DeviceMqtt(
+                            identifiers: [$"{device.DeviceId}{commandDef!.Command}"],
+                            name: $"{device.DeviceName}-{commandDef.Command}",
+                            manufacturer: deviceMqtt.Manufacturer,
+                            model: deviceMqtt.Model);
+                    await PublishEntityAsync(MqttEntityHelper.CreateKeypadDeleteKeySelectEntity(device, commandIndex, commandConf, deviceMqttForCommand, paramDef, keys), true);
+                    payloadDict[paramDef.Name] = "";
+                    return;
+                }
+                if (payload.ParamName == "id")
+                {
+                    CommandPayloadDictionary[device.DeviceId][payload.ParamName] = payload.ParamValue.Split(':').FirstOrDefault() ?? "";
+                    return;
+                }
+            }
+
             if (payload.ParamName != MqttEntityHelper.ButtonPrefix)
             {
                 CommandPayloadDictionary[device.DeviceId][payload.ParamName] = payload.ParamValue;
@@ -307,91 +370,93 @@ public class MqttCoreService(
                 await switchBotApiClient.SendDefaultDeviceControlCommandAsync(device, commandConf, CancellationToken.None);
                 return;
             }
-            var paramDefs = deviceDefinitionsManager.CommandPayloadDefinitions.Where(p => p.DeviceType == device.DeviceType && p.CommandType == commandType && p.Command == payload.Command).OrderBy(p => p.Index).ToList();
-            var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
-            if (commandDef.PayloadType == PayloadType.SingleValue)
             {
-                await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
-                return;
-            }
 
-            if (commandDef.PayloadType == PayloadType.Json)
-            {
-                var jsonRoot = JsonNode.Parse("{}")!;
-                paramDefs.ForEach(paramDef =>
+                var paramDefs = deviceDefinitionsManager.CommandPayloadDefinitions.Where(p => p.DeviceType == device.DeviceType && p.CommandType == commandType && p.Command == payload.Command).OrderBy(p => p.Index).ToList();
+                var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
+                if (commandDef.PayloadType == PayloadType.SingleValue)
                 {
-                    var json = jsonRoot;
-                    if (!string.IsNullOrEmpty(paramDef.Path))
+                    await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
+                    return;
+                }
+
+                if (commandDef.PayloadType == PayloadType.Json)
+                {
+                    var jsonRoot = JsonNode.Parse("{}")!;
+                    paramDefs.ForEach(paramDef =>
                     {
-                        if (jsonRoot[paramDef.Path] == null)
+                        var json = jsonRoot;
+                        if (!string.IsNullOrEmpty(paramDef.Path))
                         {
-                            jsonRoot[paramDef.Path] = JsonNode.Parse("{}")!;
+                            if (jsonRoot[paramDef.Path] == null)
+                            {
+                                jsonRoot[paramDef.Path] = JsonNode.Parse("{}")!;
+                            }
+                            json = jsonRoot[paramDef.Path]!;
                         }
-                        json = jsonRoot[paramDef.Path]!;
-                    }
-                    if (paramDef.ParameterType == ParameterType.Long
-                        || paramDef.ParameterType == ParameterType.Range)
-                    {
-                        if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue)
-                            && longValue != paramDef.RangeMin - 1)
+                        if (paramDef.ParameterType == ParameterType.Long
+                            || paramDef.ParameterType == ParameterType.Range)
                         {
-                            json[paramDef.Name] = JsonValue.Create<long>(longValue);
+                            if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue)
+                                && longValue != paramDef.RangeMin - 1)
+                            {
+                                json[paramDef.Name] = JsonValue.Create<long>(longValue);
+                            }
                         }
-                    }
-                    else if (paramDef.ParameterType == ParameterType.Select)
-                    {
-                        json[paramDef.Name] = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
-                    }
-                    else if (paramDef.ParameterType == ParameterType.SelectOrRange)
-                    {
-                        if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue))
-                        {
-                            json[paramDef.Name] = JsonValue.Create<long>(longValue);
-                        }
-                        else
+                        else if (paramDef.ParameterType == ParameterType.Select)
                         {
                             json[paramDef.Name] = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
                         }
-                    }
-                    else
-                    {
-                        json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
-                    }
-                });
-                await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
-            }
-            else
-            {
-                var parameters = string.Join(
-                    commandDef.PayloadType switch
-                    {
-                        PayloadType.JoinColon => ':',
-                        PayloadType.JoinComma => ',',
-                        PayloadType.JoinSemiColon => ':',
-                        _ => throw new InvalidOperationException()
-                    }
-                    , paramDefs.Select(p =>
-                    {
-                        if (p.ParameterType == ParameterType.SelectOrRange)
+                        else if (paramDef.ParameterType == ParameterType.SelectOrRange)
                         {
-                            if (long.TryParse((string)payloadDict[p.Name], out var longValue))
+                            if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue))
                             {
-                                return longValue;
+                                json[paramDef.Name] = JsonValue.Create<long>(longValue);
                             }
                             else
                             {
-                                return p.DescriptionToOption((string)payloadDict[p.Name]);
+                                json[paramDef.Name] = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
                             }
                         }
-                        if (p.ParameterType == ParameterType.Select)
+                        else
                         {
-                            return p.DescriptionToOption((string)payloadDict[p.Name]);
+                            json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
                         }
-                        return payloadDict[p.Name];
-                    }));
-                await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, parameters, CancellationToken.None);
+                    });
+                    await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
+                }
+                else
+                {
+                    var parameters = string.Join(
+                        commandDef.PayloadType switch
+                        {
+                            PayloadType.JoinColon => ':',
+                            PayloadType.JoinComma => ',',
+                            PayloadType.JoinSemiColon => ':',
+                            _ => throw new InvalidOperationException()
+                        }
+                        , paramDefs.Select(p =>
+                        {
+                            if (p.ParameterType == ParameterType.SelectOrRange)
+                            {
+                                if (long.TryParse((string)payloadDict[p.Name], out var longValue))
+                                {
+                                    return longValue;
+                                }
+                                else
+                                {
+                                    return p.DescriptionToOption((string)payloadDict[p.Name]);
+                                }
+                            }
+                            if (p.ParameterType == ParameterType.Select)
+                            {
+                                return p.DescriptionToOption((string)payloadDict[p.Name]);
+                            }
+                            return payloadDict[p.Name];
+                        }));
+                    await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, parameters, CancellationToken.None);
+                }
             }
-
         }
         catch (Exception e)
         {

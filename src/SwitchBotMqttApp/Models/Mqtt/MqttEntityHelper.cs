@@ -48,6 +48,10 @@ public static class MqttEntityHelper
     {
         return $"{paramName}_{commandIndex}_cmd_{deviceId}";
     }
+    public static string GetReloadKeysObjectId(string deviceId, int commandIndex, string paramName)
+    {
+        return $"{paramName}_{commandIndex}_reloadkeys_{deviceId}";
+    }
 
     public static string GetCommandTemplate(CommandConfig commandConfig, string paramName, ParameterType? parameterType = null)
     {
@@ -135,6 +139,33 @@ public static class MqttEntityHelper
             }
             , deviceClass: commandDef.ButtonDeviceClass
             , icon: commandDef.Icon
+        );
+    }
+
+    public static ButtonConfig CreateKeypadReloadButtonEntity(DeviceMqtt deviceMqtt, DeviceBase deviceConf, int commandIndex, CommandConfig command, CommandDefinition commandDef)
+    {
+        return new ButtonConfig(
+            deviceMqtt
+            , objectId: GetReloadKeysObjectId(deviceConf.DeviceId, commandIndex, ButtonPrefix)
+            , commandTopic: GetCommandTopic(deviceConf.DeviceId)
+            , commandTemplate: GetCommandTemplate(command, ButtonPrefix)
+            , payloadPress: "reloadkeys"
+            , name: "Reload keys"
+            , deviceClass: commandDef.ButtonDeviceClass
+            , icon: "mdi:refresh"
+        );
+    }
+
+    public static SelectConfig CreateKeypadDeleteKeySelectEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, string[] options)
+    {
+        return new SelectConfig(
+            deviceMqtt
+            , defaultValue: ""
+            , objectId: GetCommandParamObjectId(deviceConf.DeviceId, commandIndex, paramDef.Name)
+            , commandTopic: GetCommandTopic(deviceConf.DeviceId)
+            , commandTemplate: GetCommandTemplate(command, paramDef.Name, paramDef.ParameterType)
+            , name: paramDef.Name
+            , options: options
         );
     }
 
