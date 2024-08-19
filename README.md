@@ -222,7 +222,7 @@ We have implemented all devices according to the published API specifications, b
 [PanTiltCamPlus3MPProductJP]: https://www.switchbot.jp/products/switchbot-pan-tilt-cam-plus-3mp
 [PanTiltCamPlus5MPProductJP]: https://www.switchbot.jp/products/switchbot-pan-tilt-cam-plus-5mp
 [IndoorCamProduct]: https://switch-bot.com/pages/switchbot-indoor-cam
-[IndoorCamProductJP]: https://www.switchbot.jp/collections/security-camera-solution/products/switchbot-indoor-cam
+[IndoorCamProductJP]: https://www.switchbot.jp/products/switchbot-indoor-cam
 [IndoorCamList]: https://github.com/OpenWonderLabs/SwitchBotAPI#indoor-cam
 [IndoorCamWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#indoor-cam-1
 [PlugList]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug
