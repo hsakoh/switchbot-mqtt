@@ -578,7 +578,12 @@ public class MqttCoreService(
                     continue;
                 }
 
-                var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
+                var field = physicalDevice.Fields.FirstOrDefault(f => f.FieldName == fieldDef.FieldName);
+                if (field == null)
+                {
+                    logger.LogWarning("missing device field difinition(might need to remove and refetch the device) {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    continue;
+                }
                 if (!field.Enable)
                 {
                     logger.LogTrace("disable polling paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
