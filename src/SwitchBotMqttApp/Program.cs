@@ -1,5 +1,7 @@
 using Blazored.Modal;
 using FluffySpoon.Ngrok;
+using HomeAssistantAddOn.Core;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using SwitchBotMqttApp.Components;
 using SwitchBotMqttApp.Configurations;
@@ -42,7 +44,7 @@ public class Program
             .AddInteractiveServerComponents();
         builder.Services.AddBlazoredModal();
 
-        builder.Services.AddOptions<CommonOptions>().
+        builder.Services.AddOptions<Configurations.CommonOptions>().
             Configure<IConfiguration>((settings, configuration) =>
             {
                 configuration.Bind(settings);
@@ -101,6 +103,10 @@ public class Program
 
         builder.WebHost.UseWebRoot("wwwroot");
         builder.WebHost.UseStaticWebAssets();
+
+        builder.Services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(Utility.GetBaseDataDirectory(), "PersistKeys")));
+
         var app = builder.Build();
 
         var pathBase = GetPathBase();
