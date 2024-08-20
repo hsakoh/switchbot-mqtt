@@ -376,7 +376,24 @@ public class MqttCoreService(
                 var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
                 if (commandDef.PayloadType == PayloadType.SingleValue)
                 {
-                    await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, payloadDict[paramDefs[0].Name], CancellationToken.None);
+                    var value = payloadDict[paramDefs[0].Name];
+                    var paramDef = paramDefs.Single();
+                    if (paramDef.ParameterType == ParameterType.SelectOrRange)
+                    {
+                        if (long.TryParse((string)payloadDict[paramDef.Name], out var longValue))
+                        {
+                            value = longValue;
+                        }
+                        else
+                        {
+                            value = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
+                        }
+                    }
+                    if (paramDef.ParameterType == ParameterType.Select)
+                    {
+                        value = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
+                    }
+                    await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, value, CancellationToken.None);
                     return;
                 }
 
