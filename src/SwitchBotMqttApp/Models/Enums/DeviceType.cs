@@ -40,6 +40,10 @@ public enum DeviceType
     PanTiltCam,
     BlindTilt,
     BatteryCirculatorFan,
+    CirculatorFan,
+    UniversalRemote,
+    PanTiltCamPlus5mp,
+    OutdoorSpotlightCam2K,
 
     //VirtualInfraredRemoteDevice
     AirConditioner,

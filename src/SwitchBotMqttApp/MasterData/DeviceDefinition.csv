@@ -32,6 +32,10 @@ IndoorCam,Indoor Cam,,WoCamera,PhysicalDevice,FALSE,TRUE,FALSE,,Indoor Cam,屋�
 PanTiltCam,Pan/Tilt Cam,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam,見守りカメラ/見守りカメラ3MP
 BlindTilt,Blind Tilt,,,PhysicalDevice,TRUE,FALSE,TRUE,,Blind Tilt,ブラインドポール
 BatteryCirculatorFan,Battery Circulator Fan,,WoFan2,PhysicalDevice,TRUE,TRUE,TRUE,,Battery Circulator Fan,サーキュレーター
+CirculatorFan,Circulator Fan,,WoFan2,PhysicalDevice,TRUE,TRUE,TRUE,,Circulator Fan Lite,サーキュレーター Lite
+UniversalRemote,remote with screen,,,PhysicalDevice,TRUE,FALSE,FALSE,,Universal Remote,学習リモコン
+PanTiltCamPlus5mp,Pan/Tilt Cam Plus 5MP,,WoCamKvs5mp,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam Plus(5MP),見守りカメラ Plus 5MP
+OutdoorSpotlightCam2K,Outdoor Spotlight Cam 2K,,,PhysicalDevice,FALSE,FALSE,FALSE,,Outdoor Spotlight Cam 2K,屋外カメラ 3MP
 AirConditioner,Air Conditioner,DIY Air Conditioner,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Air Conditioner,エアコン
 TV,TV,DIY TV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,TV,テレビ
 IPTV,IPTV,DIY IPTV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,IPTV,メディアストリーミング

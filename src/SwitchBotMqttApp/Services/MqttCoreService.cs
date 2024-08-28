@@ -521,8 +521,16 @@ public class MqttCoreService(
             {
                 if (kv.Key == "deviceType") //modify device name
                 {
-                    both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
-                        ?? deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
+                    if(physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
+                        || physicalDevice.DeviceType == DeviceType.CirculatorFan)
+                    {
+                        both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
+                    }
+                    else
+                    {
+                        both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
+                            ?? deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
+                    }
                 }
                 else
                 {
@@ -545,7 +553,8 @@ public class MqttCoreService(
                     || fieldDef.DeviceType == DeviceType.CeilingLightPro
                     || fieldDef.DeviceType == DeviceType.StripLight
                     || fieldDef.DeviceType == DeviceType.ColorBulb
-                    || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan)
+                    || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan
+                    || fieldDef.DeviceType == DeviceType.CirculatorFan)
                     && fieldDef.FieldName == "power")
               )
             {
