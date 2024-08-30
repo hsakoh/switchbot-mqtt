@@ -1,5 +1,4 @@
-﻿using CliWrap;
-using HomeAssistantAddOn.Mqtt;
+﻿using HomeAssistantAddOn.Mqtt;
 using SwitchBotMqttApp.Logics;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
 using SwitchBotMqttApp.Models.DeviceDefinitions;
@@ -9,7 +8,6 @@ using SwitchBotMqttApp.Models.Mqtt;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using static HomeAssistantAddOn.Mqtt.SupervisorApi;
 
 namespace SwitchBotMqttApp.Services;
 
@@ -91,14 +89,14 @@ public class MqttCoreService(
                         , icon: fieldDef.Icon
                         , deviceClass: fieldDef.BinarySensorDeviceClass!.Value
                         , payloadOn: fieldDef.OnValue!
-                        , payloadOff:fieldDef.OffValue!
+                        , payloadOff: fieldDef.OffValue!
                         , value_template: null
                     );
                 }
                 else
                 {
                     string? value_template = null;
-                    if(fieldDef.FieldName == "timeOfSample")
+                    if (fieldDef.FieldName == "timeOfSample")
                     {
                         value_template = UnixTimeValueTemplateFormat.Replace("%FIELD%", "timeOfSample");
                     }
@@ -480,7 +478,7 @@ public class MqttCoreService(
             logger.LogError(e, "subscribe action {DeviceId},{Payload}", device.DeviceId, payloadRaw);
         }
     }
-    public async Task PublishWebhookAsync(JsonNode webhookContent)
+    public async Task PublishWebhookAsync(JsonNode webhookContent, JsonNode inputRawRoot)
     {
         var deviceMac = webhookContent["deviceMac"]?.GetValue<string>();
         PhysicalDevice? physicalDevice = CurrentDevicesConfig.PhysicalDevices.FirstOrDefault(d => d.DeviceId == deviceMac);
@@ -497,7 +495,19 @@ public class MqttCoreService(
         var webhook = JsonNode.Parse("{}")!;
         var both = JsonNode.Parse("{}")!;
         var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
-        foreach (var kv in webhookContent.AsObject())
+        var contentKvDict = webhookContent.AsObject().ToDictionary();
+        foreach (var rootKv in inputRawRoot.AsObject())
+        {
+            if (
+                rootKv.Key != "eventType"
+                && rootKv.Key != "eventVersion"
+                && rootKv.Key != "context"
+                && !contentKvDict.ContainsKey(rootKv.Key))
+            {
+                contentKvDict.Add(rootKv.Key, rootKv.Value);
+            }
+        }
+        foreach (var kv in contentKvDict)
         {
             var fieldDef = fieldDefs.FirstOrDefault(f => f.WebhookKey == kv.Key);
             if (fieldDef == null)
@@ -521,7 +531,7 @@ public class MqttCoreService(
             {
                 if (kv.Key == "deviceType") //modify device name
                 {
-                    if(physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
+                    if (physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
                         || physicalDevice.DeviceType == DeviceType.CirculatorFan)
                     {
                         both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;

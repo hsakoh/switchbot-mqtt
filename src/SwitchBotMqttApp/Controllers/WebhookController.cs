@@ -19,7 +19,8 @@ public class WebhookController(ILogger<WebhookController> logger
         {
             logger.LogInformation("{json}", json);
             var inputRaw = JsonSerializer.Deserialize<WebhookRaw>(json);
-            await mqttCoreService.PublishWebhookAsync(inputRaw!.Context);
+            var inputRawRoot = JsonSerializer.Deserialize<JsonNode>(json);
+            await mqttCoreService.PublishWebhookAsync(inputRaw!.Context, inputRawRoot!);
             return Ok();
         }
         catch (Exception e)
