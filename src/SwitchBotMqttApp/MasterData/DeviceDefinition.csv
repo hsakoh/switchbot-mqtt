@@ -26,6 +26,8 @@ StripLight,Strip Light,,WoStrip,PhysicalDevice,TRUE,TRUE,TRUE,,Strip Light,テ�
 ColorBulb,Color Bulb,,WoBulb,PhysicalDevice,TRUE,TRUE,TRUE,,Color Bulb,スマートバルブ
 RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1,ロボット掃除機 S1
 RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
+MiniRobotVacuumK10Plus,K10+,,WoSweeperMini,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+,ロボット掃除機 K10+
+MiniRobotVacuumK10PlusPro,K10+ Pro,,WoSweeperMiniPro,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+ Pro,ロボット掃除機 K10+ Pro
 RobotVacuumCleanerS10,Robot Vacuum Cleaner S10,,Robot Vacuum Cleaner S10,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S10,ロボット掃除機 S10
 Humidifier,Humidifier,,,PhysicalDevice,TRUE,FALSE,TRUE,,Humidifier,加湿器
 IndoorCam,Indoor Cam,,WoCamera,PhysicalDevice,FALSE,TRUE,FALSE,,Indoor Cam,屋内カメラ

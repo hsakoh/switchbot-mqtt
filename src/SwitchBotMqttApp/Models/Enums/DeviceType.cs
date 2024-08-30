@@ -34,6 +34,8 @@ public enum DeviceType
     ColorBulb,
     RobotVacuumCleanerS1,
     RobotVacuumCleanerS1Plus,
+    MiniRobotVacuumK10Plus,
+    MiniRobotVacuumK10PlusPro,
     RobotVacuumCleanerS10,
     Humidifier,
     IndoorCam,

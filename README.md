@@ -47,8 +47,8 @@ We have implemented all devices according to the published API specifications, b
 | **Robot Vacuum**                                                                                                         |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
 | Robot Vacuum Cleaner S1  [[JP][RobotVacuumCleanerS1ProductJP]]                                                           |        [✅][RobotVacuumCleanerS1List]        |   [✅][RobotVacuumCleanerS1Status]   |   [✅][RobotVacuumCleanerS1Webhook]   |   [✅][RobotVacuumCleanerS1Command]   |              |
 | Robot Vacuum Cleaner S1 Plus  [[JP][RobotVacuumCleanerS1PlusProductJP]]                                                  |      [✅][RobotVacuumCleanerS1PlusList]      | [✅][RobotVacuumCleanerS1PlusStatus] | [✅][RobotVacuumCleanerS1PlusWebhook] | [✅][RobotVacuumCleanerS1PlusCommand] |              |
-| [Mini Robot Vacuum K10+][MiniRobotVacuumK10+Product]  [[JP][MiniRobotVacuumK10+ProductJP]]                               |                      -                      |                                     |                                      |                                      |              |
-| [Mini Robot Vacuum K10+ Pro][MiniRobotVacuumK10+ProProduct]  [[JP][MiniRobotVacuumK10+ProProductJP]]                     |                      -                      |                                     |                                      |                                      |              |
+| [Mini Robot Vacuum K10+][MiniRobotVacuumK10+Product]  [[JP][MiniRobotVacuumK10+ProductJP]]                               |        [✅][MiniRobotVacuumK10+List]         |   [✅][MiniRobotVacuumK10+Status]    |   [✅][MiniRobotVacuumK10+Webhook]    |   [✅][MiniRobotVacuumK10+Command]    |              |
+| [Mini Robot Vacuum K10+ Pro][MiniRobotVacuumK10+ProProduct]  [[JP][MiniRobotVacuumK10+ProProductJP]]                     |       [✅][MiniRobotVacuumK10+ProList]       |  [✅][MiniRobotVacuumK10+ProStatus]  |  [✅][MiniRobotVacuumK10+ProWebhook]  |  [✅][MiniRobotVacuumK10+ProCommand]  |              |
 | [Floor Cleaning Robot S10][FloorCleaningRobotS10Product]  [[JP][FloorCleaningRobotS10ProductJP]]                         |       [✅][FloorCleaningRobotS10List]        |  [✅][FloorCleaningRobotS10Status]   |  [✅][FloorCleaningRobotS10Webhook]   |  [✅][FloorCleaningRobotS10Command]   |              |
 | **Sensor**                                                                                                               |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
 | [Meter][MeterProduct]  [[JP][MeterProductJP]]                                                                            |               [✅][MeterList]                |          [✅][MeterStatus]           |          [✅][MeterWebhook]           |                  -                   |              |
@@ -147,8 +147,16 @@ We have implemented all devices according to the published API specifications, b
 [RobotVacuumCleanerS1PlusCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-cleaner-s1-plus-2
 [MiniRobotVacuumK10+Product]: https://www.switch-bot.com/products/switchbot-mini-robot-vacuum-k10
 [MiniRobotVacuumK10+ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-k10
+[MiniRobotVacuumK10+List]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10
+[MiniRobotVacuumK10+Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-1
+[MiniRobotVacuumK10+Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-3
+[MiniRobotVacuumK10+Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-2
 [MiniRobotVacuumK10+ProProduct]: https://www.switch-bot.com/products/switchbot-mini-robot-vacuum-k10-pro
 [MiniRobotVacuumK10+ProProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-k10-pro
+[MiniRobotVacuumK10+ProList]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro
+[MiniRobotVacuumK10+ProStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro-1
+[MiniRobotVacuumK10+ProWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro-3
+[MiniRobotVacuumK10+ProCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro-2
 [FloorCleaningRobotS10Product]: https://www.switch-bot.com/products/switchbot-floor-cleaning-robot-s10
 [FloorCleaningRobotS10ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-s10
 [FloorCleaningRobotS10List]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s10
