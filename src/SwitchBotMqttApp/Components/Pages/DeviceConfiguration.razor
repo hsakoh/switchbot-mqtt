@@ -5,7 +5,7 @@
 
 <PageTitle>Device Configuration</PageTitle>
 
-<div class="container">
+<div class="container-fluid">
     <button @onclick="()=>FetchSwitchBotApi()" class="btn btn-outline-primary btn-sm">
         Fetch Devices By SwitchBotApi
         @if (Model.Fetching)
@@ -29,7 +29,7 @@
     </button>
 </div>
 <EditForm Model="@Model">
-    <div class="container">
+    <div class="container-fluid">
         <button type="submit" disabled hidden />
         <table class="table align-middle">
             <thead>
@@ -267,7 +267,7 @@
             </tfoot>
         </table>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <table class="table align-middle">
             <thead>
                 <tr class="table-primary">
