@@ -5,10 +5,10 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 
 
 public class BinarySensorConfig(
-    DeviceMqtt device, string key, string name, string objectId, string stateTopic, string attributeTopic
+    DeviceMqtt device, string key, string name, string objectId, string stateTopic
         , BinarySensorDeviceClass deviceClass
-        , string payloadOn
-        , string payloadOff
+        , object payloadOn
+        , object payloadOff
         , string? icon = null
         , string? value_template = null) : MqttEntityBase(
         topic: $"homeassistant/binary_sensor/{objectId}/config"
@@ -20,15 +20,13 @@ public class BinarySensorConfig(
             , icon: icon)
 {
     [JsonProperty("value_template")]
-    public string ValueTemplate { get; set; } = value_template ?? $"{{{{value_json.{key}}}}}";
+    public string ValueTemplate { get; set; } = value_template ?? $"{{{{ value_json['{key}'] if (value_json['{key}'] is defined and value_json['{key}'] is not none) else states('sensor.{objectId}') }}}}";
 
     [JsonProperty("state_topic")]
     public string StateTopic { get; set; } = stateTopic;
-    [JsonProperty("json_attributes_topic")]
-    public string JsonAttributesTopic { get; set; } = attributeTopic;
     [JsonProperty("payload_on")]
-    public string PayloadOn { get; set; } = payloadOn;
+    public object PayloadOn { get; set; } = payloadOn;
     [JsonProperty("payload_off")]
-    public string PayloadOff { get; set; } = payloadOff;
+    public object PayloadOff { get; set; } = payloadOff;
 }
 

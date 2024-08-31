@@ -5,7 +5,7 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 
 
 public class SensorConfig(
-    DeviceMqtt device, string key, string name, string objectId, string stateTopic, string attributeTopic
+    DeviceMqtt device, string key, string name, string objectId, string stateTopic
         , string? icon = null
         , SensorDeviceClass? deviceClass = null
         , string? entity_category = null
@@ -21,12 +21,10 @@ public class SensorConfig(
             , icon: icon)
 {
     [JsonProperty("value_template")]
-    public string ValueTemplate { get; set; } = value_template ?? $"{{{{value_json.{key}}}}}";
+    public string ValueTemplate { get; set; } = value_template ?? $"{{{{ value_json['{key}'] if (value_json['{key}'] is defined and value_json['{key}'] is not none) else states('sensor.{objectId}') }}}}";
 
     [JsonProperty("state_topic")]
     public string StateTopic { get; set; } = stateTopic;
-    [JsonProperty("json_attributes_topic")]
-    public string JsonAttributesTopic { get; set; } = attributeTopic;
     [JsonProperty("unit_of_measurement")]
     public string? UnitOfMeasurement { get; set; } = unit_of_measurement;
     [JsonProperty("state_class")]

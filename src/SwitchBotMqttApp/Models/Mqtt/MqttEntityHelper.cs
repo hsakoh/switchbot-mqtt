@@ -8,36 +8,14 @@ namespace SwitchBotMqttApp.Models.Mqtt;
 
 public static class MqttEntityHelper
 {
-    public static string GetStateTopicByType(string deviceId, FieldSourceType fieldSourceType)
+    public static string GetStateTopic(string deviceId)
     {
-        return fieldSourceType switch
-        {
-            FieldSourceType.Status => GetSensorStateTopic(deviceId),
-            FieldSourceType.Webhook => GetWebhookTopic(deviceId),
-            _ => GetBothTopic(deviceId),
-        };
-    }
-
-    public static string GetSensorStateTopic(string deviceId)
-    {
-        return $"switchbot/{deviceId}/status/{FieldSourceType.Status.ToEnumMemberValue()}";
+        return $"switchbot/{deviceId}/status";
     }
 
     public static string GetSensorUpdateTopic(string deviceId)
     {
-        return $"switchbot/{deviceId}/status/update";
-    }
-    public static string GetAttributeTopic(string deviceId)
-    {
-        return $"switchbot/{deviceId}/attribute";
-    }
-    public static string GetWebhookTopic(string deviceId)
-    {
-        return $"switchbot/{deviceId}/status/{FieldSourceType.Webhook.ToEnumMemberValue()}";
-    }
-    public static string GetBothTopic(string deviceId)
-    {
-        return $"switchbot/{deviceId}/status/{FieldSourceType.Both.ToEnumMemberValue()}";
+        return $"switchbot/{deviceId}/polling";
     }
 
     public static string GetCommandTopic(string deviceId)
@@ -105,7 +83,7 @@ public static class MqttEntityHelper
         );
     }
 
-    public static NumberConfig CreateCommandParamNumberEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, long? min, long? max, NumberMode numberMode,string? defaultValue, string additionalObjectId = "")
+    public static NumberConfig CreateCommandParamNumberEntity(DeviceBase deviceConf, int commandIndex, CommandConfig command, DeviceMqtt deviceMqtt, CommandPayloadDefinition paramDef, long? min, long? max, NumberMode numberMode, string? defaultValue, string additionalObjectId = "")
     {
         return new NumberConfig(
             deviceMqtt

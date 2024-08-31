@@ -84,12 +84,11 @@ public class MqttCoreService(
                         , key: fieldDef.FieldName
                         , name: fieldDef.DisplayName ?? fieldDef.FieldName
                         , objectId: $"{fieldDef.FieldSourceType.ToEnumMemberValue()!}_{fieldDef.FieldName}_{deviceMqtt.Identifiers[0]}"
-                        , stateTopic: MqttEntityHelper.GetStateTopicByType(deviceMqtt.Identifiers[0], fieldDef.FieldSourceType)
-                        , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+                        , stateTopic: MqttEntityHelper.GetStateTopic(deviceMqtt.Identifiers[0])
                         , icon: fieldDef.Icon
                         , deviceClass: fieldDef.BinarySensorDeviceClass!.Value
-                        , payloadOn: fieldDef.OnValue!
-                        , payloadOff: fieldDef.OffValue!
+                        , payloadOn: fieldDef.FieldDataType == FieldDataType.Boolean ? bool.Parse(fieldDef.OnValue!) : fieldDef.OnValue!
+                        , payloadOff: fieldDef.FieldDataType == FieldDataType.Boolean ? bool.Parse(fieldDef.OffValue!) : fieldDef.OffValue!
                         , value_template: null
                     );
                 }
@@ -105,8 +104,7 @@ public class MqttCoreService(
                         , key: fieldDef.FieldName
                         , name: fieldDef.DisplayName ?? fieldDef.FieldName
                         , objectId: $"{fieldDef.FieldSourceType.ToEnumMemberValue()!}_{fieldDef.FieldName}_{deviceMqtt.Identifiers[0]}"
-                        , stateTopic: MqttEntityHelper.GetStateTopicByType(deviceMqtt.Identifiers[0], fieldDef.FieldSourceType)
-                        , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+                        , stateTopic: MqttEntityHelper.GetStateTopic(deviceMqtt.Identifiers[0])
                         , icon: fieldDef.Icon
                         , deviceClass: fieldDef.SensorDeviceClass ?? SensorDeviceClass.None
                         , entity_category: fieldDef.EntityCategory
@@ -126,8 +124,7 @@ public class MqttCoreService(
             , key: "status_timestamp"
             , name: "Status Lastupdate"
             , objectId: $"{FieldSourceType.Status.ToEnumMemberValue()!}_status_timestamp_{deviceMqtt.Identifiers[0]}"
-            , stateTopic: MqttEntityHelper.GetSensorStateTopic(deviceMqtt.Identifiers[0])
-            , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+            , stateTopic: MqttEntityHelper.GetStateTopic(deviceMqtt.Identifiers[0])
             , deviceClass: SensorDeviceClass.Timestamp
             , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "timestamp")
             );
@@ -139,8 +136,7 @@ public class MqttCoreService(
                 , key: "webhook_timestamp"
                 , name: "Webhook Lastupdate"
                 , objectId: $"{FieldSourceType.Webhook.ToEnumMemberValue()!}_webhook_timestamp_{deviceMqtt.Identifiers[0]}"
-                , stateTopic: MqttEntityHelper.GetWebhookTopic(deviceMqtt.Identifiers[0])
-                , attributeTopic: MqttEntityHelper.GetAttributeTopic(deviceMqtt.Identifiers[0])
+                , stateTopic: MqttEntityHelper.GetStateTopic(deviceMqtt.Identifiers[0])
                 , deviceClass: SensorDeviceClass.Timestamp
                 , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "timestamp")
             );
@@ -493,7 +489,6 @@ public class MqttCoreService(
             return;
         }
         var webhook = JsonNode.Parse("{}")!;
-        var both = JsonNode.Parse("{}")!;
         var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
         var contentKvDict = webhookContent.AsObject().ToDictionary();
         foreach (var rootKv in inputRawRoot.AsObject())
@@ -523,29 +518,22 @@ public class MqttCoreService(
                 continue;
             }
 
-            if (fieldDef.FieldSourceType == FieldSourceType.Webhook)
+            if (kv.Key == "deviceType") //modify device name
             {
-                webhook[fieldDef.FieldName] = kv.Value!.Copy();
-            }
-            else
-            {
-                if (kv.Key == "deviceType") //modify device name
+                if (physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
+                    || physicalDevice.DeviceType == DeviceType.CirculatorFan)
                 {
-                    if (physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
-                        || physicalDevice.DeviceType == DeviceType.CirculatorFan)
-                    {
-                        both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
-                    }
-                    else
-                    {
-                        both[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
-                            ?? deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
-                    }
+                    webhook[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
                 }
                 else
                 {
-                    both[fieldDef.FieldName] = kv.Value!.Copy();
+                    webhook[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(x => x.WebhookDeviceTypeString == kv.Value!.GetValue<string>())?.ApiDeviceTypeString
+                        ?? deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
                 }
+            }
+            else
+            {
+                webhook[fieldDef.FieldName] = kv.Value!.Copy();
             }
             if (
                 (
@@ -568,15 +556,11 @@ public class MqttCoreService(
                     && fieldDef.FieldName == "power")
               )
             {
-                both[fieldDef.FieldName] = both[fieldDef.FieldName]!.GetValue<string>().ToLower();
+                webhook[fieldDef.FieldName] = webhook[fieldDef.FieldName]!.GetValue<string>().ToLower();
             }
         }
         webhook["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        await mqttService.PublishAsync(MqttEntityHelper.GetWebhookTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
-        if (both.AsObject().Count != 0)
-        {
-            await mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
-        }
+        await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
     }
 
     public async Task PollingAndPublishStatusAsync(PhysicalDevice physicalDevice, CancellationToken cancellationToken)
@@ -585,7 +569,6 @@ public class MqttCoreService(
         {
             var rawStatus = await switchBotApiClient.GetDeviceStatus(physicalDevice.DeviceId, cancellationToken);
             var status = JsonNode.Parse("{}")!;
-            var both = JsonNode.Parse("{}")!;
 
             var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
             foreach (var kv in rawStatus.AsObject())
@@ -608,21 +591,10 @@ public class MqttCoreService(
                     logger.LogTrace("disable polling paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
-                if (fieldDef.FieldSourceType == FieldSourceType.Status)
-                {
-                    status[fieldDef.FieldName] = kv.Value!.Copy();
-                }
-                else
-                {
-                    both[fieldDef.FieldName] = kv.Value!.Copy();
-                }
+                status[fieldDef.FieldName] = kv.Value!.Copy();
             }
             status["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            await mqttService.PublishAsync(MqttEntityHelper.GetSensorStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
-            if (both.AsObject().Count != 0)
-            {
-                await mqttService.PublishAsync(MqttEntityHelper.GetBothTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(both), false);
-            }
+            await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
         }
         catch (Exception ex)
         {
