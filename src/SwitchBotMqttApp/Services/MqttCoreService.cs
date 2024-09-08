@@ -126,7 +126,7 @@ public class MqttCoreService(
             , objectId: $"{FieldSourceType.Status.ToEnumMemberValue()!}_status_timestamp_{deviceMqtt.Identifiers[0]}"
             , stateTopic: MqttEntityHelper.GetStateTopic(deviceMqtt.Identifiers[0])
             , deviceClass: SensorDeviceClass.Timestamp
-            , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "timestamp")
+            , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "status_timestamp")
             );
         await PublishEntityAsync(statusTimestamp, true);
 
@@ -138,7 +138,7 @@ public class MqttCoreService(
                 , objectId: $"{FieldSourceType.Webhook.ToEnumMemberValue()!}_webhook_timestamp_{deviceMqtt.Identifiers[0]}"
                 , stateTopic: MqttEntityHelper.GetStateTopic(deviceMqtt.Identifiers[0])
                 , deviceClass: SensorDeviceClass.Timestamp
-                , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "timestamp")
+                , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "webhook_timestamp")
             );
             await PublishEntityAsync(webhookTimestamp, true);
         }
@@ -559,7 +559,7 @@ public class MqttCoreService(
                 webhook[fieldDef.FieldName] = webhook[fieldDef.FieldName]!.GetValue<string>().ToLower();
             }
         }
-        webhook["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        webhook["webhook_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
     }
 
@@ -593,7 +593,7 @@ public class MqttCoreService(
                 }
                 status[fieldDef.FieldName] = kv.Value!.Copy();
             }
-            status["timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            status["status_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
         }
         catch (Exception ex)
