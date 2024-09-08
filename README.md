@@ -35,8 +35,10 @@ We have implemented all devices according to the published API specifications, b
 | [Curtain][CurtainProduct]                                                                                                |              [✅][CurtainList]               |         [✅][CurtainStatus]          |         [✅][CurtainWebhook]          |         [✅][CurtainCommand]          |      ✅       |
 | [Curtain3][Curtain3Product]  [[JP][Curtain3ProductJP]]                                                                   |              [✅][Curtain3List]              |         [✅][Curtain3Status]         |         [✅][Curtain3Webhook]         |         [✅][Curtain3Command]         |              |
 | [Blind Tilt][BlindTiltProduct]  [[JP][BlindTiltProductJP]]                                                               |             [✅][BlindTiltList]              |        [✅][BlindTiltStatus]         |                  -                   |        [✅][BlindTiltCommand]         |              |
+| [Roller Shade][RollerShadeProduct]                                                                                       |                      -                      |                                     |                                      |                                      |              |
 | [Universal Remote][UniversalRemoteProduct]  [[JP][UniversalRemoteProductJP]]                                             |                      -                      |                  ✅                  |                  -                   |                  -                   |      ✅       |
-| Wallet Finder Card  [[JP][WalletFinderCardProductJP]]                                                                    |                      -                      |                                     |                                      |                                      |      📦      |
+| [Wallet Finder Card][WalletFinderCardProduct]  [[JP][WalletFinderCardProductJP]]                                         |                      -                      |                                     |                                      |                                      |      📦      |
+| [Relay Switch][RelaySwitchProduct]  [[JP][WalletFinderCardProductJP]]                                                    |                      -                      |                                     |                                      |                                      |              |
 | **Home Appliance**                                                                                                       |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
 | Humidifier  [[JP][HumidifierProductJP]]                                                                                  |             [✅][HumidifierList]             |        [✅][HumidifierStatus]        |                  -                   |        [✅][HumidifierCommand]        |              |
 | Evaporative Humidifier  [[JP][EvaporativeHumidifierProductJP]]                                                           |                      -                      |                                     |                                      |                                      |              |
@@ -44,16 +46,20 @@ We have implemented all devices according to the published API specifications, b
 | Fan                                                                                                                      |                      -                      |                                     |                                      |                                      |              |
 | [Battery Circulator Fan][BatteryCirculatorFanProduct]  [[JP][BatteryCirculatorFanProductJP]]                             |        [✅][BatteryCirculatorFanList]        |   [✅][BatteryCirculatorFanStatus]   |   [✅][BatteryCirculatorFanWebhook]   |   [✅][BatteryCirculatorFanCommand]   |              |
 | Circulator Fan Lite  [[JP][CirculatorFanLiteProductJP]]                                                                  |                      -                      |                  ✅                  |                  ✅                   |                  ✅                   |      ✅       |
+| [Air Purifier][AirPurifierProduct]                                                                                       |                      -                      |                                     |                                      |                                      |              |
+| [Air Purifier Table][AirPurifierTableProduct]                                                                            |                      -                      |                                     |                                      |                                      |              |
 | **Robot Vacuum**                                                                                                         |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
 | Robot Vacuum Cleaner S1  [[JP][RobotVacuumCleanerS1ProductJP]]                                                           |        [✅][RobotVacuumCleanerS1List]        |   [✅][RobotVacuumCleanerS1Status]   |   [✅][RobotVacuumCleanerS1Webhook]   |   [✅][RobotVacuumCleanerS1Command]   |              |
 | Robot Vacuum Cleaner S1 Plus  [[JP][RobotVacuumCleanerS1PlusProductJP]]                                                  |      [✅][RobotVacuumCleanerS1PlusList]      | [✅][RobotVacuumCleanerS1PlusStatus] | [✅][RobotVacuumCleanerS1PlusWebhook] | [✅][RobotVacuumCleanerS1PlusCommand] |              |
 | [Mini Robot Vacuum K10+][MiniRobotVacuumK10+Product]  [[JP][MiniRobotVacuumK10+ProductJP]]                               |        [✅][MiniRobotVacuumK10+List]         |   [✅][MiniRobotVacuumK10+Status]    |   [✅][MiniRobotVacuumK10+Webhook]    |   [✅][MiniRobotVacuumK10+Command]    |              |
 | [Mini Robot Vacuum K10+ Pro][MiniRobotVacuumK10+ProProduct]  [[JP][MiniRobotVacuumK10+ProProductJP]]                     |       [✅][MiniRobotVacuumK10+ProList]       |  [✅][MiniRobotVacuumK10+ProStatus]  |  [✅][MiniRobotVacuumK10+ProWebhook]  |  [✅][MiniRobotVacuumK10+ProCommand]  |              |
 | [Floor Cleaning Robot S10][FloorCleaningRobotS10Product]  [[JP][FloorCleaningRobotS10ProductJP]]                         |       [✅][FloorCleaningRobotS10List]        |  [✅][FloorCleaningRobotS10Status]   |  [✅][FloorCleaningRobotS10Webhook]   |  [✅][FloorCleaningRobotS10Command]   |              |
+| [K10+ Pro Combo][K10+ProComboProduct]                                                                                    |                                             |                                     |                                      |                                      |              |
 | **Sensor**                                                                                                               |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
 | [Meter][MeterProduct]  [[JP][MeterProductJP]]                                                                            |               [✅][MeterList]                |          [✅][MeterStatus]           |          [✅][MeterWebhook]           |                  -                   |              |
 | [Meter Plus][MeterPlusProduct]  [[JP][MeterPlusProductJP]]                                                               |             [✅][MeterPlusList]              |        [✅][MeterPlusStatus]         |        [✅][MeterPlusWebhook]         |                  -                   |      ✅       |
-| Meter Pro                                                                                                                |                      -                      |                                     |                                      |                                      |              |
+| [Meter Pro][MeterProProduct]                                                                                             |                      -                      |                                     |                                      |                                      |              |
+| [Meter Pro (CO2 Monitor)][MeterProCO2MonitorProduct]                                                                     |                      -                      |                                     |                                      |                                      |              |
 | [Outdoor Meter][OutdoorMeterProduct]  [[JP][OutdoorMeterProductJP]]                                                      |            [✅][OutdoorMeterList]            |       [✅][OutdoorMeterStatus]       |       [✅][OutdoorMeterWebhook]       |                  -                   |              |
 | [Motion Sensor][MotionSensorProduct]  [[JP][MotionSensorProductJP]]                                                      |            [✅][MotionSensorList]            |       [✅][MotionSensorStatus]       |       [✅][MotionSensorWebhook]       |                  -                   |      ✅       |
 | [Contact Sensor][ContactSensorProduct]  [[JP][ContactSensorProductJP]]                                                   |           [✅][ContactSensorList]            |      [✅][ContactSensorStatus]       |      [✅][ContactSensorWebhook]       |                  -                   |      ✅       |
@@ -118,9 +124,12 @@ We have implemented all devices according to the published API specifications, b
 [BlindTiltList]: https://github.com/OpenWonderLabs/SwitchBotAPI#blind-tilt
 [BlindTiltStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#blind-tilt-1
 [BlindTiltCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#blind-tilt-2
+[RollerShadeProduct]: https://www.switch-bot.com/products/switchbot-roller-shade
 [UniversalRemoteProduct]: https://www.switch-bot.com/products/switchbot-universal-remote
 [UniversalRemoteProductJP]: https://www.switchbot.jp/products/switchbot-universal-remote
+[WalletFinderCardProduct]: https://www.switch-bot.com/products/switchbot-wallet-finder-card
 [WalletFinderCardProductJP]: https://www.switchbot.jp/products/switchbot-wallet-finder-card
+[RelaySwitchProduct]: https://www.switch-bot.com/pages/switchbot-relay-switch
 [HumidifierProductJP]: https://www.switchbot.jp/products/switchbot-smart-humidifier?variant=40981225799855
 [HumidifierList]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier
 [HumidifierStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier-1
@@ -135,6 +144,8 @@ We have implemented all devices according to the published API specifications, b
 [BatteryCirculatorFanWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#battery-circulator-fan-3
 [BatteryCirculatorFanCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#battery-circulator-fan-2
 [CirculatorFanLiteProductJP]: https://www.switchbot.jp/products/switchbot-smart-circulator-fan?variant=44221010182319
+[AirPurifierProduct]: https://www.switch-bot.com/products/switchbot-air-purifier
+[AirPurifierTableProduct]: https://www.switch-bot.com/products/switchbot-air-purifier-table
 [RobotVacuumCleanerS1ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner?variant=41850919420079
 [RobotVacuumCleanerS1List]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-cleaner-s1
 [RobotVacuumCleanerS1Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-cleaner-s1-1
@@ -163,6 +174,7 @@ We have implemented all devices according to the published API specifications, b
 [FloorCleaningRobotS10Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s10-1
 [FloorCleaningRobotS10Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s10-3
 [FloorCleaningRobotS10Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s10-2
+[K10+ProComboProduct]: https://www.switch-bot.com/products/switchbot-k10-pro-combo
 [MeterProduct]: https://www.switch-bot.com/products/switchbot-meter
 [MeterProductJP]: https://www.switchbot.jp/products/switchbot-meter
 [MeterList]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter
@@ -173,6 +185,8 @@ We have implemented all devices according to the published API specifications, b
 [MeterPlusList]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-plus
 [MeterPlusStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-plus-1
 [MeterPlusWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-plus-2
+[MeterProProduct]: https://www.switch-bot.com/products/switchbot-meter-pro
+[MeterProCO2MonitorProduct]: https://www.switch-bot.com/products/switchbot-meter-pro-co2-monitor
 [OutdoorMeterProduct]: https://www.switch-bot.com/products/switchbot-indoor-outdoor-thermo-hygrometer
 [OutdoorMeterProductJP]: https://www.switchbot.jp/products/switchbot-indoor-outdoor-meter
 [OutdoorMeterList]: https://github.com/OpenWonderLabs/SwitchBotAPI#outdoor-meter
