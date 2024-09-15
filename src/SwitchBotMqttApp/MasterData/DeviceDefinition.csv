@@ -38,6 +38,7 @@ CirculatorFan,Circulator Fan,,WoFan2,PhysicalDevice,TRUE,TRUE,TRUE,,Circulator F
 UniversalRemote,remote with screen,,,PhysicalDevice,TRUE,FALSE,FALSE,,Universal Remote,学習リモコン
 PanTiltCamPlus5mp,Pan/Tilt Cam Plus 5MP,,WoCamKvs5mp,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam Plus(5MP),見守りカメラ Plus 5MP
 OutdoorSpotlightCam2K,Outdoor Spotlight Cam 2K,,,PhysicalDevice,FALSE,FALSE,FALSE,,Outdoor Spotlight Cam 2K,屋外カメラ 3MP
+WalletFinderCard,Wallet Finder Card,,WoFinderCard,PhysicalDevice,FALSE,FALSE,FALSE,,Wallet Finder Card,トラッカーカード
 AirConditioner,Air Conditioner,DIY Air Conditioner,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Air Conditioner,エアコン
 TV,TV,DIY TV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,TV,テレビ
 IPTV,IPTV,DIY IPTV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,IPTV,メディアストリーミング

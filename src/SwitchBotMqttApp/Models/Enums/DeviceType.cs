@@ -46,6 +46,7 @@ public enum DeviceType
     UniversalRemote,
     PanTiltCamPlus5mp,
     OutdoorSpotlightCam2K,
+    WalletFinderCard,
 
     //VirtualInfraredRemoteDevice
     AirConditioner,
