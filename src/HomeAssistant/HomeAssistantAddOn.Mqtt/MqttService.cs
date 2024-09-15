@@ -31,6 +31,34 @@ public class MqttService : IDisposable
         var mqttFactory = new MqttFactory();
         _mqttClient = mqttFactory.CreateManagedMqttClient();
         _mqttClient.ApplicationMessageReceivedAsync += ApplicationMessageReceivedAsync;
+        _mqttClient.ConnectingFailedAsync += ConnectingFailedAsync;
+        _mqttClient.ApplicationMessageSkippedAsync += ApplicationMessageSkippedAsync;
+        _mqttClient.DisconnectedAsync += DisconnectedAsync;
+        _mqttClient.ConnectedAsync += ConnectedAsync;
+    }
+
+    private Task ConnectedAsync(MqttClientConnectedEventArgs args)
+    {
+        _logger.LogTrace("Connected {ConnectionResult}", JsonConvert.SerializeObject(args.ConnectResult));
+        return Task.CompletedTask;
+    }
+
+    private Task DisconnectedAsync(MqttClientDisconnectedEventArgs args)
+    {
+        _logger.LogTrace(args.Exception, "Disconnected {ConnectionResult},{Reason}", JsonConvert.SerializeObject(args.ConnectResult), args.ReasonString);
+        return Task.CompletedTask;
+    }
+
+    private Task ApplicationMessageSkippedAsync(ApplicationMessageSkippedEventArgs args)
+    {
+        _logger.LogError("ApplicationMessageSkipped {Topic}", args.ApplicationMessage.ApplicationMessage.Topic);
+        return Task.CompletedTask;
+    }
+
+    private Task ConnectingFailedAsync(ConnectingFailedEventArgs args)
+    {
+        _logger.LogError(args.Exception, "ConnectingFailed {ConnectionResult}", JsonConvert.SerializeObject(args.ConnectResult));
+        return Task.CompletedTask;
     }
 
     public async Task StartAsync()

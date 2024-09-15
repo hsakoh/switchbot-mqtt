@@ -10,7 +10,8 @@
       "applicationUrl": "http://localhost:8098;http://localhost:8099",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "OVERRIDE_DATA_PATH": "..\\..\\data\\"
+        "OVERRIDE_DATA_PATH": "..\\..\\data\\",
+        "--Logging__LogLevel__HomeAssistantAddOn": "Trace"
       }
     }
   }
