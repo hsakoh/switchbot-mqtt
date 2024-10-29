@@ -45,7 +45,7 @@ We have implemented all devices according to the published API specifications, b
 | [Evaporative Humidifier Auto-refill(Plus)][EvaporativeHumidifierPlusProduct]  [[JP][EvaporativeHumidifierPlusProductJP]] |                      -                      |                                     |                                      |                                      |              |
 | Fan                                                                                                                      |                      -                      |                                     |                                      |                                      |              |
 | [Battery Circulator Fan][BatteryCirculatorFanProduct]  [[JP][BatteryCirculatorFanProductJP]]                             |        [✅][BatteryCirculatorFanList]        |   [✅][BatteryCirculatorFanStatus]   |   [✅][BatteryCirculatorFanWebhook]   |   [✅][BatteryCirculatorFanCommand]   |              |
-| Circulator Fan Lite  [[JP][CirculatorFanLiteProductJP]]                                                                  |                      -                      |                  ✅                  |                  ✅                   |                  ✅                   |      ✅       |
+| [Circulator Fan][CirculatorFanLiteProduct]  [[JP][CirculatorFanLiteProductJP]]                                           |           [✅][CirculatorFanList]            |      [✅][CirculatorFanStatus]       |      [✅][CirculatorFanWebhook]       |      [✅][CirculatorFanCommand]       |      ✅       |
 | [Air Purifier][AirPurifierProduct]                                                                                       |                      -                      |                                     |                                      |                                      |              |
 | [Air Purifier Table][AirPurifierTableProduct]                                                                            |                      -                      |                                     |                                      |                                      |              |
 | **Robot Vacuum**                                                                                                         |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
@@ -58,8 +58,8 @@ We have implemented all devices according to the published API specifications, b
 | **Sensor**                                                                                                               |                      -                      |                  -                  |                  -                   |                  -                   |      -       |
 | [Meter][MeterProduct]  [[JP][MeterProductJP]]                                                                            |               [✅][MeterList]                |          [✅][MeterStatus]           |          [✅][MeterWebhook]           |                  -                   |              |
 | [Meter Plus][MeterPlusProduct]  [[JP][MeterPlusProductJP]]                                                               |             [✅][MeterPlusList]              |        [✅][MeterPlusStatus]         |        [✅][MeterPlusWebhook]         |                  -                   |      ✅       |
-| [Meter Pro][MeterProProduct]  [[JP][MeterProProductJP]]                                                                  |                      -                      |                                     |                                      |                                      |              |
-| [Meter Pro (CO2 Monitor)][MeterProCO2MonitorProduct]  [[JP][MeterProCO2MonitorProductJP]]                                |                      -                      |                                     |                                      |                                      |              |
+| [Meter Pro][MeterProProduct]  [[JP][MeterProProductJP]]                                                                  |              [✅][MeterProList]              |         [✅][MeterProStatus]         |         [✅][MeterProWebhook]         |                  -                   |              |
+| [Meter Pro (CO2 Monitor)][MeterProCO2MonitorProduct]  [[JP][MeterProCO2MonitorProductJP]]                                |         [✅][MeterProCO2MonitorList]         |    [✅][MeterProCO2MonitorStatus]    |    [✅][MeterProCO2MonitorWebhook]    |                  -                   |      ✅       |
 | [Outdoor Meter][OutdoorMeterProduct]  [[JP][OutdoorMeterProductJP]]                                                      |            [✅][OutdoorMeterList]            |       [✅][OutdoorMeterStatus]       |       [✅][OutdoorMeterWebhook]       |                  -                   |              |
 | [Motion Sensor][MotionSensorProduct]  [[JP][MotionSensorProductJP]]                                                      |            [✅][MotionSensorList]            |       [✅][MotionSensorStatus]       |       [✅][MotionSensorWebhook]       |                  -                   |      ✅       |
 | [Contact Sensor][ContactSensorProduct]  [[JP][ContactSensorProductJP]]                                                   |           [✅][ContactSensorList]            |      [✅][ContactSensorStatus]       |      [✅][ContactSensorWebhook]       |                  -                   |      ✅       |
@@ -138,13 +138,18 @@ We have implemented all devices according to the published API specifications, b
 [EvaporativeHumidifierProductJP]: https://www.switchbot.jp/products/switchbot-evaporative-humidifier
 [EvaporativeHumidifierPlusProduct]: https://us.switch-bot.com/products/switchbot-evaporative-humidifier-auto-refill
 [EvaporativeHumidifierPlusProductJP]: https://www.switchbot.jp/products/switchbot-evaporative-humidifier-plus
-[BatteryCirculatorFanProduct]: https://us.switch-bot.com/products/switchbot-battery-circulator-fan
+[BatteryCirculatorFanProduct]: https://www.switch-bot.com/products/switchbot-battery-circulator-fan?variant=46175199756455
 [BatteryCirculatorFanProductJP]: https://www.switchbot.jp/products/switchbot-smart-circulator-fan?variant=44020075167919
 [BatteryCirculatorFanList]: https://github.com/OpenWonderLabs/SwitchBotAPI#battery-circulator-fan
 [BatteryCirculatorFanStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#battery-circulator-fan-1
 [BatteryCirculatorFanWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#battery-circulator-fan-3
 [BatteryCirculatorFanCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#battery-circulator-fan-2
+[CirculatorFanLiteProduct]: https://www.switch-bot.com/products/switchbot-battery-circulator-fan?variant=46175199789223
 [CirculatorFanLiteProductJP]: https://www.switchbot.jp/products/switchbot-smart-circulator-fan?variant=44221010182319
+[CirculatorFanList]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan
+[CirculatorFanStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan-1
+[CirculatorFanWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan-3
+[CirculatorFanCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan-2
 [AirPurifierProduct]: https://www.switch-bot.com/products/switchbot-air-purifier
 [AirPurifierTableProduct]: https://www.switch-bot.com/products/switchbot-air-purifier-table
 [RobotVacuumCleanerS1ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner?variant=41850919420079
@@ -188,8 +193,14 @@ We have implemented all devices according to the published API specifications, b
 [MeterPlusWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-plus-2
 [MeterProProduct]: https://www.switch-bot.com/products/switchbot-meter-pro
 [MeterProProductJP]: https://www.switchbot.jp/products/switchbot-meter-pro
+[MeterProList]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-pro
+[MeterProStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-pro-1
+[MeterProWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-pro-2
 [MeterProCO2MonitorProduct]: https://www.switch-bot.com/products/switchbot-meter-pro-co2-monitor
 [MeterProCO2MonitorProductJP]: https://www.switchbot.jp/products/switchbot-co2-meter
+[MeterProCO2MonitorList]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-pro-co2-monitor
+[MeterProCO2MonitorStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-pro-co2-1
+[MeterProCO2MonitorWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter-pro-co2-monitor-2
 [OutdoorMeterProduct]: https://www.switch-bot.com/products/switchbot-indoor-outdoor-thermo-hygrometer
 [OutdoorMeterProductJP]: https://www.switchbot.jp/products/switchbot-indoor-outdoor-meter
 [OutdoorMeterList]: https://github.com/OpenWonderLabs/SwitchBotAPI#outdoor-meter
