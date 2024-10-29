@@ -87,6 +87,7 @@ We have implemented all devices according to the published API specifications, b
 | Ceiling Light Pro  [[JP][CeilingLightProProductJP]]                                                                      |          [✅][CeilingLightProList]           |     [✅][CeilingLightProStatus]      |     [✅][CeilingLightProWebhook]      |     [✅][CeilingLightProCommand]      |              |
 | [Color Bulb][ColorBulbProduct]  [[JP][ColorBulbProductJP]]                                                               |             [✅][ColorBulbList]              |        [✅][ColorBulbStatus]         |        [✅][ColorBulbWebhook]         |        [✅][ColorBulbCommand]         |      ✅       |
 | [Strip Light][StripLightProduct]  [[JP][StripLightProductJP]]                                                            |             [✅][StripLightList]             |        [✅][StripLightStatus]        |        [✅][StripLightWebhook]        |        [✅][StripLightCommand]        |              |
+| Strip Light2  [[JP][StripLight2ProductJP]]                                                                               |                                             |                                     |                                      |                                      |              |
 
 [GetDeviceList]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-list
 [StatusAPI]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-status
@@ -287,6 +288,7 @@ We have implemented all devices according to the published API specifications, b
 [StripLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#strip-light-1
 [StripLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#led-strip-light
 [StripLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#strip-light-2
+[StripLight2ProductJP]: https://www.switchbot.jp/products/switchbot-strip-light2
 
 ### Virtual Infrared Remote Devices
 

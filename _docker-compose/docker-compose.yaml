@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   switchbot-mqtt:
-    image: ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.25
+    image: ghcr.io/hsakoh/switchbotmqtt-amd64:1.0.28
+    container_name: switchbot-mqtt
     volumes:
       - ./:/data
     ports:

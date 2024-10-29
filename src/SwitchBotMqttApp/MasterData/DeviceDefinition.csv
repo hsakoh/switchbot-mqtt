@@ -9,6 +9,8 @@ Hub2,Hub 2,,WoHub2,PhysicalDevice,TRUE,TRUE,FALSE,,Hub 2,ハブ 2
 Meter,Meter,,WoMeter,PhysicalDevice,TRUE,TRUE,FALSE,,Meter,温湿度計
 MeterPlus,MeterPlus,,WoMeterPlus,PhysicalDevice,TRUE,TRUE,FALSE,,MeterPlus,温湿度計プラス
 OutdoorMeter,WoIOSensor,,WoIOSensor,PhysicalDevice,TRUE,TRUE,FALSE,,WoIOSensor,防水温湿度計
+MeterPro,MeterPro,,MeterPro,PhysicalDevice,TRUE,TRUE,FALSE,,MeterPro ,温湿度計 Pro
+MeterProCO2,MeterPro(CO2),,MeterPro(CO2),PhysicalDevice,TRUE,TRUE,FALSE,,MeterPro (CO2 Monitor),CO2センサー（温湿度計）
 Lock,Smart Lock,,WoLock,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock,ロック
 LockPro,Smart Lock Pro,,WoLockPro,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock Pro,ロック Pro
 Keypad,Keypad,,WoKeypad,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad,キーパッド

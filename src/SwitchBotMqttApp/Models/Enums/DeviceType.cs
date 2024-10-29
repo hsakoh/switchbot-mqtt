@@ -17,6 +17,8 @@ public enum DeviceType
     Meter,
     MeterPlus,
     OutdoorMeter,
+    MeterPro,
+    MeterProCO2,
     Lock,
     LockPro,
     Keypad,
