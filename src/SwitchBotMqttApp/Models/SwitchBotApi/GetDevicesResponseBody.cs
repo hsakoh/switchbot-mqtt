@@ -21,12 +21,14 @@ public class GetDevicesResponseBody
         [JsonPropertyName("hubDeviceId")]
         public string HubDeviceId { get; set; } = default!;
 
-        //BlindTilt,Curtain
+        //BlindTilt,Curtain,Roller Shade
 
         [JsonPropertyName("curtainDevicesIds")]
         public string[]? CurtainDevicesIds { get; set; }
         [JsonPropertyName("blindTiltDevicesIds")]
         public string[]? BlindTiltDevicesIds { get; set; }
+        [JsonPropertyName("groupingDevicesIds")]
+        public string[]? GroupingDevicesIds { get; set; }
         [JsonPropertyName("calibrate")]
         public bool? Calibrate { get; set; }
         [JsonPropertyName("group")]
@@ -41,6 +43,8 @@ public class GetDevicesResponseBody
         public string? OpenDirection { get; set; }
         [JsonPropertyName("version")]
         public int Version { get; set; }
+        [JsonPropertyName("bleVersion")]
+        public int BleVersion { get; set; }
 
         // Lock 
         [JsonPropertyName("groupName")]

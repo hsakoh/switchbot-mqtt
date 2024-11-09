@@ -308,7 +308,7 @@ public class MqttCoreService(
             var commandType = payload.CommandType.ToEnumFromEnumMember<CommandType>()!;
 
             var commandConf = device.Commands.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
-            var commandDef = deviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
+            var commandDef = deviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.DeviceType == device.DeviceType && c.CommandType == commandType && c.Command == payload.Command);
 
             if (commandConf == null)
             {
@@ -552,7 +552,12 @@ public class MqttCoreService(
                     || fieldDef.DeviceType == DeviceType.StripLight
                     || fieldDef.DeviceType == DeviceType.ColorBulb
                     || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan
-                    || fieldDef.DeviceType == DeviceType.CirculatorFan)
+                    || fieldDef.DeviceType == DeviceType.CirculatorFan
+                    || fieldDef.DeviceType == DeviceType.EvaporativeHumidifier
+                    || fieldDef.DeviceType == DeviceType.AirPurifierPM25
+                    || fieldDef.DeviceType == DeviceType.AirPurifierTablePM25
+                    || fieldDef.DeviceType == DeviceType.AirPurifierVOC
+                    || fieldDef.DeviceType == DeviceType.AirPurifierTableVOC)
                     && fieldDef.FieldName == "power")
               )
             {
@@ -571,7 +576,27 @@ public class MqttCoreService(
             var status = JsonNode.Parse("{}")!;
 
             var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+
+            List<KeyValuePair<string, JsonNode?>> keyValuePairs = [];
             foreach (var kv in rawStatus.AsObject())
+            {
+                if(kv.Value?.GetValueKind() == JsonValueKind.Object)
+                {
+                    // EvaporativeHumidifier
+                    //  filterElement.effectiveUsageHours
+                    //  filterElement.usedHours
+                    foreach (var nestKv in kv.Value!.AsObject())
+                    {
+                        keyValuePairs.Add(new KeyValuePair<string, JsonNode?>($"{kv.Key}.{nestKv.Key}", nestKv.Value));
+                    }
+                }
+                else
+                {
+                    keyValuePairs.Add(kv);
+                }
+            }
+
+            foreach (var kv in keyValuePairs)
             {
                 var fieldDef = fieldDefs.FirstOrDefault(f => f.StatusKey == kv.Key);
                 if (fieldDef == null)
@@ -592,6 +617,18 @@ public class MqttCoreService(
                     continue;
                 }
                 status[fieldDef.FieldName] = kv.Value!.Copy();
+                if (
+                    (
+                        (fieldDef.DeviceType == DeviceType.EvaporativeHumidifier
+                        || fieldDef.DeviceType == DeviceType.AirPurifierPM25
+                        || fieldDef.DeviceType == DeviceType.AirPurifierTablePM25
+                        || fieldDef.DeviceType == DeviceType.AirPurifierVOC
+                        || fieldDef.DeviceType == DeviceType.AirPurifierTableVOC)
+                        && fieldDef.FieldName == "power")
+                  )
+                {
+                    status[fieldDef.FieldName] = status[fieldDef.FieldName]!.GetValue<string>().ToLower();
+                }
             }
             status["status_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
