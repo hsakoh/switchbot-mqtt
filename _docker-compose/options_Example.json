@@ -24,5 +24,9 @@
     "UseNgrok": true,
     "NgrokAuthToken": "<Configuration required only when using Webhook with ngrok>",
     "HostUrl": "<Configuration required only when using Webhook without ngrok>"
+  },
+  "MessageRetain": {
+    "Entity": true,
+    "State": false
   }
 }

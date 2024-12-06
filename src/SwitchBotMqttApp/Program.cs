@@ -64,6 +64,11 @@ public class Program
             {
                 configuration.GetSection("WebhookService").Bind(settings);
             });
+        builder.Services.AddOptions<MessageRetainOptions>().
+            Configure<IConfiguration>((settings, configuration) =>
+            {
+                configuration.GetSection("MessageRetain").Bind(settings);
+            });
 
         builder.Services.AddSingleton<DeviceConfigurationManager>();
         builder.Services.AddSingleton<DeviceDefinitionsManager>();

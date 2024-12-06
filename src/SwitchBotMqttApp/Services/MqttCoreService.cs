@@ -1,4 +1,6 @@
 ﻿using HomeAssistantAddOn.Mqtt;
+using Microsoft.Extensions.Options;
+using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Logics;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
 using SwitchBotMqttApp.Models.DeviceDefinitions;
@@ -16,7 +18,8 @@ public class MqttCoreService(
         , DeviceConfigurationManager deviceConfigurationManager
         , DeviceDefinitionsManager deviceDefinitionsManager
         , MqttService mqttService
-        , SwitchBotApiClient switchBotApiClient) : ManagedServiceBase
+        , SwitchBotApiClient switchBotApiClient
+        , IOptions<MessageRetainOptions> messageRetailOptions) : ManagedServiceBase
 {
     public DevicesConfig CurrentDevicesConfig { get; set; } = default!;
 
@@ -117,7 +120,7 @@ public class MqttCoreService(
             }).ToList();
         foreach (var e in statusEntities)
         {
-            await PublishEntityAsync(e, true);
+            await PublishEntityAsync(e);
         }
 
         var statusTimestamp = new SensorConfig(deviceMqtt
@@ -128,7 +131,7 @@ public class MqttCoreService(
             , deviceClass: SensorDeviceClass.Timestamp
             , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "status_timestamp")
             );
-        await PublishEntityAsync(statusTimestamp, true);
+        await PublishEntityAsync(statusTimestamp);
 
         if (deviceDef.IsSupportWebhook && physicalDevice.UseWebhook)
         {
@@ -140,11 +143,11 @@ public class MqttCoreService(
                 , deviceClass: SensorDeviceClass.Timestamp
                 , value_template: UnixTimeValueTemplateFormat.Replace("%FIELD%", "webhook_timestamp")
             );
-            await PublishEntityAsync(webhookTimestamp, true);
+            await PublishEntityAsync(webhookTimestamp);
         }
 
         //subscribe update action
-        await PublishEntityAsync(MqttEntityHelper.CreateSensorUpdateButtonEntity(deviceMqtt, physicalDevice), true);
+        await PublishEntityAsync(MqttEntityHelper.CreateSensorUpdateButtonEntity(deviceMqtt, physicalDevice));
         mqttService.Subscribe(MqttEntityHelper.GetSensorUpdateTopic(physicalDevice.DeviceId), async (payload) => await PollingAndPublishStatusAsync(physicalDevice, CancellationToken.None));
 
 
@@ -154,9 +157,9 @@ public class MqttCoreService(
 
     private const string UnixTimeValueTemplateFormat = "{% set ts = value_json.get('%FIELD%', {})  %} {% if ts %}\n  {{ (ts / 1000) | timestamp_local | as_datetime }}\n{% else %}\n  {{ this.state }}\n{% endif %}";
 
-    private async Task PublishEntityAsync(MqttEntityBase payload, bool retain)
+    private async Task PublishEntityAsync(MqttEntityBase payload)
     {
-        await mqttService.PublishAsync(payload.Topic, payload, retain);
+        await mqttService.PublishAsync(payload.Topic, payload, messageRetailOptions.Value.Entity);
     }
 
     private async Task PublishCommandEntities(DeviceMqtt deviceMqtt, DeviceBase deviceConf)
@@ -280,19 +283,19 @@ public class MqttCoreService(
 
         foreach (var e in buttonEntities)
         {
-            await PublishEntityAsync(e, true);
+            await PublishEntityAsync(e);
         }
         foreach (var e in numberEntities)
         {
-            await PublishEntityAsync(e, true);
+            await PublishEntityAsync(e);
         }
         foreach (var e in selectEntities)
         {
-            await PublishEntityAsync(e, true);
+            await PublishEntityAsync(e);
         }
         foreach (var e in textEntities)
         {
-            await PublishEntityAsync(e, true);
+            await PublishEntityAsync(e);
         }
     }
 
@@ -341,7 +344,7 @@ public class MqttCoreService(
                             name: $"{device.DeviceName}-{commandDef.Command}",
                             manufacturer: deviceMqtt.Manufacturer,
                             model: deviceMqtt.Model);
-                    await PublishEntityAsync(MqttEntityHelper.CreateKeypadDeleteKeySelectEntity(device, commandIndex, commandConf, deviceMqttForCommand, paramDef, keys), true);
+                    await PublishEntityAsync(MqttEntityHelper.CreateKeypadDeleteKeySelectEntity(device, commandIndex, commandConf, deviceMqttForCommand, paramDef, keys));
                     payloadDict[paramDef.Name] = "";
                     return;
                 }
@@ -565,7 +568,7 @@ public class MqttCoreService(
             }
         }
         webhook["webhook_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), false);
+        await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), messageRetailOptions.Value.State);
     }
 
     public async Task PollingAndPublishStatusAsync(PhysicalDevice physicalDevice, CancellationToken cancellationToken)
@@ -580,7 +583,7 @@ public class MqttCoreService(
             List<KeyValuePair<string, JsonNode?>> keyValuePairs = [];
             foreach (var kv in rawStatus.AsObject())
             {
-                if(kv.Value?.GetValueKind() == JsonValueKind.Object)
+                if (kv.Value?.GetValueKind() == JsonValueKind.Object)
                 {
                     // EvaporativeHumidifier
                     //  filterElement.effectiveUsageHours
@@ -631,7 +634,7 @@ public class MqttCoreService(
                 }
             }
             status["status_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), false);
+            await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), messageRetailOptions.Value.State);
         }
         catch (Exception ex)
         {
@@ -645,7 +648,7 @@ public class MqttCoreService(
         foreach (var scene in sceneList)
         {
             //subscribe update action
-            await PublishEntityAsync(MqttEntityHelper.CreateSceneEntity(scene.SceneName, scene.SceneId), true);
+            await PublishEntityAsync(MqttEntityHelper.CreateSceneEntity(scene.SceneName, scene.SceneId));
         }
         mqttService.Subscribe(MqttEntityHelper.GetSceneCommandTopic(), async (payload) =>
         {
