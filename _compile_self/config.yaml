@@ -1,6 +1,6 @@
 name: "SwitchBot-Mqtt"
 description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
-version: "1.0.30"
+version: "1.0.31"
 slug: "switchbot_mqtt"
 url: "https://github.com/hsakoh/switchbot-mqtt"
 ports:
@@ -24,6 +24,7 @@ options:
     Pw: ''
     Tls: false
   SwitchBot: 
+    ApiBaseUrl: 'https://api.switch-bot.com/v1.1/'
     ApiKey: ''
     ApiSecret: ''
   EnforceDeviceTypes:
@@ -48,6 +49,7 @@ schema:
     Pw: password?
     Tls: bool?
   SwitchBot: 
+    ApiBaseUrl: str
     ApiKey: str
     ApiSecret: password
   EnforceDeviceTypes:

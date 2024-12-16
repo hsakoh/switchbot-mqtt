@@ -10,6 +10,7 @@
     "Tls": false
   },
   "SwitchBot": {
+    "ApiBaseUrl": "https://api.switch-bot.com/v1.1/",
     "ApiKey": "",
     "ApiSecret": ""
   },

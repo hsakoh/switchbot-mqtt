@@ -25,7 +25,7 @@ public class SwitchBotApiClient
         _logger = logger;
         _switchBotOptions = switchBotOptions;
         _switchBotHttpClient = httpClientFactory.CreateClient(nameof(SwitchBotApiClient));
-        _switchBotHttpClient.BaseAddress = new Uri($"https://api.switch-bot.com/v1.1/");
+        _switchBotHttpClient.BaseAddress = new Uri(_switchBotOptions.Value.ApiBaseUrl);
         _switchBotHttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
