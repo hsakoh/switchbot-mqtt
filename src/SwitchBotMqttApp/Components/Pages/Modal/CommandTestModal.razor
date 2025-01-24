@@ -183,7 +183,7 @@
             }
             else if (CommandDef.PayloadType == PayloadType.Json)
             {
-                var jsonRoot = JsonNode.Parse("{}")!;
+                JsonNode jsonRoot = new JsonObject();
                 CommandParams.ForEach(commandParam =>
                 {
                     var paramDef = commandParam.def;
@@ -192,7 +192,7 @@
                     {
                         if (jsonRoot[paramDef.Path] == null)
                         {
-                            jsonRoot[paramDef.Path] = JsonNode.Parse("{}")!;
+                            jsonRoot[paramDef.Path] = new JsonObject();
                         }
                         json = jsonRoot[paramDef.Path]!;
                     }

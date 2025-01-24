@@ -72,6 +72,7 @@ public class Program
 
         builder.Services.AddSingleton<DeviceConfigurationManager>();
         builder.Services.AddSingleton<DeviceDefinitionsManager>();
+        builder.Services.AddSingleton<DeviceStatePersistanceManager>();
         builder.Services.AddSingleton<SwitchBotApiClient>();
         builder.Services.AddHttpContextAccessor();
 

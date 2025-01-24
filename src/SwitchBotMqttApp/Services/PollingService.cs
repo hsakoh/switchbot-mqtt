@@ -17,7 +17,7 @@ public class PollingService(
                 Status = ServiceStatus.Failed;
                 return Task.CompletedTask;
             }
-            var pollingDevice = mqttCoreService.CurrentDevicesConfig.PhysicalDevices.Where(d => d.UsePolling).ToList();
+            var pollingDevice = mqttCoreService.CurrentDevicesConfig.PhysicalDevices.Where(d => d.UsePolling && d.Enable).ToList();
             pollingDevice.ForEach(d =>
             {
                 var timer = new System.Timers.Timer

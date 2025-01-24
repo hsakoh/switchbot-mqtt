@@ -1,6 +1,6 @@
 name: "SwitchBot-Mqtt"
 description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
-version: "1.0.31"
+version: "1.0.32"
 slug: "switchbot_mqtt"
 url: "https://github.com/hsakoh/switchbot-mqtt"
 ports:
@@ -38,6 +38,7 @@ options:
   MessageRetain: 
     Entity: true
     State: false
+  DeviceStatePersistence: false
   AutoStartServices: false
   LogLevel: 'Trace'
 schema:
@@ -63,5 +64,6 @@ schema:
   MessageRetain: 
     Entity: bool
     State: bool
+  DeviceStatePersistence: bool
   AutoStartServices: bool
   LogLevel: list(Trace|Debug|Information|Warning|Error|Critical|None)

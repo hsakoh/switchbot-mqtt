@@ -161,26 +161,27 @@ public class MqttService : IDisposable
 
     private static readonly JsonSerializerSettings MqttPaloadSerializerSetting = new() { NullValueHandling = NullValueHandling.Ignore };
 
-    public async Task PublishAsync(string topic, object payload, bool retain = false)
+    public async Task PublishAsync(string topic, object payloadObject, bool retain = false)
     {
+        var payload = JsonConvert.SerializeObject(payloadObject, MqttPaloadSerializerSetting);
         await _mqttClient.EnqueueAsync(new MqttApplicationMessageBuilder()
             .WithTopic(topic)
-            .WithPayload(JsonConvert.SerializeObject(payload, MqttPaloadSerializerSetting))
+            .WithPayload(payload)
             .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
             .WithRetainFlag(retain)
             .Build());
-        _logger.LogDebug("Publish {topic}", topic);
+        _logger.LogDebug("Publish {topic} {payload}", topic, payload);
     }
 
-    public async Task PublishAsync(string topic, string jsonPayload, bool retain = false)
+    public async Task PublishAsync(string topic, string payload, bool retain = false)
     {
         await _mqttClient.EnqueueAsync(new MqttApplicationMessageBuilder()
             .WithTopic(topic)
-            .WithPayload(jsonPayload)
+            .WithPayload(payload)
             .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
             .WithRetainFlag(retain)
             .Build());
-        _logger.LogDebug("Publish {topic}", topic);
+        _logger.LogDebug("Publish {topic} {payload}", topic, payload);
     }
 
     public void Dispose()

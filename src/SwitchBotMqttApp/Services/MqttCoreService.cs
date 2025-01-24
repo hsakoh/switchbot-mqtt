@@ -1,4 +1,5 @@
 ﻿using HomeAssistantAddOn.Mqtt;
+using Microsoft.AspNetCore;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Logics;
@@ -19,7 +20,8 @@ public class MqttCoreService(
         , DeviceDefinitionsManager deviceDefinitionsManager
         , MqttService mqttService
         , SwitchBotApiClient switchBotApiClient
-        , IOptions<MessageRetainOptions> messageRetailOptions) : ManagedServiceBase
+        , IOptions<MessageRetainOptions> messageRetailOptions
+        , DeviceStatePersistanceManager deviceStatePersistanceManager) : ManagedServiceBase
 {
     public DevicesConfig CurrentDevicesConfig { get; set; } = default!;
 
@@ -396,7 +398,7 @@ public class MqttCoreService(
 
                 if (commandDef.PayloadType == PayloadType.Json)
                 {
-                    var jsonRoot = JsonNode.Parse("{}")!;
+                    JsonNode jsonRoot = new JsonObject();
                     paramDefs.ForEach(paramDef =>
                     {
                         var json = jsonRoot;
@@ -404,7 +406,7 @@ public class MqttCoreService(
                         {
                             if (jsonRoot[paramDef.Path] == null)
                             {
-                                jsonRoot[paramDef.Path] = JsonNode.Parse("{}")!;
+                                jsonRoot[paramDef.Path] = new JsonObject();
                             }
                             json = jsonRoot[paramDef.Path]!;
                         }
@@ -486,12 +488,12 @@ public class MqttCoreService(
             logger.LogWarning("unknown deviceMac {deviceMac}", deviceMac);
             return;
         }
-        if (!physicalDevice.UseWebhook)
+        if (!physicalDevice.Enable || !physicalDevice.UseWebhook)
         {
             logger.LogInformation("disable webhook device {deviceId},{deviceName},{json}", physicalDevice.DeviceId, physicalDevice.DeviceId, webhookContent);
             return;
         }
-        var webhook = JsonNode.Parse("{}")!;
+        var webhook = await deviceStatePersistanceManager.LoadAsync(physicalDevice.DeviceId);
         var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
         var contentKvDict = webhookContent.AsObject().ToDictionary();
         foreach (var rootKv in inputRawRoot.AsObject())
@@ -569,6 +571,7 @@ public class MqttCoreService(
         }
         webhook["webhook_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(webhook), messageRetailOptions.Value.State);
+        await deviceStatePersistanceManager.SaveAsync(physicalDevice.DeviceId, webhook);
     }
 
     public async Task PollingAndPublishStatusAsync(PhysicalDevice physicalDevice, CancellationToken cancellationToken)
@@ -576,7 +579,7 @@ public class MqttCoreService(
         try
         {
             var rawStatus = await switchBotApiClient.GetDeviceStatus(physicalDevice.DeviceId, cancellationToken);
-            var status = JsonNode.Parse("{}")!;
+            var status = await deviceStatePersistanceManager.LoadAsync(physicalDevice.DeviceId);
 
             var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
 
@@ -635,6 +638,7 @@ public class MqttCoreService(
             }
             status["status_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             await mqttService.PublishAsync(MqttEntityHelper.GetStateTopic(physicalDevice.DeviceId), JsonSerializer.Serialize(status), messageRetailOptions.Value.State);
+            await deviceStatePersistanceManager.SaveAsync(physicalDevice.DeviceId, status);
         }
         catch (Exception ex)
         {

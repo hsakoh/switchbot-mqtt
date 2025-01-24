@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
-using SwitchBotMqttApp.Models.Enums;
 using System.Text;
 using System.Text.Json;
 
@@ -72,10 +71,10 @@ public class DeviceConfigurationManager(
             }
 
             List<PhysicalDevice> physicalDevices = [];
-            foreach(var d in response.DeviceList)
+            foreach (var d in response.DeviceList)
             {
                 var deviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.DeviceType)?.DeviceType;
-                if(deviceType == null)
+                if (deviceType == null)
                 {
                     logger.LogWarning("{Method} unknown device type. {MacAddress},{DeviceType},{DeviceName}", nameof(LoadDevicesAsync), d.DeviceId, d.DeviceType, d.DeviceName);
                 }
