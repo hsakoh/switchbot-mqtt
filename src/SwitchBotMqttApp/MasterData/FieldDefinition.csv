@@ -205,7 +205,6 @@ RelaySwitch1PM,deviceType,Both,deviceType,deviceType,String,"the type of the dev
 RelaySwitch1PM,timeOfSample,Webhook,,timeOfSample,Long,"the time stamp when the event is sent",false,,,,,Timestamp,,,,,
 RelaySwitch1,voltage,Status,voltage,,Integer,"the voltage of the device, measured in Volt",false,,,,,Voltage,,measurement,V,,
 RelaySwitch1,version,Status,version,,String,"the current BLE and Wi-Fi firmware version, e.g. V3.1-6.3",false,,,,mdi:information,,diagnostic,,,,
-RelaySwitch1,power,Status,power,,Integer,"the current power, measured in Watts",false,,,,,Power,,measurement,W,,
 RelaySwitch1,switchStatus,Both,switchStatus,switchStatus,Integer,"the current switch state. `0`, off; `1`, on, the switch state of the device. `1`, on; `0`, off",true,Power,1,0,,,,,,,
 RelaySwitch1,online,Webhook,,online,Boolean,"determines if the device is connected to the internet or disconnected",true,Connectivity,true,false,,,,,,,
 RelaySwitch1,overTemperature,Webhook,,overTemperature,Boolean,"determines if the working temperature is over 100 degree celcius or not",true,Heat,true,false,,,,,,,
