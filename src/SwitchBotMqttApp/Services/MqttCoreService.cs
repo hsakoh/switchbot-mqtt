@@ -392,6 +392,12 @@ public class MqttCoreService(
                     {
                         value = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
                     }
+                    if(device.DeviceType == DeviceType.RollerShade
+                        && commandConf.Command == "setPosition"
+                        && paramDef.ParameterType == ParameterType.Range)
+                    {
+                        value = int.Parse((string)value);
+                    }
                     await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, value, CancellationToken.None);
                     return;
                 }

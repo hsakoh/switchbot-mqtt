@@ -84,13 +84,13 @@
                             <div class="col-2">@param.def.ParameterType</div>
                             <div class="col-2">
                                 @if (param.def.ParameterType == ParameterType.Range
-                               || param.def.ParameterType == ParameterType.SelectOrRange)
+                              || param.def.ParameterType == ParameterType.SelectOrRange)
                                 {
 
                                     <div>@param.def.RangeMin - @param.def.RangeMax</div>
                                 }
                                 @if (param.def.ParameterType == ParameterType.Select
-                               || param.def.ParameterType == ParameterType.SelectOrRange)
+                              || param.def.ParameterType == ParameterType.SelectOrRange)
                                 {
                                     for (int i = 0; i < param.def.GetOptions()!.Length; i++)
                                     {
@@ -179,7 +179,14 @@
             }
             else if (CommandDef.PayloadType == PayloadType.SingleValue)
             {
-                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, CommandParams[0].value, CancellationToken.None);
+                object value = CommandParams[0].value;
+                if (Device.DeviceType == DeviceType.RollerShade
+                    && CommandConf.Command == "setPosition"
+                    && CommandParams[0].def.ParameterType == ParameterType.Range)
+                {
+                    value = int.Parse((string)value);
+                }
+                Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, value, CancellationToken.None);
             }
             else if (CommandDef.PayloadType == PayloadType.Json)
             {
