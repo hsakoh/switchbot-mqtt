@@ -6,9 +6,24 @@ on:
     - 'v*'
 
 jobs:
-  push_to_registries:
-    name: Push Docker image to multiple registries
+  build_app:
+    name: Build and Push Docker image
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - arch: "aarch64"
+            platform: "linux/arm64"
+            rid: "linux-musl-arm64"
+            useQEMU: true
+          - arch: "amd64"
+            platform: "linux/amd64"
+            rid: "linux-musl-x64"
+            useQEMU: false
+          - arch: "armv7"
+            platform: "linux/arm/v7"
+            rid: "linux-musl-arm"
+            useQEMU: true
     permissions:
       packages: write
       contents: read
@@ -25,13 +40,9 @@ jobs:
 
       - name: Build and Publish
         run: |
-          mkdir ./_compile_self/aarch64
-          mkdir ./_compile_self/amd64
-          mkdir ./_compile_self/armv7
+          mkdir ./_compile_self/${{ matrix.arch }}
           dotnet restore "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj"
-          dotnet publish "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r linux-musl-arm64 -p:PublishSingleFile=true --self-contained false -c Release -o "./_compile_self/aarch64" --no-restore
-          dotnet publish "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r linux-musl-x64 -p:PublishSingleFile=true --self-contained false -c Release -o "./_compile_self/amd64" --no-restore
-          dotnet publish "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r linux-musl-arm -p:PublishSingleFile=true --self-contained false -c Release -o "./_compile_self/armv7" --no-restore
+          dotnet publish "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r ${{ matrix.rid }} -p:PublishSingleFile=true --self-contained false -c Release -o "./_compile_self/${{ matrix.arch }}" --no-restore
       
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -47,82 +58,31 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up QEMU
+        if: ${{ matrix.useQEMU }}
         uses: docker/setup-qemu-action@v3
 
-      - name: Extract metadata (tags, labels) for Docker aarch64
-        id: meta-aarch64
+      - name: Extract metadata (tags, labels) for Docker ${{ matrix.arch }}
+        id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            hsakoh/switchbotmqtt-aarch64
-            ghcr.io/hsakoh/switchbotmqtt-aarch64
+            hsakoh/switchbotmqtt-${{ matrix.arch }}
+            ghcr.io/hsakoh/switchbotmqtt-${{ matrix.arch }}
           tags: |
             latest
             type=semver,pattern={{version}}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}/
 
-      - name: Build and push Docker images aarch64
-        id: push-aarch64
+      - name: Build and push Docker images ${{ matrix.arch }}
+        id: push
         uses: docker/build-push-action@v6
         with:
           context: ./_compile_self
-          platforms: linux/arm64
+          platforms: ${{ matrix.platform }}
           build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/aarch64-base:latest
-            BUILD_ARCH=aarch64
+            BUILD_FROM=ghcr.io/home-assistant/${{ matrix.arch }}-base:latest
+            BUILD_ARCH=${{ matrix.arch }}
           push: true
-          tags: ${{ steps.meta-aarch64.outputs.tags }}
-          labels: ${{ steps.meta-aarch64.outputs.labels }}
-
-      - name: Extract metadata (tags, labels) for Docker amd64
-        id: meta-amd64
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            hsakoh/switchbotmqtt-amd64
-            ghcr.io/hsakoh/switchbotmqtt-amd64
-          tags: |
-            latest
-            type=semver,pattern={{version}}
-          labels: |
-            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}/
-
-      - name: Build and push Docker images amd64
-        id: push-amd64
-        uses: docker/build-push-action@v6
-        with:
-          context: ./_compile_self
-          platforms: linux/amd64
-          build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
-            BUILD_ARCH=amd64
-          push: true
-          tags: ${{ steps.meta-amd64.outputs.tags }}
-          labels: ${{ steps.meta-amd64.outputs.labels }}
-
-      - name: Extract metadata (tags, labels) for Docker armv7
-        id: meta-armv7
-        uses: docker/metadata-action@v5
-        with:
-          images: |
-            hsakoh/switchbotmqtt-armv7
-            ghcr.io/hsakoh/switchbotmqtt-armv7
-          tags: |
-            latest
-            type=semver,pattern={{version}}
-          labels: |
-            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}/
-
-      - name: Build and push Docker images armv7
-        id: push-armv7
-        uses: docker/build-push-action@v6
-        with:
-          context: ./_compile_self
-          platforms: linux/arm/v7
-          build-args: |
-            BUILD_FROM=ghcr.io/home-assistant/armv7-base:latest
-            BUILD_ARCH=armv7
-          push: true
-          tags: ${{ steps.meta-armv7.outputs.tags }}
-          labels: ${{ steps.meta-armv7.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
