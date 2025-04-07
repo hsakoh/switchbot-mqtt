@@ -9,6 +9,8 @@ You can perform manual scene executions that were configured in the SwitchBot ap
 
 **Important: Please note that this add-on does not support operations on SwitchBot devices via Bluetooth.**
 
+**New custom integration for Pan/Tilt Cam Plus [here](https://github.com/hsakoh/ha-switchbot-kvs-camera).**
+
 ## Current Support Status
 
 ![aarch64-shield](https://img.shields.io/badge/aarch64-yes-green.svg)
@@ -77,8 +79,8 @@ We have implemented all devices according to the published API specifications, b
 | [Outdoor Spotlight Cam 2K(3MP)][OutdoorSpotlightCam2K3MPProduct]  [[JP][OutdoorSpotlightCam2K3MPProductJP]]                    |                      -                      |                     -                      |                      -                      |                      -                      |      -       |
 | [Pan/Tilt Cam][PanTiltCamProduct]  [[JP][PanTiltCamProductJP]]                                                                 |             [✅][PanTiltCamList]             |                     -                      |           [✅][PanTiltCamWebhook]            |                      -                      |              |
 | [Pan/Tilt Cam 2K(3MP)][PanTiltCam2K3MPProduct]  [[JP][PanTiltCam2K3MPProductJP]]                                               |          [✅][PanTiltCam2K3MPList]           |                                            |                                             |                                             |              |
-| Pan/Tilt Cam Plus(3MP)  [[JP][PanTiltCamPlus3MPProductJP]]                                                                     |                      -                      |                                            |                                             |                                             |              |
-| Pan/Tilt Cam Plus(5MP)  [[JP][PanTiltCamPlus5MPProductJP]]                                                                     |                      -                      |                     -                      |                      ✅                      |                                             |      ✅       |
+| [Pan/Tilt Cam Plus 2K(3MP)][PanTiltCamPlus3MPProduct] [[JP][PanTiltCamPlus3MPProductJP]]                                       |                      -                      |                                            |                                             |                                             |              |
+| [Pan/Tilt Cam Plus 3K(5MP)][PanTiltCamPlus5MPProduct] [[JP][PanTiltCamPlus5MPProductJP]]                                       |                      -                      |                     -                      |                      ✅                      |                                             |      ✅       |
 | [Indoor Cam][IndoorCamProduct]  [[JP][IndoorCamProductJP]]                                                                     |             [✅][IndoorCamList]              |                     -                      |            [✅][IndoorCamWebhook]            |                      -                      |      ✅       |
 | **Power & Switch**                                                                                                             |                      -                      |                     -                      |                      -                      |                      -                      |      -       |
 | Plug                                                                                                                           |                [✅][PlugList]                |              [✅][PlugStatus]               |                      -                      |              [✅][PlugCommand]               |              |
@@ -301,7 +303,9 @@ We have implemented all devices according to the published API specifications, b
 [PanTiltCam2K3MPProduct]: https://switch-bot.com/pages/switchbot-pan-tilt-cam-2k
 [PanTiltCam2K3MPProductJP]: https://www.switchbot.jp/products/switchbot-pan-tilt-cam-3mp
 [PanTiltCam2K3MPList]: https://github.com/OpenWonderLabs/SwitchBotAPI#pantilt-cam-2k
+[PanTiltCamPlus3MPProduct]: https://us.switch-bot.com/pages/switchbot-pan-tilt-cam-plus-2k
 [PanTiltCamPlus3MPProductJP]: https://www.switchbot.jp/products/switchbot-pan-tilt-cam-plus-3mp
+[PanTiltCamPlus5MPProduct]: https://us.switch-bot.com/pages/switchbot-pan-tilt-cam-plus-3k
 [PanTiltCamPlus5MPProductJP]: https://www.switchbot.jp/products/switchbot-pan-tilt-cam-plus-5mp
 [IndoorCamProduct]: https://switch-bot.com/pages/switchbot-indoor-cam
 [IndoorCamProductJP]: https://www.switchbot.jp/products/switchbot-indoor-cam
