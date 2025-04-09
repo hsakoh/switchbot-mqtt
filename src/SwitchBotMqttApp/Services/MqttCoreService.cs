@@ -442,21 +442,21 @@ public class MqttCoreService(
                         }
                         else
                         {
-                            if ((device.DeviceType == DeviceType.AirPurifierPM25
-                            || device.DeviceType == DeviceType.AirPurifierTablePM25
-                            || device.DeviceType == DeviceType.AirPurifierVOC
-                            || device.DeviceType == DeviceType.AirPurifierTableVOC)
-                            && commandDef.Command == "setMode"
-                            && paramDef.ParameterType == ParameterType.Select)
-                            {
-                                json[paramDef.Name] = JsonValue.Create<int>(int.Parse((string)payloadDict[paramDef.Name]));
-                            }
-                            else
-                            {
-                                json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
-                            }
+                            json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
                         }
                     });
+                    if ((device.DeviceType == DeviceType.AirPurifierPM25
+                    || device.DeviceType == DeviceType.AirPurifierTablePM25
+                    || device.DeviceType == DeviceType.AirPurifierVOC
+                    || device.DeviceType == DeviceType.AirPurifierTableVOC)
+                    && commandDef.Command == "setMode")
+                    {
+                        if (jsonRoot["mode"]!.AsValue().GetValue<string>() != "1")
+                        {
+                            jsonRoot.AsObject().Remove("fanGear");
+                        }
+                        jsonRoot["mode"] = JsonValue.Create<int>(int.Parse(jsonRoot["mode"]!.AsValue().GetValue<string>()));
+                    }
                     await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
                 }
                 else
