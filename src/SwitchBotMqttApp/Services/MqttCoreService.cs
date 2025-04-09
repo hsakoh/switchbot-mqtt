@@ -1,4 +1,4 @@
-﻿using HomeAssistantAddOn.Mqtt;
+using HomeAssistantAddOn.Mqtt;
 using Microsoft.AspNetCore;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
@@ -442,7 +442,19 @@ public class MqttCoreService(
                         }
                         else
                         {
-                            json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
+                            if ((device.DeviceType == DeviceType.AirPurifierPM25
+                            || device.DeviceType == DeviceType.AirPurifierTablePM25
+                            || device.DeviceType == DeviceType.AirPurifierVOC
+                            || device.DeviceType == DeviceType.AirPurifierTableVOC)
+                            && commandDef.Command == "setMode"
+                            && paramDef.ParameterType == ParameterType.Select)
+                            {
+                                json[paramDef.Name] = JsonValue.Create<int>(int.Parse((string)payloadDict[paramDef.Name]));
+                            }
+                            else
+                            {
+                                json[paramDef.Name] = JsonValue.Create<string>((string)payloadDict[paramDef.Name]);
+                            }
                         }
                     });
                     await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
