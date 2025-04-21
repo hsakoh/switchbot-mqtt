@@ -466,7 +466,7 @@ public class MqttCoreService(
                         {
                             PayloadType.JoinColon => ':',
                             PayloadType.JoinComma => ',',
-                            PayloadType.JoinSemiColon => ':',
+                            PayloadType.JoinSemiColon => ';',
                             _ => throw new InvalidOperationException()
                         }
                         , paramDefs.Select(p =>

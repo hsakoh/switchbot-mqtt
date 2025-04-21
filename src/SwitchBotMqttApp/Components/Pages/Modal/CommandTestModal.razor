@@ -253,7 +253,7 @@
                     {
                         PayloadType.JoinColon => ':',
                         PayloadType.JoinComma => ',',
-                        PayloadType.JoinSemiColon => ':',
+                        PayloadType.JoinSemiColon => ';',
                         _ => throw new InvalidOperationException()
                     }
                     , CommandParams.Select(p => p.value));
