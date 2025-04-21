@@ -7,6 +7,7 @@ Hub,Hub,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub,
 HubPlus,Hub Plus,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub Plus,ハブプラス
 HubMini,Hub Mini,,,PhysicalDevice,FALSE,FALSE,FALSE,,Hub Mini,ハブミニ
 Hub2,Hub 2,,WoHub2,PhysicalDevice,TRUE,TRUE,FALSE,,Hub 2,ハブ 2
+Hub3,Hub 3,,Hub 3,PhysicalDevice,TRUE,TRUE,FALSE,,Hub 3,ハブ 3
 Meter,Meter,,WoMeter,PhysicalDevice,TRUE,TRUE,FALSE,,Meter,温湿度計
 MeterPlus,MeterPlus,,WoMeterPlus,PhysicalDevice,TRUE,TRUE,FALSE,,Meter Plus,温湿度計プラス
 OutdoorMeter,WoIOSensor,,WoIOSensor,PhysicalDevice,TRUE,TRUE,FALSE,,Outdoor Meter,防水温湿度計
@@ -14,8 +15,11 @@ MeterPro,MeterPro,,MeterPro,PhysicalDevice,TRUE,TRUE,FALSE,,Meter Pro ,温湿度
 MeterProCO2,MeterPro(CO2),,MeterPro(CO2),PhysicalDevice,TRUE,TRUE,FALSE,,Meter Pro CO2,CO2センサー（温湿度計）
 Lock,Smart Lock,,WoLock,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock,ロック
 LockPro,Smart Lock Pro,,WoLockPro,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock Pro,ロック Pro
+LockLite,Lock Lite,,WoLockLite,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock Lite,ロック Lite
+LockUltra,Smart Lock Ultra,,Smart Lock Ultra,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Lock Ultra,ロック Ultra
 Keypad,Keypad,,WoKeypad,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad,キーパッド
 KeypadTouch,Keypad Touch,,WoKeypadTouch,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad Touch,指紋認証パッド
+KeypadVision,Keypad Vision,,WoKeypadVision,PhysicalDevice,TRUE,TRUE,TRUE,,Keypad Vision,顔認証パッド
 Remote,Remote,,,PhysicalDevice,FALSE,FALSE,FALSE,,Remote,
 MotionSensor,Motion Sensor,,WoPresence,PhysicalDevice,TRUE,TRUE,FALSE,,Motion Sensor,人感センサー
 ContactSensor,Contact Sensor,,WoContact,PhysicalDevice,TRUE,TRUE,FALSE,,Contact Sensor,開閉センサー
@@ -27,14 +31,20 @@ PlugMiniJp,Plug Mini (JP),,WoPlugJP,PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (JP
 Plug,Plug,,,PhysicalDevice,TRUE,FALSE,TRUE,,Plug,プラグ
 RelaySwitch1PM,Relay Switch 1PM,,Relay Switch 1PM,PhysicalDevice,TRUE,TRUE,TRUE,,Relay Switch 1PM,リレースイッチ 1PM
 RelaySwitch1,Relay Switch 1,,Relay Switch 1,PhysicalDevice,TRUE,TRUE,TRUE,,Relay Switch 1,リレースイッチ 1
+RelaySwitch2PM,Relay Switch 2PM,,Relay Switch 2PM,PhysicalDevice,TRUE,TRUE,TRUE,,Relay Switch 2PM,リレースイッチ 2PM
+GarageDoorOpener,Garage Door Opener,,Garage Door Opener,PhysicalDevice,TRUE,TRUE,TRUE,,Garage Door Opener,Garage Door Opener
 StripLight,Strip Light,,WoStrip,PhysicalDevice,TRUE,TRUE,TRUE,,Strip Light,テープライト
 ColorBulb,Color Bulb,,WoBulb,PhysicalDevice,TRUE,TRUE,TRUE,,Color Bulb,スマートバルブ
+StripLight3,LED Strip Light 3,,Strip Light 3,PhysicalDevice,TRUE,TRUE,TRUE,,LED Strip Light 3,テープライト3
+FloorLamp,Floor Lamp,,Floor Lamp,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Lamp,Floor Lamp
 RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1,ロボット掃除機 S1
 RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
 MiniRobotVacuumK10Plus,K10+,,WoSweeperMini,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+,ロボット掃除機 K10+
 MiniRobotVacuumK10PlusPro,K10+ Pro,,WoSweeperMiniPro,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+ Pro,ロボット掃除機 K10+ Pro
 RobotVacuumCleanerS10,Robot Vacuum Cleaner S10,,Robot Vacuum Cleaner S10,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S10,お掃除ロボット S10
+RobotVacuumCleanerS20,Robot Vacuum Cleaner S20,,Robot Vacuum Cleaner S20,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S20,お掃除ロボット S20
 RobotVacuumCleanerK10PlusProCombo,Robot Vacuum Cleaner K10+ Pro Combo,,Robot Vacuum Cleaner K10+ Pro Combo,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K10+ Pro Combo,ロボット掃除機 K10+ Pro Combo
+RobotVacuumCleanerK20PlusPro,Robot Vacuum Cleaner K20 Plus Pro,,Robot Vacuum Cleaner K20+ Pro,PhysicalDevice,TRUE,TRUE,TRUE,,Multitasking Household Robot K20+ Pro,ロボット掃除機 K20+ Pro
 Humidifier,Humidifier,,,PhysicalDevice,TRUE,FALSE,TRUE,,Humidifier,加湿器
 EvaporativeHumidifier,Humidifier2,,Humidifier2,PhysicalDevice,TRUE,TRUE,TRUE,,Evaporative Humidifier,気化式加湿器
 AirPurifierPM25,Air Purifier VOC,,Air Purifier VOC,PhysicalDevice,TRUE,TRUE,TRUE,,Air Purifier PM2.5,空気清浄機
@@ -42,7 +52,8 @@ AirPurifierTablePM25,Air Purifier Table VOC,,Air Purifier Table VOC,PhysicalDevi
 AirPurifierVOC,Air Purifier PM2.5,,Air Purifier PM2.5,PhysicalDevice,TRUE,TRUE,TRUE,,Air Purifier VOC,空気清浄機
 AirPurifierTableVOC,Air Purifier Table PM2.5,,Air Purifier Table PM2.5,PhysicalDevice,TRUE,TRUE,TRUE,,Air Purifier Table VOC,空気清浄機 Table
 IndoorCam,Indoor Cam,,WoCamera,PhysicalDevice,FALSE,TRUE,FALSE,,Indoor Cam,屋内カメラ
-PanTiltCam,Pan/Tilt Cam,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam,見守りカメラ/見守りカメラ3MP
+PanTiltCam,Pan/Tilt Cam,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam,見守りカメラ
+PanTiltCam2K,Pan/Tilt Cam 2K,,WoPanTiltCam,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam 2K,見守りカメラ3MP
 BlindTilt,Blind Tilt,,,PhysicalDevice,TRUE,FALSE,TRUE,,Blind Tilt,ブラインドポール
 BatteryCirculatorFan,Battery Circulator Fan,,WoFan2,PhysicalDevice,TRUE,TRUE,TRUE,,Battery Circulator Fan,サーキュレーター
 CirculatorFan,Circulator Fan,,WoFan2,PhysicalDevice,TRUE,TRUE,TRUE,,Circulator Fan,サーキュレーター Lite
@@ -50,6 +61,7 @@ UniversalRemote,remote with screen,,,PhysicalDevice,TRUE,FALSE,FALSE,,Universal 
 PanTiltCamPlus5mp,Pan/Tilt Cam Plus 5MP,,WoCamKvs5mp,PhysicalDevice,FALSE,TRUE,FALSE,,Pan/Tilt Cam Plus(5MP),見守りカメラ Plus 5MP
 OutdoorSpotlightCam2K,Outdoor Spotlight Cam 2K,,,PhysicalDevice,FALSE,FALSE,FALSE,,Outdoor Spotlight Cam 2K,屋外カメラ 3MP
 WalletFinderCard,Wallet Finder Card,,WoFinderCard,PhysicalDevice,FALSE,FALSE,FALSE,,Wallet Finder Card,トラッカーカード
+VideoDoorbell,Video Doorbell,,Video Doorbell,PhysicalDevice,TRUE,TRUE,TRUE,,Video Doorbell,スマートテレビドアホン
 AirConditioner,Air Conditioner,DIY Air Conditioner,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,Air Conditioner,エアコン
 TV,TV,DIY TV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,TV,テレビ
 IPTV,IPTV,DIY IPTV,,VirtualInfraredRemoteDevice,FALSE,FALSE,TRUE,,IPTV,メディアストリーミング

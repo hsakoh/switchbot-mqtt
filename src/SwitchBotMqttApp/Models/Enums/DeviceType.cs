@@ -1,4 +1,3 @@
-﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace SwitchBotMqttApp.Models.Enums;
@@ -15,6 +14,7 @@ public enum DeviceType
     HubPlus,
     HubMini,
     Hub2,
+    Hub3,
     Meter,
     MeterPlus,
     OutdoorMeter,
@@ -22,8 +22,11 @@ public enum DeviceType
     MeterProCO2,
     Lock,
     LockPro,
+    LockLite,
+    LockUltra,
     Keypad,
     KeypadTouch,
+    KeypadVision,
     Remote,
     MotionSensor,
     ContactSensor,
@@ -35,14 +38,20 @@ public enum DeviceType
     Plug,
     RelaySwitch1PM,
     RelaySwitch1,
+    RelaySwitch2PM,
+    GarageDoorOpener,
     StripLight,
     ColorBulb,
+    StripLight3,
+    FloorLamp,
     RobotVacuumCleanerS1,
     RobotVacuumCleanerS1Plus,
     MiniRobotVacuumK10Plus,
     MiniRobotVacuumK10PlusPro,
     RobotVacuumCleanerS10,
+    RobotVacuumCleanerS20,
     RobotVacuumCleanerK10PlusProCombo,
+    RobotVacuumCleanerK20PlusPro,
     Humidifier,
     EvaporativeHumidifier,
     AirPurifierPM25,
@@ -51,6 +60,7 @@ public enum DeviceType
     AirPurifierTableVOC,
     IndoorCam,
     PanTiltCam,
+    PanTiltCam2K,
     BlindTilt,
     BatteryCirculatorFan,
     CirculatorFan,
@@ -58,6 +68,7 @@ public enum DeviceType
     PanTiltCamPlus5mp,
     OutdoorSpotlightCam2K,
     WalletFinderCard,
+    VideoDoorbell,
 
     //VirtualInfraredRemoteDevice
     AirConditioner,

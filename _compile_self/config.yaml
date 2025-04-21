@@ -1,6 +1,6 @@
 name: "SwitchBot-Mqtt"
 description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
-version: "1.0.36"
+version: "1.0.37"
 slug: "switchbot_mqtt"
 url: "https://github.com/hsakoh/switchbot-mqtt"
 ports:

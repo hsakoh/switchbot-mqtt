@@ -1,4 +1,4 @@
-﻿@page "/deviceconfiguration"
+@page "/deviceconfiguration"
 @using SwitchBotMqttApp.Models.DeviceConfiguration;
 @using SwitchBotMqttApp.Models.DeviceDefinitions;
 @using SwitchBotMqttApp.Models.Enums;
@@ -70,7 +70,7 @@
                             <InputCheckbox @bind-Value="device.Enable" class="big-checkbox" />
                         </td>
                         <td>
-                            @if (device.DeviceType == DeviceType.Keypad || device.DeviceType == DeviceType.KeypadTouch)
+                            @if (device.DeviceType == DeviceType.Keypad || device.DeviceType == DeviceType.KeypadTouch || device.DeviceType == DeviceType.KeypadVision)
                             {
                                 <button @onclick="()=>ShowKeypadModal(device)" class="btn btn-outline-info btn-sm">
                                     <i class="oi oi-key">@deviceDef.ApiDeviceTypeString</i>

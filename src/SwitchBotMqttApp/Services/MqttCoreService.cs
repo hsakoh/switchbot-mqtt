@@ -200,7 +200,8 @@ public class MqttCoreService(
 
             // Keypad deleteKey
             if ((deviceConf.DeviceType == DeviceType.Keypad
-                || deviceConf.DeviceType == DeviceType.KeypadTouch)
+                || deviceConf.DeviceType == DeviceType.KeypadTouch
+                || deviceConf.DeviceType == DeviceType.KeypadVision)
                 && command.Command == "deleteKey")
             {
                 var deviceMqttForCommand = new DeviceMqtt(
@@ -323,7 +324,8 @@ public class MqttCoreService(
 
             // Keypad deleteKey
             if ((device.DeviceType == DeviceType.Keypad
-                || device.DeviceType == DeviceType.KeypadTouch)
+                || device.DeviceType == DeviceType.KeypadTouch
+                || device.DeviceType == DeviceType.KeypadVision)
                 && payload.Command == "deleteKey")
             {
                 if (payload.ParamValue == "reloadkeys")
@@ -561,7 +563,9 @@ public class MqttCoreService(
             if (
                 (
                     (fieldDef.DeviceType == DeviceType.Lock
-                    || fieldDef.DeviceType == DeviceType.LockPro)
+                    || fieldDef.DeviceType == DeviceType.LockPro
+                    || fieldDef.DeviceType == DeviceType.LockLite
+                    || fieldDef.DeviceType == DeviceType.LockUltra)
                     && fieldDef.FieldName == "lockState")
                 ||
                 (
@@ -574,6 +578,8 @@ public class MqttCoreService(
                     || fieldDef.DeviceType == DeviceType.CeilingLightPro
                     || fieldDef.DeviceType == DeviceType.StripLight
                     || fieldDef.DeviceType == DeviceType.ColorBulb
+                    || fieldDef.DeviceType == DeviceType.StripLight3
+                    || fieldDef.DeviceType == DeviceType.FloorLamp
                     || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan
                     || fieldDef.DeviceType == DeviceType.CirculatorFan
                     || fieldDef.DeviceType == DeviceType.EvaporativeHumidifier
