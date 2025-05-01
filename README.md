@@ -101,7 +101,7 @@ We have implemented all devices according to the published API specifications, b
 | Ceiling Light Pro [[JP][CeilingLightProProductJP]]                                                                                 |          [✅][CeilingLightProList]          |         [✅][CeilingLightProStatus]          |         [✅][CeilingLightProWebhook]          |         [✅][CeilingLightProCommand]          |              |
 | [Color Bulb][ColorBulbProduct] [[JP][ColorBulbProductJP]]                                                                          |             [✅][ColorBulbList]             |            [✅][ColorBulbStatus]             |            [✅][ColorBulbWebhook]             |            [✅][ColorBulbCommand]             |      ✅      |
 | [Strip Light][StripLightProduct] [[JP][StripLightProductJP]]<br>Strip Light2 [[JP][StripLight2ProductJP]]                          |            [✅][StripLightList]             |            [✅][StripLightStatus]            |            [✅][StripLightWebhook]            |            [✅][StripLightCommand]            |      ✅      |
-| [RGBWW Strip Light 3][StripLight3Product] [[JP][StripLight3ProductJP]]                                                             |            [✅][StripLight3List]            |           [✅][StripLight3Status]            |           [✅][StripLight3Webhook]            |           [✅][StripLight3Command]            |      📦      |
+| [RGBWW Strip Light 3][StripLight3Product] [[JP][StripLight3ProductJP]]                                                             |            [✅][StripLight3List]            |           [✅][StripLight3Status]            |           [✅][StripLight3Webhook]            |           [✅][StripLight3Command]            |      ✅      |
 | [RGBWW Floor Lamp][FloorLampProduct] [[JP][FloorLampProductJP]]                                                                    |             [✅][FloorLampList]             |            [✅][FloorLampStatus]             |            [✅][FloorLampWebhook]             |            [✅][FloorLampCommand]             |              |
 
 [GetDeviceList]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-list
@@ -418,7 +418,7 @@ We have implemented all devices according to the published API specifications, b
 [FloorLampWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-3
 [FloorLampCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-2
 [StripLight3Product]: https://www.switch-bot.com/products/switchbot-light-strip
-[StripLight3ProductJP]: https://www.switchbot.jp/products/switchbot-strip-light
+[StripLight3ProductJP]: https://www.switchbot.jp/products/switchbot-strip-light3
 [StripLight3List]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3
 [StripLight3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3-1
 [StripLight3Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3-3

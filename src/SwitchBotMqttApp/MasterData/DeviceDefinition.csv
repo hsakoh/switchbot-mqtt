@@ -35,7 +35,7 @@ RelaySwitch2PM,Relay Switch 2PM,,Relay Switch 2PM,PhysicalDevice,TRUE,TRUE,TRUE,
 GarageDoorOpener,Garage Door Opener,,Garage Door Opener,PhysicalDevice,TRUE,TRUE,TRUE,,Garage Door Opener,Garage Door Opener
 StripLight,Strip Light,,WoStrip,PhysicalDevice,TRUE,TRUE,TRUE,,Strip Light,テープライト
 ColorBulb,Color Bulb,,WoBulb,PhysicalDevice,TRUE,TRUE,TRUE,,Color Bulb,スマートバルブ
-StripLight3,LED Strip Light 3,,Strip Light 3,PhysicalDevice,TRUE,TRUE,TRUE,,LED Strip Light 3,テープライト3
+StripLight3,Strip Light 3,,Strip Light 3,PhysicalDevice,TRUE,TRUE,TRUE,,LED Strip Light 3,テープライト3
 FloorLamp,Floor Lamp,,Floor Lamp,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Lamp,Floor Lamp
 RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1,ロボット掃除機 S1
 RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
