@@ -2,6 +2,7 @@
 @using SwitchBotMqttApp.Models.DeviceConfiguration;
 @using SwitchBotMqttApp.Models.DeviceDefinitions;
 @using SwitchBotMqttApp.Models.Enums;
+@inject ILogger<DeviceConfiguration> logger
 
 <PageTitle>Device Configuration</PageTitle>
 
@@ -48,7 +49,12 @@
             <tbody>
                 @foreach (var device in Model.Data.PhysicalDevices)
                 {
-                    var deviceDef = DeviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == device.DeviceType);
+                    var deviceDef = DeviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(d => d.DeviceType == device.DeviceType);
+                    if (deviceDef == null)
+                    {
+                        logger.LogWarning("DeviceType {deviceType} not found in DeviceDefinitions", device.DeviceType);
+                        continue;
+                    }
                     string style = device.ConfigureStatus switch
                     {
                         ConfigureStatus.NoChange => "light",
@@ -104,7 +110,7 @@
                         </td>
                         <td>
                             @if (device.ConfigureStatus == ConfigureStatus.Missing
-                           || device.ConfigureStatus == ConfigureStatus.Deleting)
+                          || device.ConfigureStatus == ConfigureStatus.Deleting)
                             {
                                 <button @onclick="()=>DeleteDevice(device)" class="btn btn-outline-warning btn-sm">
                                     <i class="oi oi-action-redo"></i>
@@ -133,7 +139,12 @@
                             </div>
                             @foreach (var field in device.Fields)
                             {
-                                var fieldDef = DeviceDefinitionsManager.FieldDefinitions.First(f => f.DeviceType == device.DeviceType && f.FieldName == field.FieldName);
+                                var fieldDef = DeviceDefinitionsManager.FieldDefinitions.FirstOrDefault(f => f.DeviceType == device.DeviceType && f.FieldName == field.FieldName);
+                                if (fieldDef == null)
+                                {
+                                    logger.LogWarning("DeviceType {deviceType} FieldName {fieldName} not found in FieldDefinitions", device.DeviceType,field.FieldName);
+                                    continue;
+                                }
 
                                 <div class="row border mx-2">
                                     <div class="col-1" style="text-align: center">
@@ -178,7 +189,12 @@
                                 </div>
                                 @foreach (var command in device.Commands)
                                 {
-                                    var commandDef = DeviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                    var commandDef = DeviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                    if (commandDef == null)
+                                    {
+                                        logger.LogWarning("DeviceType {deviceType} CommandType {commandType} Command {command} not found in CommandDefinitions", device.DeviceType, command.CommandType, command.Command);
+                                        continue;
+                                    }
                                     <div class="row border mx-2">
                                         <div class="col-1" style="text-align: center"><InputCheckbox @bind-Value="command.Enable" class="big-checkbox" /></div>
                                         <div class="col-1">
