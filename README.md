@@ -243,8 +243,8 @@ We have implemented all devices according to the published API specifications, b
 [MiniRobotVacuumK10+ProStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro-1
 [MiniRobotVacuumK10+ProWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro-3
 [MiniRobotVacuumK10+ProCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#mini-robot-vacuum-k10-pro-2
-[MultitaskingHouseholdRobotK20ProProduct]: https://www.switch-bot.com/products/switchbot-mini-robot-vacuum-k20
-[MultitaskingHouseholdRobotK20ProProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-k20
+[MultitaskingHouseholdRobotK20ProProduct]: https://www.switch-bot.com/products/switchbot-mini-robot-vacuum-k20-pro
+[MultitaskingHouseholdRobotK20ProProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-k20-pro
 [MultitaskingHouseholdRobotK20ProList]: https://github.com/OpenWonderLabs/SwitchBotAPI#k20-pro
 [MultitaskingHouseholdRobotK20ProStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#k20-pro-1
 [MultitaskingHouseholdRobotK20ProWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#k20-pro-3
@@ -417,7 +417,7 @@ We have implemented all devices according to the published API specifications, b
 [FloorLampStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-1
 [FloorLampWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-3
 [FloorLampCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-2
-[StripLight3Product]: https://www.switch-bot.com/products/switchbot-light-strip
+[StripLight3Product]: https://www.switch-bot.com/products/switchbot-led-strip-light-3
 [StripLight3ProductJP]: https://www.switchbot.jp/products/switchbot-strip-light3
 [StripLight3List]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3
 [StripLight3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3-1
