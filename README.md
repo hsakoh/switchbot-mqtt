@@ -412,7 +412,7 @@ We have implemented all devices according to the published API specifications, b
 [StripLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#strip-light-2
 [StripLight2ProductJP]: https://www.switchbot.jp/products/switchbot-strip-light2
 [FloorLampProduct]: https://www.switch-bot.com/products/Floor-Lamp
-[FloorLampProductJP]: https://www.switchbot.jp/products/Floor-Lamp
+[FloorLampProductJP]: https://www.switchbot.jp/products/switchbot-floor-lamp
 [FloorLampList]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp
 [FloorLampStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-1
 [FloorLampWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#Floor-Lamp-3
