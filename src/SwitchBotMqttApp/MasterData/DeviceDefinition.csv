@@ -44,7 +44,7 @@ MiniRobotVacuumK10PlusPro,K10+ Pro,,WoSweeperMiniPro,PhysicalDevice,TRUE,TRUE,TR
 RobotVacuumCleanerS10,Robot Vacuum Cleaner S10,,Robot Vacuum Cleaner S10,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S10,お掃除ロボット S10
 RobotVacuumCleanerS20,Robot Vacuum Cleaner S20,,Robot Vacuum Cleaner S20,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S20,お掃除ロボット S20
 RobotVacuumCleanerK10PlusProCombo,Robot Vacuum Cleaner K10+ Pro Combo,,Robot Vacuum Cleaner K10+ Pro Combo,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K10+ Pro Combo,ロボット掃除機 K10+ Pro Combo
-RobotVacuumCleanerK20PlusPro,Robot Vacuum Cleaner K20 Plus Pro,,Robot Vacuum Cleaner K20+ Pro,PhysicalDevice,TRUE,TRUE,TRUE,,Multitasking Household Robot K20+ Pro,ロボット掃除機 K20+ Pro
+RobotVacuumCleanerK20PlusPro,Robot Vacuum Cleaner K20 Plus Pro,,Robot Vacuum Cleaner K20+ Pro,PhysicalDevice,TRUE,TRUE,TRUE,,Multitasking Household Robot K20+ Pro,マルチタスク家庭用ロボットK20＋Pro
 Humidifier,Humidifier,,,PhysicalDevice,TRUE,FALSE,TRUE,,Humidifier,加湿器
 EvaporativeHumidifier,Humidifier2,,Humidifier2,PhysicalDevice,TRUE,TRUE,TRUE,,Evaporative Humidifier,気化式加湿器
 AirPurifierPM25,Air Purifier VOC,,Air Purifier VOC,PhysicalDevice,TRUE,TRUE,TRUE,,Air Purifier PM2.5,空気清浄機

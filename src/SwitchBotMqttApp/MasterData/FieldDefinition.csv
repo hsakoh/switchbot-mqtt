@@ -50,7 +50,7 @@ Hub3,lightLevel,Both,lightLevel,lightLevel,Integer,"the level of illuminance of 
 Hub3,version,Status,version,,String,"the current firmware version, e.g. V4.2",false,,,,mdi:information,,diagnostic,,,,
 Hub3,humidity,Both,humidity,humidity,Integer,"humidity percentage",false,,,,,Humidity,,measurement,%,,
 Hub3,moveDetected,Status,moveDetected,,String,"determines if motion is detected",false,,,,mdi:information,,,,,,
-Hub3,online,Status,online,,String,"the connection status of the device. online or offline",false,,,,mdi:information,,,,,,
+Hub3,online,Status,onlineStatus,,String,"the connection status of the device. online or offline",false,,,,mdi:information,,,,,,
 Hub3,scale,Webhook,,scale,String,"the current temperature unit being used",false,,,,mdi:information,,,,,,
 Hub3,detectionState,Webhook,,detectionState,String,"the motion state of the device, 'DETECTED' stands for motion is detected; 'NOT_DETECTED' stands for motion has not been detected for some time",true,Motion,DETECTED,NOT_DETECTED,,,,,,,
 Hub3,deviceId,Both,deviceId,deviceMac,String,"the MAC address of the device. device ID ",false,,,,mdi:information,,diagnostic,,,,
