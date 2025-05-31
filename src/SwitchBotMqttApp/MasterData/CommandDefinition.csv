@@ -55,6 +55,7 @@ RelaySwitch2PM,Command,turnOn,SingleValue,"set to ON state `1` represents channe
 RelaySwitch2PM,Command,turnOff,SingleValue,"set to OFF state `1` represents channel 1 `2` represents channel 2",mdi:power-plug-off,,,
 RelaySwitch2PM,Command,toggle,SingleValue,"toggle `1` represents channel 1 `2` represents channel 2state",mdi:power,,,
 RelaySwitch2PM,Command,setMode,JoinSemiColon,"The first item represents the switching of channel number, `1` represents channel number 1 and `2` represents channel number 2. The second item represents set the switch mode. `0`, toggle mode; `1`, edge switch mode; `2`, detached switch mode; `3`, momentary switch mode",mdi:play-circle,,,
+RelaySwitch2PM,Command,setPosition,SingleValue,"Set roller blind opening and closing percentage. `0`, Open All; `100`, Close All",mdi:play-circle,,,
 GarageDoorOpener,Command,turnOn,Default,"set to ON state",mdi:power-plug,,,
 GarageDoorOpener,Command,turnOff,Default,"set to OFF state",mdi:power-plug-off,,,
 StripLight,Command,turnOn,Default,"set to ON state",mdi:lightbulb-on,,,
