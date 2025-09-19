@@ -45,6 +45,7 @@ We have implemented all devices according to the published API specifications, b
 | [Relay Switch 1][RelaySwitch1Product]                                                                                              |           [✅][RelaySwitch1List]            |           [✅][RelaySwitch1Status]           |           [✅][RelaySwitch1Webhook]           |           [✅][RelaySwitch1Command]           |      ✅      |
 | [Relay Switch 2PM][RelaySwitch2PMProduct]                                                                                          |          [✅][RelaySwitch2PMList]           |          [✅][RelaySwitch2PMStatus]          |          [✅][RelaySwitch2PMWebhook]          |          [✅][RelaySwitch2PMCommand]          |      ✅      |
 | [Garage Door Opener][GarageDoorOpenerProduct]                                                                                      |         [✅][GarageDoorOpenerList]          |         [✅][GarageDoorOpenerStatus]         |         [✅][GarageDoorOpenerWebhook]         |         [✅][GarageDoorOpenerCommand]         |              |
+| [Smart Radiator Thermostat][SmartRadiatorThermostatProduct]                                                                        |      [✅][SmartRadiatorThermostatList]      |     [✅][SmartRadiatorThermostatStatus]      |     [✅][SmartRadiatorThermostatWebhook]      |     [✅][SmartRadiatorThermostatCommand]      |              |
 | **Home Appliance**                                                                                                                 |                      -                      |                      -                       |                       -                       |                       -                       |      -       |
 | Humidifier [[JP][HumidifierProductJP]]                                                                                             |            [✅][HumidifierList]             |            [✅][HumidifierStatus]            |                       -                       |            [✅][HumidifierCommand]            |              |
 | Evaporative Humidifier [[JP][EvaporativeHumidifierProductJP]]                                                                      |       [✅][EvaporativeHumidifierList]       |      [✅][EvaporativeHumidifierStatus]       |      [✅][EvaporativeHumidifierWebhook]       |      [✅][EvaporativeHumidifierCommand]       |              |
@@ -64,7 +65,8 @@ We have implemented all devices according to the published API specifications, b
 | [Multitasking Household Robot K20+ Pro][MultitaskingHouseholdRobotK20ProProduct] [[JP][MultitaskingHouseholdRobotK20ProProductJP]] | [✅][MultitaskingHouseholdRobotK20ProList]  | [✅][MultitaskingHouseholdRobotK20ProStatus] | [✅][MultitaskingHouseholdRobotK20ProWebhook] | [✅][MultitaskingHouseholdRobotK20ProCommand] |              |
 | [Floor Cleaning Robot S10][FloorCleaningRobotS10Product] [[JP][FloorCleaningRobotS10ProductJP]]                                    |       [✅][FloorCleaningRobotS10List]       |      [✅][FloorCleaningRobotS10Status]       |      [✅][FloorCleaningRobotS10Webhook]       |      [✅][FloorCleaningRobotS10Command]       |              |
 | [Floor Cleaning Robot S20][FloorCleaningRobotS20Product] [[JP][FloorCleaningRobotS20ProductJP]]                                    |       [✅][FloorCleaningRobotS20List]       |      [✅][FloorCleaningRobotS20Status]       |      [✅][FloorCleaningRobotS20Webhook]       |      [✅][FloorCleaningRobotS20Command]       |              |
-| [Robot Vacuum K10+ Pro Combo][RobotVacuumK10+ProComboProduct]                                                                      |      [✅][RobotVacuumK10+ProComboList]      |     [✅][RobotVacuumK10+ProComboStatus]      |     [✅][RobotVacuumK10+ProComboWebhook]      |     [✅][RobotVacuumK10+ProComboCommand]      |              |
+| [Robot Vacuum K10+ Pro Combo][RobotVacuumK10+ProComboProduct] [[JP][RobotVacuumK10+ProComboProductJP]]                             |      [✅][RobotVacuumK10+ProComboList]      |     [✅][RobotVacuumK10+ProComboStatus]      |     [✅][RobotVacuumK10+ProComboWebhook]      |     [✅][RobotVacuumK10+ProComboCommand]      |              |
+| [Robot Vacuum K11+][RobotVacuumK11+Product] [[JP][RobotVacuumK11+ProductJP]]                                                       |          [✅][RobotVacuumK11+List]          |         [✅][RobotVacuumK11+Status]          |         [✅][RobotVacuumK11+Webhook]          |         [✅][RobotVacuumK11+Command]          |              |
 | **Sensor**                                                                                                                         |                      -                      |                      -                       |                       -                       |                       -                       |      -       |
 | [Meter][MeterProduct] [[JP][MeterProductJP]]                                                                                       |               [✅][MeterList]               |              [✅][MeterStatus]               |              [✅][MeterWebhook]               |                       -                       |              |
 | [Meter Plus][MeterPlusProduct] [[JP][MeterPlusProductJP]]                                                                          |             [✅][MeterPlusList]             |            [✅][MeterPlusStatus]             |            [✅][MeterPlusWebhook]             |                       -                       |      ✅      |
@@ -95,6 +97,7 @@ We have implemented all devices according to the published API specifications, b
 | Plug                                                                                                                               |               [✅][PlugList]                |               [✅][PlugStatus]               |                       -                       |               [✅][PlugCommand]               |              |
 | [Plug Mini (US)][PlugMiniUSProduct]                                                                                                |            [✅][PlugMiniUSList]             |            [✅][PlugMiniUSStatus]            |            [✅][PlugMiniUSWebhook]            |            [✅][PlugMiniUSCommand]            |              |
 | Plug Mini (JP) [[JP][PlugMiniJPProductJP]]                                                                                         |            [✅][PlugMiniJPList]             |            [✅][PlugMiniJPStatus]            |            [✅][PlugMiniJPWebhook]            |            [✅][PlugMiniJPCommand]            |      ✅      |
+| [Plug Mini (EU)][PlugMiniEUProduct]                                                                                                |            [✅][PlugMiniEUList]             |            [✅][PlugMiniEUStatus]            |            [✅][PlugMiniEUWebhook]            |            [✅][PlugMiniEUCommand]            |              |
 | [Remote][RemoteProduct] [[JP][RemoteProductJP]]                                                                                    |              [✅][RemoteList]               |                      -                       |                       -                       |                       -                       |      -       |
 | **Lighting**                                                                                                                       |                      -                      |                      -                       |                       -                       |                       -                       |      -       |
 | Ceiling Light [[JP][CeilingLightProductJP]]                                                                                        |           [✅][CeilingLightList]            |           [✅][CeilingLightStatus]           |           [✅][CeilingLightWebhook]           |           [✅][CeilingLightCommand]           |      ✅      |
@@ -103,6 +106,9 @@ We have implemented all devices according to the published API specifications, b
 | [Strip Light][StripLightProduct] [[JP][StripLightProductJP]]<br>Strip Light2 [[JP][StripLight2ProductJP]]                          |            [✅][StripLightList]             |            [✅][StripLightStatus]            |            [✅][StripLightWebhook]            |            [✅][StripLightCommand]            |      ✅      |
 | [RGBWW Strip Light 3][StripLight3Product] [[JP][StripLight3ProductJP]]                                                             |            [✅][StripLight3List]            |           [✅][StripLight3Status]            |           [✅][StripLight3Webhook]            |           [✅][StripLight3Command]            |      ✅      |
 | [RGBWW Floor Lamp][FloorLampProduct] [[JP][FloorLampProductJP]]                                                                    |             [✅][FloorLampList]             |            [✅][FloorLampStatus]             |            [✅][FloorLampWebhook]             |            [✅][FloorLampCommand]             |              |
+| [RGBICWW Strip Light][RGBICWWStripLightProduct] [[JP][RGBICWWStripLightProductJP]]                                                 |         [✅][RGBICWWStripLightList]         |        [✅][RGBICWWStripLightStatus]         |        [✅][RGBICWWStripLightWebhook]         |        [✅][RGBICWWStripLightCommand]         |              |
+| [RGBICWW Floor Lamp][RGBICWWFlooLampProduct] [[JP][RGBICWWFlooLampProductJP]]                                                      |          [✅][RGBICWWFlooLampList]          |         [✅][RGBICWWFlooLampStatus]          |         [✅][RGBICWWFlooLampWebhook]          |         [✅][RGBICWWFlooLampCommand]          |              |
+| [RGBIC Neon Wire Rope Light][RGBICNeonWireRopeLightProduct] [[JP][RGBICNeonWireRopeLightProductJP]]                                |      [✅][RGBICNeonWireRopeLightList]       |      [✅][RGBICNeonWireRopeLightStatus]      |      [✅][RGBICNeonWireRopeLightWebhook]      |      [✅][RGBICNeonWireRopeLightCommand]      |              |
 
 [GetDeviceList]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-list
 [StatusAPI]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-status
@@ -174,6 +180,11 @@ We have implemented all devices according to the published API specifications, b
 [GarageDoorOpenerStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#Garage-Door-Opener-1
 [GarageDoorOpenerWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#Garage-Door-Opener-3
 [GarageDoorOpenerCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#Garage-Door-Opener-2
+[SmartRadiatorThermostatProduct]: https://www.switch-bot.com/products/switchbot-smart-radiator-thermostat
+[SmartRadiatorThermostatList]: https://github.com/OpenWonderLabs/SwitchBotAPI#smart-radiator-thermostat
+[SmartRadiatorThermostatStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#smart-radiator-thermostat-1
+[SmartRadiatorThermostatWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#smart-radiator-thermostat-3
+[SmartRadiatorThermostatCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#smart-radiator-thermostat-2
 [HumidifierProductJP]: https://www.switchbot.jp/products/switchbot-smart-humidifier?variant=40981225799855
 [HumidifierList]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier
 [HumidifierStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier-1
@@ -262,10 +273,17 @@ We have implemented all devices according to the published API specifications, b
 [FloorCleaningRobotS20Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#s20-2
 [FloorCleaningRobotS20Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#s20-1
 [RobotVacuumK10+ProComboProduct]: https://www.switch-bot.com/products/switchbot-k10-pro-combo
+[RobotVacuumK10+ProComboProductJP]: https://www.switchbot.jp/products/robot-vacuum-cleaner-k10-pro-combo
 [RobotVacuumK10+ProComboList]: https://github.com/OpenWonderLabs/SwitchBotAPI#k10-pro-combo
 [RobotVacuumK10+ProComboStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#k10-pro-combo-1
 [RobotVacuumK10+ProComboWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#k10-pro-combo-3
 [RobotVacuumK10+ProComboCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#k10-pro-combo-2
+[RobotVacuumK11+Product]: https://www.switch-bot.com/products/switchbot-robot-vacuum-k11
+[RobotVacuumK11+ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-k11
+[RobotVacuumK11+List]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-k11
+[RobotVacuumK11+Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-k11-1
+[RobotVacuumK11+Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-k11-3
+[RobotVacuumK11+Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#robot-vacuum-k11-2
 [MeterProduct]: https://www.switch-bot.com/products/switchbot-meter
 [MeterProductJP]: https://www.switchbot.jp/products/switchbot-meter
 [MeterList]: https://github.com/OpenWonderLabs/SwitchBotAPI#meter
@@ -385,6 +403,11 @@ We have implemented all devices according to the published API specifications, b
 [PlugMiniJPStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-jp-1
 [PlugMiniJPWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-jp-3
 [PlugMiniJPCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-jp-2
+[PlugMiniEUProduct]: https://eu.switch-bot.com/products/switchbot-plug-mini
+[PlugMiniEUList]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-eu
+[PlugMiniEUStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-eu-1
+[PlugMiniEUWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-eu-3
+[PlugMiniEUCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#plug-mini-eu-2
 [RemoteProduct]: https://switch-bot.com/products/switchbot-remote
 [RemoteProductJP]: https://www.switchbot.jp/products/switchbot-remote
 [RemoteList]: https://github.com/OpenWonderLabs/SwitchBotAPI#remote
@@ -423,6 +446,24 @@ We have implemented all devices according to the published API specifications, b
 [StripLight3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3-1
 [StripLight3Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3-3
 [StripLight3Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#Strip-Light-3-2
+[RGBICWWStripLightProduct]: https://www.switch-bot.com/products/switchbot-rgbicww-strip-light
+[RGBICWWStripLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbicww-strip-light
+[RGBICWWStripLightList]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-strip-light
+[RGBICWWStripLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-strip-light-1
+[RGBICWWStripLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-strip-light-3
+[RGBICWWStripLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-strip-light-2
+[RGBICWWFlooLampProduct]: https://www.switch-bot.com/products/switchbot-rgbicww-floor-lamp
+[RGBICWWFlooLampProductJP]: https://www.switchbot.jp/products/switchbot-rgbicww-floor-lamp
+[RGBICWWFlooLampList]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-floor-lamp
+[RGBICWWFlooLampStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-floor-lamp-1
+[RGBICWWFlooLampWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-floor-lamp-3
+[RGBICWWFlooLampCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbicww-floor-lamp-2
+[RGBICNeonWireRopeLightProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-wire-rope-light
+[RGBICNeonWireRopeLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-wire-rope-light
+[RGBICNeonWireRopeLightList]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light
+[RGBICNeonWireRopeLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-1
+[RGBICNeonWireRopeLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-3
+[RGBICNeonWireRopeLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-2
 
 ### Virtual Infrared Remote Devices
 

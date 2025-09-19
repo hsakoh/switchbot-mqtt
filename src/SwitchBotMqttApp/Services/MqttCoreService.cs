@@ -570,7 +570,8 @@ public class MqttCoreService(
                 ||
                 (
                     (fieldDef.DeviceType == DeviceType.PlugMiniJp
-                    || fieldDef.DeviceType == DeviceType.PlugMiniUs)
+                    || fieldDef.DeviceType == DeviceType.PlugMiniUs
+                    || fieldDef.DeviceType == DeviceType.PlugMiniEu)
                     && fieldDef.FieldName == "powerState")
                 ||
                 (
@@ -580,6 +581,9 @@ public class MqttCoreService(
                     || fieldDef.DeviceType == DeviceType.ColorBulb
                     || fieldDef.DeviceType == DeviceType.StripLight3
                     || fieldDef.DeviceType == DeviceType.FloorLamp
+                    || fieldDef.DeviceType == DeviceType.RGBICWWStripLight
+                    || fieldDef.DeviceType == DeviceType.RGBICWWFloorLamp
+                    || fieldDef.DeviceType == DeviceType.RGBICNeonWireRopeLight
                     || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan
                     || fieldDef.DeviceType == DeviceType.CirculatorFan
                     || fieldDef.DeviceType == DeviceType.EvaporativeHumidifier

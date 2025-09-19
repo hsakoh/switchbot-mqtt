@@ -28,19 +28,25 @@ CeilingLight,Ceiling Light,,WoCeiling,PhysicalDevice,TRUE,TRUE,TRUE,,Ceiling Lig
 CeilingLightPro,Ceiling Light Pro,,WoCeilingPro,PhysicalDevice,TRUE,TRUE,TRUE,,Ceiling Light Pro,シーリングライトプロ
 PlugMiniUs,Plug Mini (US),,WoPlugUS,PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (US),プラグミニ(US)
 PlugMiniJp,Plug Mini (JP),,WoPlugJP,PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (JP),プラグミニ(JP)
+PlugMiniEu,Plug Mini (EU),,Plug Mini (EU),PhysicalDevice,TRUE,TRUE,TRUE,,Plug Mini (EU),プラグミニ(EU)
 Plug,Plug,,,PhysicalDevice,TRUE,FALSE,TRUE,,Plug,プラグ
 RelaySwitch1PM,Relay Switch 1PM,,Relay Switch 1PM,PhysicalDevice,TRUE,TRUE,TRUE,,Relay Switch 1PM,リレースイッチ 1PM
 RelaySwitch1,Relay Switch 1,,Relay Switch 1,PhysicalDevice,TRUE,TRUE,TRUE,,Relay Switch 1,リレースイッチ 1
 RelaySwitch2PM,Relay Switch 2PM,,Relay Switch 2PM,PhysicalDevice,TRUE,TRUE,TRUE,,Relay Switch 2PM,リレースイッチ 2PM
 GarageDoorOpener,Garage Door Opener,,Garage Door Opener,PhysicalDevice,TRUE,TRUE,TRUE,,Garage Door Opener,Garage Door Opener
+SmartRadiatorThermostat,Smart Radiato Thermostat,,Smart Radiato Thermostat,PhysicalDevice,TRUE,TRUE,TRUE,,Smart Radiato Thermostat,Smart Radiato Thermostat
 StripLight,Strip Light,,WoStrip,PhysicalDevice,TRUE,TRUE,TRUE,,Strip Light,テープライト
 ColorBulb,Color Bulb,,WoBulb,PhysicalDevice,TRUE,TRUE,TRUE,,Color Bulb,スマートバルブ
 StripLight3,Strip Light 3,,Strip Light 3,PhysicalDevice,TRUE,TRUE,TRUE,,LED Strip Light 3,テープライト3
 FloorLamp,Floor Lamp,,Floor Lamp,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Lamp,Floor Lamp
+RGBICWWStripLight,RGBICWW Strip Light,,RGBICWW Strip Light,PhysicalDevice,TRUE,TRUE,TRUE,,RGBICWW Strip Light,RGBICテープライト
+RGBICWWFloorLamp,RGBICWW Floor Lamp,,RGBICWW Floor Lamp,PhysicalDevice,TRUE,TRUE,TRUE,,RGBICWW Floor Lamp,RGBICフロアライト
+RGBICNeonWireRopeLight,RGBIC Neon Wire Rope Light,,RGBIC Neon Wire Rope Light,PhysicalDevice,TRUE,TRUE,TRUE,,RGBIC Neon Wire Rope Light,RGBICワイヤーネオンライト
 RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1,ロボット掃除機 S1
 RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
 MiniRobotVacuumK10Plus,K10+,,WoSweeperMini,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+,ロボット掃除機 K10+
 MiniRobotVacuumK10PlusPro,K10+ Pro,,WoSweeperMiniPro,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+ Pro,ロボット掃除機 K10+ Pro
+RobotVacuumK11Plus,Robot Vacuum Cleaner K11+,,Robot Vacuum Cleaner K11 Plus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K11+,ロボット掃除機 K11＋
 RobotVacuumCleanerS10,Robot Vacuum Cleaner S10,,Robot Vacuum Cleaner S10,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S10,お掃除ロボット S10
 RobotVacuumCleanerS20,Robot Vacuum Cleaner S20,,Robot Vacuum Cleaner S20,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S20,お掃除ロボット S20
 RobotVacuumCleanerK10PlusProCombo,Robot Vacuum Cleaner K10+ Pro Combo,,Robot Vacuum Cleaner K10+ Pro Combo,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K10+ Pro Combo,ロボット掃除機 K10+ Pro Combo
