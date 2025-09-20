@@ -1,4 +1,4 @@
-﻿using FluffySpoon.Ngrok;
+using FluffySpoon.Ngrok;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.Extensions.Options;
@@ -46,6 +46,8 @@ public class WebhookService : ManagedServiceBase
             if (_webhookServiceOptions.Value.UseNgrok)
             {
                 await _ngrokService.InitializeAsync(cancellationToken);
+
+                await Task.Delay(5000, cancellationToken);
 
                 IServerAddressesFeature? feature = _server.Features.Get<IServerAddressesFeature>()
                     ?? throw new InvalidOperationException("Ngrok requires the IServerAddressesFeature to be accessible.");
