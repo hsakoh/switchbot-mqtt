@@ -572,7 +572,7 @@ public class MqttCoreService(
                 var val = webhook[fieldDef.FieldName]!.GetValue<string>().ToLower();
                 if (val == "latchboltlocked")
                 {
-                    val = "locked";
+                    val = "unlocked";
                 }
                 webhook[fieldDef.FieldName] = val;
             }
@@ -684,7 +684,7 @@ public class MqttCoreService(
                     var val = status[fieldDef.FieldName]!.GetValue<string>().ToLower();
                     if (val == "latchboltlocked")
                     {
-                        val = "locked";
+                        val = "unlocked";
                     }
                     status[fieldDef.FieldName] = val;
                 }
