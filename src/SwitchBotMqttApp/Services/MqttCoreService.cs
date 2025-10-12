@@ -567,7 +567,16 @@ public class MqttCoreService(
                     || fieldDef.DeviceType == DeviceType.LockLite
                     || fieldDef.DeviceType == DeviceType.LockUltra)
                     && fieldDef.FieldName == "lockState")
-                ||
+              )
+            {
+                var val = webhook[fieldDef.FieldName]!.GetValue<string>().ToLower();
+                if (val == "latchboltlocked")
+                {
+                    val = "locked";
+                }
+                webhook[fieldDef.FieldName] = val;
+            }
+            if (
                 (
                     (fieldDef.DeviceType == DeviceType.PlugMiniJp
                     || fieldDef.DeviceType == DeviceType.PlugMiniUs
@@ -662,6 +671,22 @@ public class MqttCoreService(
                   )
                 {
                     status[fieldDef.FieldName] = status[fieldDef.FieldName]!.GetValue<string>().ToLower();
+                }
+                if (
+                    (
+                        (fieldDef.DeviceType == DeviceType.Lock
+                        || fieldDef.DeviceType == DeviceType.LockPro
+                        || fieldDef.DeviceType == DeviceType.LockLite
+                        || fieldDef.DeviceType == DeviceType.LockUltra)
+                        && fieldDef.FieldName == "lockState")
+                  )
+                {
+                    var val = status[fieldDef.FieldName]!.GetValue<string>().ToLower();
+                    if (val == "latchboltlocked")
+                    {
+                        val = "locked";
+                    }
+                    status[fieldDef.FieldName] = val;
                 }
             }
             status["status_timestamp"] = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
