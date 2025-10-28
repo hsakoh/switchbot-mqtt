@@ -401,7 +401,7 @@ MiniRobotVacuumK10PlusPro,deviceType,Both,deviceType,deviceType,String,"the type
 MiniRobotVacuumK10PlusPro,hubDeviceId,Status,hubDeviceId,,String,"device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",false,,,,mdi:information,,diagnostic,,,,
 MiniRobotVacuumK10PlusPro,timeOfSample,Webhook,,timeOfSample,Long,"the time stamp when the event is sent",false,,,,,Timestamp,,,,,
 RobotVacuumK11Plus,deviceName,Status,deviceName,,String,"device name",false,,,,mdi:information,,,,,,
-RobotVacuumK11Plus,enableCloudService,Status,enableCloudService,,Boolean,"determines if Cloud Service is enabled or not for the current device",true,Connectivity,online,offline,mdi:information,,,,,,
+RobotVacuumK11Plus,enableCloudService,Status,enableCloudService,,Boolean,"determines if Cloud Service is enabled or not for the current device",true,Connectivity,true,false,mdi:information,,,,,,
 RobotVacuumK11Plus,workingStatus,Both,workingStatus,workingStatus,String,"the working status of the device. StandBy, Clearing, Paused, GotoChargeBase, Charging, ChargeDone, Dormant, InTrouble, InRemoteControl, or InDustCollecting",false,,,,mdi:robot-vacuum,,,,,,
 RobotVacuumK11Plus,onlineStatus,Both,onlineStatus,onlineStatus,String,"the connection status of the device. online or offline",true,Connectivity,online,offline,,,,,,,
 RobotVacuumK11Plus,battery,Both,battery,battery,Integer,"the current battery level 0-100",false,,,,,Battery,,measurement,%,,

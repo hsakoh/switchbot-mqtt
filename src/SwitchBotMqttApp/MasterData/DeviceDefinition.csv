@@ -46,7 +46,7 @@ RobotVacuumCleanerS1,Robot Vacuum Cleaner S1,,WoSweeper,PhysicalDevice,TRUE,TRUE
 RobotVacuumCleanerS1Plus,Robot Vacuum Cleaner S1 Plus,,WoSweeperPlus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum Cleaner S1 Plus,ロボット掃除機 S1 Plus
 MiniRobotVacuumK10Plus,K10+,,WoSweeperMini,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+,ロボット掃除機 K10+
 MiniRobotVacuumK10PlusPro,K10+ Pro,,WoSweeperMiniPro,PhysicalDevice,TRUE,TRUE,TRUE,,Mini Robot Vacuum K10+ Pro,ロボット掃除機 K10+ Pro
-RobotVacuumK11Plus,Robot Vacuum Cleaner K11+,,Robot Vacuum Cleaner K11 Plus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K11+,ロボット掃除機 K11＋
+RobotVacuumK11Plus,Robot Vacuum Cleaner K11 Plus,,Robot Vacuum Cleaner K11 Plus,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K11+,ロボット掃除機 K11＋
 RobotVacuumCleanerS10,Robot Vacuum Cleaner S10,,Robot Vacuum Cleaner S10,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S10,お掃除ロボット S10
 RobotVacuumCleanerS20,Robot Vacuum Cleaner S20,,Robot Vacuum Cleaner S20,PhysicalDevice,TRUE,TRUE,TRUE,,Floor Cleaning Robot S20,お掃除ロボット S20
 RobotVacuumCleanerK10PlusProCombo,Robot Vacuum Cleaner K10+ Pro Combo,,Robot Vacuum Cleaner K10+ Pro Combo,PhysicalDevice,TRUE,TRUE,TRUE,,Robot Vacuum K10+ Pro Combo,ロボット掃除機 K10+ Pro Combo
