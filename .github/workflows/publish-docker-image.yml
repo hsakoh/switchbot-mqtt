@@ -69,7 +69,7 @@ jobs:
             hsakoh/switchbotmqtt-${{ matrix.arch }}
             ghcr.io/hsakoh/switchbotmqtt-${{ matrix.arch }}
           tags: |
-            latest
+            type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{version}}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}/
