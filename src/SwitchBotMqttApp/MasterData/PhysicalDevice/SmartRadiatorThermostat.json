@@ -1,12 +1,12 @@
-﻿{
+{
   "DeviceType": "SmartRadiatorThermostat",
-  "ApiDeviceTypeString": "Smart Radiato Thermostat",
-  "WebhookDeviceTypeString": "Smart Radiato Thermostat",
+  "ApiDeviceTypeString": "Smart Radiator Thermostat",
+  "WebhookDeviceTypeString": "Smart Radiator Thermostat",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
   "IsSupportCommand": true,
-  "DisplayName": "Smart Radiato Thermostat",
+  "DisplayName": "Smart Radiator Thermostat",
   "Fields": [
     {
       "FieldName": "battery",
