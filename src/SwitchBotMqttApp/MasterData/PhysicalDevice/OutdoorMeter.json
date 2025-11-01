@@ -1,4 +1,4 @@
-﻿{
+{
   "DeviceType": "OutdoorMeter",
   "ApiDeviceTypeString": "WoIOSensor",
   "WebhookDeviceTypeString": "WoIOSensor",
