@@ -1,4 +1,4 @@
-﻿using SwitchBotMqttApp.Models.Enums;
+using SwitchBotMqttApp.Models.Enums;
 
 namespace SwitchBotMqttApp.Models.DeviceDefinitions;
 
@@ -14,5 +14,7 @@ public class DeviceDefinition
     public bool IsSupportCommand { get; set; } = default!;
     public string? Description { get; set; } = default!;
     public string? DisplayName { get; set; } = default!;
-    public string? DisplayNameJa { get; set; } = default!;
+
+    public FieldDefinition[] Fields { get; set; } = default!;
+    public CommandDefinition[] Commands { get; set; } = default!;
 }

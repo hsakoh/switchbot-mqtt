@@ -1,0 +1,159 @@
+﻿{
+  "DeviceType": "BlindTilt",
+  "ApiDeviceTypeString": "Blind Tilt",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Blind Tilt",
+  "Fields": [
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "Integer",
+      "Description": "the firmware version of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "calibrate",
+      "FieldSourceType": "status",
+      "StatusKey": "calibrate",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the open and the closed positions have been properly calibrated or not",
+      "IsBinary": false,
+      "Icon": "mdi:check-circle"
+    },
+    {
+      "FieldName": "group",
+      "FieldSourceType": "status",
+      "StatusKey": "group",
+      "FieldDataType": "Boolean",
+      "Description": "determines if a Blind Tilt device is paired with or grouped with one or more devices of the same type or not",
+      "IsBinary": false,
+      "Icon": "mdi:group"
+    },
+    {
+      "FieldName": "moving",
+      "FieldSourceType": "status",
+      "StatusKey": "moving",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the device is moving or not",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "moving",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "direction",
+      "FieldSourceType": "status",
+      "StatusKey": "direction",
+      "FieldDataType": "String",
+      "Description": "the opening direction of a Blind Tilt device",
+      "IsBinary": false,
+      "Icon": "mdi:swap-vertical"
+    },
+    {
+      "FieldName": "slidePosition",
+      "FieldSourceType": "status",
+      "StatusKey": "slidePosition",
+      "FieldDataType": "Integer",
+      "Description": "the current position, 0-100",
+      "IsBinary": false,
+      "Icon": "mdi:blinds-horizontal-closed",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceId",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "setPosition",
+      "PayloadType": "JoinSemiColon",
+      "Description": "direction: up/down position: 0~100 (0 means closed, 100 means open, it MUST be set to a multiple of 2. e.g. up;48 or up; 36)",
+      "Icon": "mdi:play-circle",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setPosition",
+          "Name": "direction",
+          "Index": 1,
+          "ParameterType": "Select",
+          "Icon": "mdi:swap-vertical",
+          "Options": "up|down",
+          "OptionsDescription": "up|down",
+          "DefaultValue": "up"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setPosition",
+          "Name": "position",
+          "Index": 2,
+          "Description": "0 means closed, 100 means open, it MUST be set to a multiple of 2",
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 0,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "0"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "fullyOpen",
+      "PayloadType": "Default",
+      "Description": "Set the position of Blind Tilt to open, equivalent to setting the position to up;100 or down;100",
+      "Icon": "mdi:blinds-open",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "closeUp",
+      "PayloadType": "Default",
+      "Description": "Set the position of Blind Tilt to closed up, equivalent to setting the position to up;0",
+      "Icon": "mdi:pan-up",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "closeDown",
+      "PayloadType": "Default",
+      "Description": "Set the position of Blind Tilt to closed down, equivalent to setting the position to down;0",
+      "Icon": "mdi:pan-down",
+      "Payloads": []
+    }
+  ]
+}

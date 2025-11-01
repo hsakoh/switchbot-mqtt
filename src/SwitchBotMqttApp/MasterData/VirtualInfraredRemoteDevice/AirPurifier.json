@@ -1,0 +1,29 @@
+﻿{
+  "DeviceType": "AirPurifier",
+  "ApiDeviceTypeString": "Air Purifier",
+  "CustomizedDeviceTypeString": "DIY Air Purifier",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Air Purifier",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:air-purifier",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:air-purifier-off",
+      "Payloads": []
+    }
+  ]
+}

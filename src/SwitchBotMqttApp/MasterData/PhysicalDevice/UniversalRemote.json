@@ -1,0 +1,71 @@
+﻿{
+  "DeviceType": "UniversalRemote",
+  "ApiDeviceTypeString": "remote with screen",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "Universal Remote",
+  "Fields": [
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V3.1",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "status",
+      "StatusKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "chargingStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "chargingStatus",
+      "FieldDataType": "String",
+      "Description": "battery charge status. charging or uncharged",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceId",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Battery Circulator Fan",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": []
+}

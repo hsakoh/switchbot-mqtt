@@ -1,0 +1,186 @@
+﻿{
+  "DeviceType": "RelaySwitch1",
+  "ApiDeviceTypeString": "Relay Switch 1",
+  "WebhookDeviceTypeString": "Relay Switch 1",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Relay Switch 1",
+  "Fields": [
+    {
+      "FieldName": "voltage",
+      "FieldSourceType": "status",
+      "StatusKey": "voltage",
+      "FieldDataType": "Float",
+      "Description": "the voltage of the device, measured in Volt",
+      "IsBinary": false,
+      "SensorDeviceClass": "voltage",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "V"
+    },
+    {
+      "FieldName": "power",
+      "FieldSourceType": "status",
+      "StatusKey": "power",
+      "FieldDataType": "String",
+      "Description": "the current power, measured in Watts",
+      "IsBinary": false,
+      "SensorDeviceClass": "power",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "W"
+    },
+    {
+      "FieldName": "usedElectricity",
+      "FieldSourceType": "status",
+      "StatusKey": "usedElectricity",
+      "FieldDataType": "Float",
+      "Description": "daily power consumption, measured in watt-minutes",
+      "IsBinary": false,
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "Wm"
+    },
+    {
+      "FieldName": "electricCurrent",
+      "FieldSourceType": "status",
+      "StatusKey": "electricCurrent",
+      "FieldDataType": "Integer",
+      "Description": "the electrical current measured in mA",
+      "IsBinary": false,
+      "SensorDeviceClass": "current",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "mA"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current BLE and Wi-Fi firmware version, e.g. V3.1-6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "switchStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "switchStatus",
+      "WebhookKey": "switchStatus",
+      "FieldDataType": "Integer",
+      "Description": "the current switch state. `0`, off; `1`, on, the switch state of the device. `1`, on; `0`, off",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "1",
+      "OffValue": "0"
+    },
+    {
+      "FieldName": "online",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "online",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the device is connected to the internet or disconnected",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "overTemperature",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "overTemperature",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the working temperature is over 100 degree celcius or not",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "heat",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:power-plug",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:power-plug-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "toggle",
+      "PayloadType": "Default",
+      "Description": "toggle state",
+      "Icon": "mdi:power",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMode",
+      "PayloadType": "SingleValue",
+      "Description": "set the switch mode. 0, toggle mode; 1, edge switch mode; 2, detached switch mode; 3, momentary switch mode",
+      "Icon": "mdi:play-circle",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setMode",
+          "Name": "mode",
+          "Index": 1,
+          "ParameterType": "Select",
+          "Icon": "mdi:cogs",
+          "Options": "0|1|2|3",
+          "OptionsDescription": "toggle mode|edge switch mode|detached switch mode|momentary switch mode",
+          "DefaultValue": "0"
+        }
+      ]
+    }
+  ]
+}

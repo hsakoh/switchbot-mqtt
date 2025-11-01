@@ -1,0 +1,69 @@
+﻿{
+  "DeviceType": "Fan",
+  "ApiDeviceTypeString": "Fan",
+  "CustomizedDeviceTypeString": "DIY Fan",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Fan",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:fan",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:fan-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "swing",
+      "PayloadType": "Default",
+      "Description": "swing",
+      "Icon": "mdi:swap-horizontal",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "timer",
+      "PayloadType": "Default",
+      "Description": "set timer",
+      "Icon": "mdi:fan-clock",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "lowSpeed",
+      "PayloadType": "Default",
+      "Description": "set fan speed to low",
+      "Icon": "mdi:fan-speed-1",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "middleSpeed",
+      "PayloadType": "Default",
+      "Description": "set fan speed to medium",
+      "Icon": "mdi:fan-speed-2",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "highSpeed",
+      "PayloadType": "Default",
+      "Description": "set fan speed to high",
+      "Icon": "mdi:fan-speed-3",
+      "Payloads": []
+    }
+  ]
+}

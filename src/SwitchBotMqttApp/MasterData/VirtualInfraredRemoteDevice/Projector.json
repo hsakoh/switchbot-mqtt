@@ -1,0 +1,29 @@
+﻿{
+  "DeviceType": "Projector",
+  "ApiDeviceTypeString": "Projector",
+  "CustomizedDeviceTypeString": "DIY Projector",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Projector",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:projector",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:projector-off",
+      "Payloads": []
+    }
+  ]
+}

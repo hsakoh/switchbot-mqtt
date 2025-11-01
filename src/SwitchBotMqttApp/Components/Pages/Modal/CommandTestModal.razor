@@ -145,12 +145,11 @@
 
     protected override Task OnInitializedAsync()
     {
-        CommandDef = DeviceDefinitionsManager.CommandDefinitions.FirstOrDefault(
-            c => c.DeviceType == Device.DeviceType && c.CommandType == CommandConf.CommandType && c.Command == CommandConf.Command);
-        CommandParams = DeviceDefinitionsManager.CommandPayloadDefinitions.Where(
-            c => c.DeviceType == Device.DeviceType && c.CommandType == CommandConf.CommandType && c.Command == CommandConf.Command)
+        CommandDef = DeviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(
+            c => c.DeviceType == Device.DeviceType)?.Commands.FirstOrDefault(c => c.CommandType == CommandConf.CommandType && c.Command == CommandConf.Command);
+        CommandParams = CommandDef?.Payloads
             .OrderBy(c => c.Index)
-            .Select(p => new ParamTest() { def = p, value = string.Empty }).ToList();
+            .Select(p => new ParamTest() { def = p, value = string.Empty }).ToList() ?? [];
         return Task.CompletedTask;
     }
     async Task Execute()

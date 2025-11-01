@@ -1,12 +1,10 @@
-﻿using SwitchBotMqttApp.Models.Enums;
+using SwitchBotMqttApp.Models.Enums;
 using SwitchBotMqttApp.Models.HomeAssistant;
-using SwitchBotMqttApp.Models.Mqtt;
 
 namespace SwitchBotMqttApp.Models.DeviceDefinitions;
 
 public class FieldDefinition
 {
-    public DeviceType DeviceType { get; set; } = default!;
     public string FieldName { get; set; } = default!;
     public FieldSourceType FieldSourceType { get; set; } = default!;
     public string? StatusKey { get; set; } = default!;
@@ -23,5 +21,4 @@ public class FieldDefinition
     public string? StateClass { get; set; } = default!;
     public string? UnitOfMeasurement { get; set; } = default!;
     public string? DisplayName { get; set; } = default!;
-    public string? DisplayNameJa { get; set; } = default!;
 }

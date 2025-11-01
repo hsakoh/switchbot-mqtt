@@ -1,0 +1,11 @@
+﻿{
+  "DeviceType": "OutdoorSpotlightCam2K",
+  "ApiDeviceTypeString": "Outdoor Spotlight Cam 2K",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "Outdoor Spotlight Cam 2K",
+  "Fields": [],
+  "Commands": []
+}

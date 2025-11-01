@@ -1,0 +1,228 @@
+﻿{
+  "DeviceType": "RGBICWWStripLight",
+  "ApiDeviceTypeString": "RGBICWW Strip Light",
+  "WebhookDeviceTypeString": "RGBICWW Strip Light",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "RGBICWW Strip Light",
+  "Fields": [
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
+      "FieldName": "power",
+      "FieldSourceType": "both",
+      "StatusKey": "power",
+      "WebhookKey": "powerState",
+      "FieldDataType": "String",
+      "Description": "ON/OFF state",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current BLE and Wi-Fi firmware version, e.g. V3.1-6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "brightness",
+      "FieldSourceType": "both",
+      "StatusKey": "brightness",
+      "WebhookKey": "brightness",
+      "FieldDataType": "Integer",
+      "Description": "the brightness value, range from 1 to 100",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "color",
+      "FieldSourceType": "both",
+      "StatusKey": "color",
+      "WebhookKey": "color",
+      "FieldDataType": "String",
+      "Description": "the color value, RGB `255:255:255`",
+      "IsBinary": false,
+      "Icon": "mdi:palette"
+    },
+    {
+      "FieldName": "colorTemperature",
+      "FieldSourceType": "both",
+      "StatusKey": "colorTemperature",
+      "WebhookKey": "colorTemperature",
+      "FieldDataType": "Integer",
+      "Description": "the color temperature value, range from 2700 to 6500",
+      "IsBinary": false,
+      "Icon": "mdi:palette",
+      "StateClass": "measurement"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. LED Strip Light 3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi. ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:lightbulb-on",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:lightbulb-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "toggle",
+      "PayloadType": "Default",
+      "Description": "toggle state",
+      "Icon": "mdi:power",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setBrightness",
+      "PayloadType": "SingleValue",
+      "Description": "set brightness",
+      "Icon": "mdi:brightness-percent",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setBrightness",
+          "Name": "brightness",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setColor",
+      "PayloadType": "JoinColon",
+      "Description": "set RGB color value",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setColor",
+          "Name": "R",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-r",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setColor",
+          "Name": "G",
+          "Index": 2,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-g",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setColor",
+          "Name": "B",
+          "Index": 3,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-b",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setColorTemperature",
+      "PayloadType": "SingleValue",
+      "Description": "set color temperature",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setColorTemperature",
+          "Name": "colortemperature",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:palette",
+          "RangeMin": 2700,
+          "RangeMax": 6500,
+          "DefaultValue": "6500"
+        }
+      ]
+    }
+  ]
+}

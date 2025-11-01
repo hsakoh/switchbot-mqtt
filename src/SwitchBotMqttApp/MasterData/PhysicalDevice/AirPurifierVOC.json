@@ -1,0 +1,166 @@
+﻿{
+  "DeviceType": "AirPurifierVOC",
+  "ApiDeviceTypeString": "Air Purifier PM2.5",
+  "WebhookDeviceTypeString": "Air Purifier PM2.5",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Air Purifier VOC",
+  "Fields": [
+    {
+      "FieldName": "power",
+      "FieldSourceType": "both",
+      "StatusKey": "power",
+      "WebhookKey": "power",
+      "FieldDataType": "String",
+      "Description": "current state; ON, on; OFF, off",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "mode",
+      "FieldSourceType": "both",
+      "StatusKey": "mode",
+      "WebhookKey": "mode",
+      "FieldDataType": "Integer",
+      "Description": "the current mode. 1, normal or fan mode; 2, auto mode; 3, sleep mode; 4, pet mode",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "childLock",
+      "FieldSourceType": "both",
+      "StatusKey": "childLock",
+      "WebhookKey": "childLock",
+      "FieldDataType": "Integer",
+      "Description": "child lock. 0, disabled; 1, enabled",
+      "IsBinary": false,
+      "Icon": "mdi:human-child"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "Integer",
+      "Description": "firmware version",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "returns null if not a bluetooth device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:air-humidifier-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:air-humidifier",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMode",
+      "PayloadType": "Json",
+      "Description": "set the mode. mode_int, 1, normal or fan mode; 2, auto mode; 3, sleep mode; 4, pet mode; fan_level_int, the fan level can only be set if mode_int is set to 1, 1~3",
+      "Icon": "mdi:cog",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setMode",
+          "Name": "mode",
+          "Index": 1,
+          "Description": "1, normal or fan mode; 2, auto mode; 3, sleep mode; 4, pet mode;",
+          "ParameterType": "Select",
+          "Icon": "mdi:cogs",
+          "Options": "1|2|3|4",
+          "OptionsDescription": "normal or fan mode|auto mode|sleep mode|pet mode",
+          "DefaultValue": "1"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setMode",
+          "Name": "fanGear",
+          "Index": 2,
+          "Description": "the fan level can only be set if mode_int is set to 1, 1~3",
+          "ParameterType": "Range",
+          "Icon": "mdi:cogs",
+          "RangeMin": 1,
+          "RangeMax": 3,
+          "DefaultValue": "1"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setChildLock",
+      "PayloadType": "SingleValue",
+      "Description": "enable or disable child lock. true, enable; false, disable",
+      "Icon": "mdi:human-child",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setChildLock",
+          "Name": "childLock",
+          "Index": 1,
+          "Description": "enable or disable child lock. 1, enable; 0, disable",
+          "ParameterType": "Select",
+          "Icon": "mdi:human-child",
+          "Options": "1|0",
+          "OptionsDescription": "enable|disable",
+          "DefaultValue": "1"
+        }
+      ]
+    }
+  ]
+}

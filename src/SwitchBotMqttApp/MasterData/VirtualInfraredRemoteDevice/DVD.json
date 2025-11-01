@@ -1,0 +1,93 @@
+﻿{
+  "DeviceType": "DVD",
+  "ApiDeviceTypeString": "DVD",
+  "CustomizedDeviceTypeString": "DIY DVD",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "DVD",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:toggle-switch",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:toggle-switch-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMute",
+      "PayloadType": "Default",
+      "Description": "mute/unmute",
+      "Icon": "mdi:volume-mute",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "FastForward",
+      "PayloadType": "Default",
+      "Description": "fast forward",
+      "Icon": "mdi:fast-forward",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "Rewind",
+      "PayloadType": "Default",
+      "Description": "rewind",
+      "Icon": "mdi:rewind",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "Next",
+      "PayloadType": "Default",
+      "Description": "next track",
+      "Icon": "mdi:skip-next",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "Previous",
+      "PayloadType": "Default",
+      "Description": "last track",
+      "Icon": "mdi:skip-forward",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "Pause",
+      "PayloadType": "Default",
+      "Description": "pause",
+      "Icon": "mdi:pause",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "Play",
+      "PayloadType": "Default",
+      "Description": "play/resume",
+      "Icon": "mdi:play",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "Stop",
+      "PayloadType": "Default",
+      "Description": "stop",
+      "Icon": "mdi:stop",
+      "Payloads": []
+    }
+  ]
+}

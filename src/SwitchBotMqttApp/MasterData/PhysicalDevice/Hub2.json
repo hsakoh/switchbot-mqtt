@@ -1,0 +1,108 @@
+﻿{
+  "DeviceType": "Hub2",
+  "ApiDeviceTypeString": "Hub 2",
+  "WebhookDeviceTypeString": "WoHub2",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": false,
+  "DisplayName": "Hub 2",
+  "Fields": [
+    {
+      "FieldName": "temperature",
+      "FieldSourceType": "both",
+      "StatusKey": "temperature",
+      "WebhookKey": "temperature",
+      "FieldDataType": "Float",
+      "Description": "temperature in celsius",
+      "IsBinary": false,
+      "SensorDeviceClass": "temperature",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "°C"
+    },
+    {
+      "FieldName": "lightLevel",
+      "FieldSourceType": "both",
+      "StatusKey": "lightLevel",
+      "WebhookKey": "lightLevel",
+      "FieldDataType": "Integer",
+      "Description": "the level of illuminance of the ambience light, 1~20",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V4.2",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "humidity",
+      "FieldSourceType": "both",
+      "StatusKey": "humidity",
+      "WebhookKey": "humidity",
+      "FieldDataType": "Integer",
+      "Description": "humidity percentage",
+      "IsBinary": false,
+      "SensorDeviceClass": "humidity",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "scale",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "scale",
+      "FieldDataType": "String",
+      "Description": "the current temperature unit being used",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": []
+}

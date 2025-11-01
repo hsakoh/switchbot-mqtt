@@ -1,4 +1,4 @@
-﻿using HomeAssistantAddOn.Core;
+using HomeAssistantAddOn.Core;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
@@ -97,24 +97,24 @@ public class DeviceConfigurationManager(
             });
             Diff(physicalDevices, currentData.PhysicalDevices, device =>
             {
-                var fields = deviceDefinitionsManager.FieldDefinitions.Where(m => m.DeviceType == device.DeviceType);
-                device.Fields = fields.Select(f => new FieldConfig()
+                var fields = deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType).Fields;
+                device.Fields = [.. fields.Select(f => new FieldConfig()
                 {
                     Enable = true,
                     FieldName = f.FieldName,
-                }).ToList();
-                var commands = deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
-                device.Commands = commands.Select(
+                })];
+                var commands = deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType).Commands;
+                device.Commands = [.. commands.Select(
                     c => new CommandConfig()
                     {
                         Enable = true,
                         CommandType = c.CommandType,
                         Command = c.Command,
                         DisplayName = c.DisplayName ?? $"{c.Command}",
-                    }).ToList();
+                    })];
             });
 
-            List<VirtualInfraredRemoteDevice> remoteDevices = response.InfraredRemoteList.Select(d => new VirtualInfraredRemoteDevice()
+            List<VirtualInfraredRemoteDevice> remoteDevices = [.. response.InfraredRemoteList.Select(d => new VirtualInfraredRemoteDevice()
             {
                 DeviceId = d.DeviceId,
                 DeviceName = d.DeviceName,
@@ -122,7 +122,7 @@ public class DeviceConfigurationManager(
                             ?? deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.CustomizedDeviceTypeString == d.RemoteType).DeviceType,
                 IsCustomized = !deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.ApiDeviceTypeString == d.RemoteType),
                 RawValue = responseRaw.InfraredRemoteList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
-            }).ToList();
+            })];
             remoteDevices.ForEach(d =>
             {
                 d.RawValue?.Remove("deviceId");
@@ -131,15 +131,15 @@ public class DeviceConfigurationManager(
             Diff(remoteDevices, currentData.VirtualInfraredRemoteDevices, device =>
             {
                 var master = deviceDefinitionsManager.DeviceDefinitions.First(m => m.DeviceType == device.DeviceType);
-                var commands = deviceDefinitionsManager.CommandDefinitions.Where(m => m.DeviceType == device.DeviceType);
-                device.Commands = commands.Select(
+                var commands = master.Commands;
+                device.Commands = [.. commands.Select(
                     c => new CommandConfig()
                     {
                         Enable = true,
                         CommandType = c.CommandType,
                         Command = c.Command,
                         DisplayName = c.DisplayName ?? $"{c.Command}",
-                    }).ToList();
+                    })];
             });
 
         }

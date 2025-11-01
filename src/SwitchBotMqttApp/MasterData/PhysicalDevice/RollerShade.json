@@ -1,0 +1,131 @@
+﻿{
+  "DeviceType": "RollerShade",
+  "ApiDeviceTypeString": "Roller Shade",
+  "WebhookDeviceTypeString": "WoRollerShade",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Roller Shade",
+  "Fields": [
+    {
+      "FieldName": "calibrate",
+      "FieldSourceType": "both",
+      "StatusKey": "calibrate",
+      "WebhookKey": "calibrate",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the open and the closed positions have been properly calibrated or not",
+      "IsBinary": false,
+      "Icon": "mdi:check-circle"
+    },
+    {
+      "FieldName": "moving",
+      "FieldSourceType": "status",
+      "StatusKey": "moving",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the device is moving or not",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "moving",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V4.2",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "slidePosition",
+      "FieldSourceType": "both",
+      "StatusKey": "slidePosition",
+      "WebhookKey": "slidePosition",
+      "FieldDataType": "Integer",
+      "Description": "the current position, 0-100. the percentage of the distance between the calibrated open position and closed position that the device has traversed",
+      "IsBinary": false,
+      "Icon": "mdi:curtains",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "setPosition",
+      "PayloadType": "SingleValue",
+      "Description": "0, open; 100, closed",
+      "Icon": "mdi:play-circle",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setPosition",
+          "Name": "position",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 0,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "0"
+        }
+      ]
+    }
+  ]
+}

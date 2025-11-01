@@ -1,0 +1,165 @@
+﻿{
+  "DeviceType": "KeypadTouch",
+  "ApiDeviceTypeString": "Keypad Touch",
+  "WebhookDeviceTypeString": "WoKeypadTouch",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Keypad Touch",
+  "Fields": [
+    {
+      "FieldName": "eventName",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "eventName",
+      "FieldDataType": "String",
+      "Description": "attributes of the context object. the name of the command being sent",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "commandId",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "commandId",
+      "FieldDataType": "String",
+      "Description": "attributes of the context object. the command id",
+      "IsBinary": false,
+      "Icon": "mdi:identifier"
+    },
+    {
+      "FieldName": "result",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "result",
+      "FieldDataType": "String",
+      "Description": "attributes of the context object. the result of the command. success, failed, or timeout. timeout duration is 1 minute",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "createKey",
+      "PayloadType": "Json",
+      "Description": "create a new passcode",
+      "Icon": "mdi:key-plus",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "name",
+          "Index": 1,
+          "Description": "a unique name for the passcode. duplicates under the same device are not allowed.",
+          "ParameterType": "String",
+          "Icon": "mdi:form-textbox",
+          "DefaultValue": "new passcode"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "type",
+          "Index": 2,
+          "Description": "type of the passcode.",
+          "ParameterType": "Select",
+          "Icon": "mdi:key-chain",
+          "Options": "permanent|timeLimit|disposable|urgent",
+          "OptionsDescription": "a permanent passcode.|a temporary passcode.|a one-time passcode.|an emergency passcode.",
+          "DefaultValue": "disposable"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "password",
+          "Index": 3,
+          "Description": "a 6 to 12-digit passcode in plain text",
+          "ParameterType": "String",
+          "Icon": "mdi:numeric",
+          "LengthMin": 6,
+          "LengthMax": 12,
+          "DefaultValue": "111111"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "startTime",
+          "Index": 4,
+          "Description": "set the time the passcode becomes valid from, mandatory for one-time passcode and temporary passcode. a 10-digit timestamp.If minus 1 is specified, it is treated as unspecified.",
+          "ParameterType": "Long",
+          "Icon": "mdi:clock-start",
+          "RangeMin": 0,
+          "RangeMax": 9999999999,
+          "DefaultValue": "0"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "endTime",
+          "Index": 5,
+          "Description": "set the time the passcode becomes expired, mandatory for one-time passcode and temporary passcode. a 10-digit timestamp.If minus 1 is specified, it is treated as unspecified.",
+          "ParameterType": "Long",
+          "Icon": "mdi:clock-end",
+          "RangeMin": 0,
+          "RangeMax": 9999999999,
+          "DefaultValue": "9999999999"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "deleteKey",
+      "PayloadType": "Json",
+      "Description": "delete an existing passcode",
+      "Icon": "mdi:key-remove",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "deleteKey",
+          "Name": "id",
+          "Index": 6,
+          "Description": "the id of the passcode",
+          "ParameterType": "Long",
+          "Icon": "mdi:identifier"
+        }
+      ]
+    }
+  ]
+}

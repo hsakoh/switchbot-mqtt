@@ -1,0 +1,80 @@
+﻿{
+  "DeviceType": "SetTopBox",
+  "ApiDeviceTypeString": "Set Top Box",
+  "CustomizedDeviceTypeString": "DIY Set Top Box",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Set Top Box",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:television",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:television-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "SetChannel",
+      "PayloadType": "SingleValue",
+      "Description": "set the TV channel to switch to",
+      "Icon": "mdi:numeric",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "SetChannel",
+          "Name": "channelNumber",
+          "Index": 1,
+          "Description": "set the TV channel to switch to",
+          "ParameterType": "String",
+          "Icon": "mdi:numeric",
+          "DefaultValue": "1"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "volumeAdd",
+      "PayloadType": "Default",
+      "Description": "volume up",
+      "Icon": "mdi:volume-plus",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "volumeSub",
+      "PayloadType": "Default",
+      "Description": "volume down",
+      "Icon": "mdi:volume-minus",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "channelAdd",
+      "PayloadType": "Default",
+      "Description": "next channel",
+      "Icon": "mdi:chevron-right",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "channelSub",
+      "PayloadType": "Default",
+      "Description": "previous channel",
+      "Icon": "mdi:chevron-left",
+      "Payloads": []
+    }
+  ]
+}

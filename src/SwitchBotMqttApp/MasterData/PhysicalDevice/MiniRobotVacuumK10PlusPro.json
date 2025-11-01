@@ -1,0 +1,142 @@
+﻿{
+  "DeviceType": "MiniRobotVacuumK10PlusPro",
+  "ApiDeviceTypeString": "K10+ Pro",
+  "WebhookDeviceTypeString": "WoSweeperMiniPro",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Mini Robot Vacuum K10+ Pro",
+  "Fields": [
+    {
+      "FieldName": "deviceName",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceName",
+      "FieldDataType": "String",
+      "Description": "device name",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "workingStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "workingStatus",
+      "WebhookKey": "workingStatus",
+      "FieldDataType": "String",
+      "Description": "the working status of the device. StandBy, Clearing, Paused, GotoChargeBase, Charging, ChargeDone, Dormant, InTrouble, InRemoteControl, or InDustCollecting",
+      "IsBinary": false,
+      "Icon": "mdi:robot-vacuum"
+    },
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "onlineStatus",
+      "WebhookKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the battery level, range from 0 to 100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "start",
+      "PayloadType": "Default",
+      "Description": "start vacuuming",
+      "Icon": "mdi:play-circle",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "stop",
+      "PayloadType": "Default",
+      "Description": "stop vacuuming",
+      "Icon": "mdi:stop-circle",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "dock",
+      "PayloadType": "Default",
+      "Description": "return to charging dock",
+      "Icon": "mdi:home-lightning-bolt",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "PowLevel",
+      "PayloadType": "SingleValue",
+      "Description": "set suction power level: 0 (Quiet), 1 (Standard), 2 (Strong), 3 (MAX)",
+      "Icon": "mdi:numeric",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "PowLevel",
+          "Name": "powerlevel",
+          "Index": 1,
+          "ParameterType": "Select",
+          "Icon": "mdi:cogs",
+          "Options": "0|1|2|3",
+          "OptionsDescription": "Quiet|Standard|Strong|MAX",
+          "DefaultValue": "1"
+        }
+      ]
+    }
+  ]
+}

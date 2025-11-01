@@ -1,0 +1,114 @@
+﻿{
+  "DeviceType": "LockLite",
+  "ApiDeviceTypeString": "Lock Lite",
+  "WebhookDeviceTypeString": "WoLockLite",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Smart Lock Lite",
+  "Fields": [
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current BLE and Wi-Fi firmware version, e.g. V3.1-6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "lockState",
+      "FieldSourceType": "both",
+      "StatusKey": "lockState",
+      "WebhookKey": "lockState",
+      "FieldDataType": "String",
+      "Description": "determines if locked or not, `jammed`, `unlock` or `lock`",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "lock",
+      "OnValue": "unlocked",
+      "OffValue": "locked"
+    },
+    {
+      "FieldName": "calibrate",
+      "FieldSourceType": "status",
+      "StatusKey": "calibrate",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the open and the closed positions have been properly calibrated or not",
+      "IsBinary": false,
+      "Icon": "mdi:check-circle"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Lock Lite",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "lock",
+      "PayloadType": "Default",
+      "Description": "rotate to locked position",
+      "Icon": "mdi:lock",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "unlock",
+      "PayloadType": "Default",
+      "Description": "rotate to unlocked position",
+      "Icon": "mdi:lock-open-variant",
+      "Payloads": []
+    }
+  ]
+}

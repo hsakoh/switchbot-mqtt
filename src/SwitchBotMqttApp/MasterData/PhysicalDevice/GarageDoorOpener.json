@@ -1,0 +1,104 @@
+﻿{
+  "DeviceType": "GarageDoorOpener",
+  "ApiDeviceTypeString": "Garage Door Opener",
+  "WebhookDeviceTypeString": "Garage Door Opener",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Garage Door Opener",
+  "Fields": [
+    {
+      "FieldName": "doorStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "doorStatus",
+      "WebhookKey": "doorStatus",
+      "FieldDataType": "Integer",
+      "Description": "the current switch state. `0`, on; `1`, off",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "door",
+      "OnValue": "0",
+      "OffValue": "1"
+    },
+    {
+      "FieldName": "online",
+      "FieldSourceType": "status",
+      "StatusKey": "online",
+      "FieldDataType": "Boolean",
+      "Description": "the connection status of the device. `true` or `false`,determines if the device is connected to the internet or disconnected",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current BLE and Wi-Fi firmware version, e.g. V3.1-6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Garage Door Opener",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:power-plug",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:power-plug-off",
+      "Payloads": []
+    }
+  ]
+}

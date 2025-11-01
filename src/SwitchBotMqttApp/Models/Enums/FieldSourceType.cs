@@ -1,7 +1,9 @@
-﻿using System.Runtime.Serialization;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace SwitchBotMqttApp.Models.Enums;
 
+[JsonConverter(typeof(JsonStringEnumMemberConverter))]
 public enum FieldSourceType
 {
     [EnumMember(Value = "status")]

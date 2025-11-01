@@ -1,0 +1,11 @@
+﻿{
+  "DeviceType": "HubPlus",
+  "ApiDeviceTypeString": "Hub Plus",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "Hub Plus",
+  "Fields": [],
+  "Commands": []
+}

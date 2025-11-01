@@ -1,0 +1,87 @@
+﻿{
+  "DeviceType": "AirConditioner",
+  "ApiDeviceTypeString": "Air Conditioner",
+  "CustomizedDeviceTypeString": "DIY Air Conditioner",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Air Conditioner",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:toggle-switch",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:toggle-switch-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setAll",
+      "PayloadType": "JoinComma",
+      "Description": "the unit of temperature is in celsius; modes include 1 (auto), 2 (cool), 3 (dry), 4 (fan), 5 (heat); fan speed includes 1 (auto), 2 (low), 3 (medium), 4 (high); power state includes on and off",
+      "Icon": "mdi:air-conditioner",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setAll",
+          "Name": "temperature",
+          "Index": 1,
+          "Description": "the unit of temperature is in celsius",
+          "ParameterType": "Range",
+          "Icon": "mdi:temperature-celsius",
+          "RangeMin": 16,
+          "RangeMax": 30,
+          "UnitOfMeasurement": "°C",
+          "DefaultValue": "25"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setAll",
+          "Name": "mode",
+          "Index": 2,
+          "Description": "modes include 1 (auto), 2 (cool), 3 (dry), 4 (fan), 5 (heat)",
+          "ParameterType": "Select",
+          "Icon": "mdi:cogs",
+          "Options": "1|2|3|4|5",
+          "OptionsDescription": "auto|cool|dry|fan|heat",
+          "DefaultValue": "1"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setAll",
+          "Name": "fanspeed",
+          "Index": 3,
+          "Description": "fan speed includes 1 (auto), 2 (low), 3 (medium), 4 (high)",
+          "ParameterType": "Select",
+          "Icon": "mdi:fan",
+          "Options": "1|2|3|4",
+          "OptionsDescription": "auto|low|medium|high",
+          "DefaultValue": "1"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setAll",
+          "Name": "powerState",
+          "Index": 4,
+          "Description": "power state includes on and off",
+          "ParameterType": "Select",
+          "Icon": "mdi:power",
+          "Options": "on|off",
+          "OptionsDescription": "on|off",
+          "DefaultValue": "on"
+        }
+      ]
+    }
+  ]
+}

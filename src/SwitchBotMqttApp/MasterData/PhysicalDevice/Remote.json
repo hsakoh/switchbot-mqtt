@@ -1,0 +1,11 @@
+﻿{
+  "DeviceType": "Remote",
+  "ApiDeviceTypeString": "Remote",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "Remote",
+  "Fields": [],
+  "Commands": []
+}

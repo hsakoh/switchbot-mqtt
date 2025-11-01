@@ -1,11 +1,10 @@
-﻿using SwitchBotMqttApp.Models.Enums;
+using SwitchBotMqttApp.Models.Enums;
 using SwitchBotMqttApp.Models.HomeAssistant;
 
 namespace SwitchBotMqttApp.Models.DeviceDefinitions;
 
 public class CommandPayloadDefinition
 {
-    public DeviceType DeviceType { get; set; } = default!;
     public CommandType CommandType { get; set; } = default!;
     public string Command { get; set; } = default!;
     public string Name { get; set; } = default!;
@@ -26,7 +25,6 @@ public class CommandPayloadDefinition
     public int? LengthMax { get; set; } = default!;
     public string? DefaultValue { get; set; } = default!;
     public string? DisplayName { get; set; } = default!;
-    public string? DisplayNameJa { get; set; } = default!;
 
     public string[]? GetOptions()
     {
@@ -51,7 +49,7 @@ public class CommandPayloadDefinition
     public string DescriptionToOption(string? description)
     {
         var index = Array.IndexOf(GetOptionsDescription()!, description);
-        if(index == -1)
+        if (index == -1)
         {
             return string.Empty;
         }

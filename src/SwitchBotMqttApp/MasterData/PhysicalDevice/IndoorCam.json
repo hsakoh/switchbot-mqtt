@@ -1,0 +1,53 @@
+﻿{
+  "DeviceType": "IndoorCam",
+  "ApiDeviceTypeString": "Indoor Cam",
+  "WebhookDeviceTypeString": "WoCamera",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": false,
+  "DisplayName": "Indoor Cam",
+  "Fields": [
+    {
+      "FieldName": "detectionState",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "detectionState",
+      "FieldDataType": "String",
+      "Description": "the detection state of the device, `DETECTED` stands for motion is detected",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "motion",
+      "OnValue": "DETECTED",
+      "OffValue": "NOT_DETECTED"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": []
+}

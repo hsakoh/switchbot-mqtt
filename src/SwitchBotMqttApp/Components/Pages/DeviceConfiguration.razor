@@ -139,7 +139,7 @@
                             </div>
                             @foreach (var field in device.Fields)
                             {
-                                var fieldDef = DeviceDefinitionsManager.FieldDefinitions.FirstOrDefault(f => f.DeviceType == device.DeviceType && f.FieldName == field.FieldName);
+                                var fieldDef = DeviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(f => f.DeviceType == device.DeviceType)?.Fields.FirstOrDefault(f => f.FieldName == field.FieldName);
                                 if (fieldDef == null)
                                 {
                                     logger.LogWarning("DeviceType {deviceType} FieldName {fieldName} not found in FieldDefinitions", device.DeviceType,field.FieldName);
@@ -189,7 +189,7 @@
                                 </div>
                                 @foreach (var command in device.Commands)
                                 {
-                                    var commandDef = DeviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                    var commandDef = DeviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(c => c.DeviceType == device.DeviceType)?.Commands.FirstOrDefault(c => c.CommandType == command.CommandType && c.Command == command.Command);
                                     if (commandDef == null)
                                     {
                                         logger.LogWarning("DeviceType {deviceType} CommandType {commandType} Command {command} not found in CommandDefinitions", device.DeviceType, command.CommandType, command.Command);
@@ -227,7 +227,7 @@
                                                     <div class="col-4">Value</div>
                                                     <div class="col-4">Description</div>
                                                 </div>
-                                                var commandParams = DeviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                                var commandParams = commandDef.Payloads;
                                                 @foreach (var param in commandParams.OrderBy(c => c.Index))
                                                 {
                                                     <div class="row border">
@@ -374,7 +374,7 @@
                             }
                             @foreach (var command in device.Commands.Where(c => c.CommandType == CommandType.Command))
                             {
-                                var commandDef = DeviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                var commandDef = DeviceDefinitionsManager.DeviceDefinitions.First(c => c.DeviceType == device.DeviceType).Commands.First(c => c.CommandType == command.CommandType && c.Command == command.Command);
                                 <div class="row border mx-2">
                                     <div class="col-1" style="text-align: center"><InputCheckbox @bind-Value="command.Enable" class="big-checkbox" /></div>
                                     <div class="col-1">
@@ -407,7 +407,7 @@
                                                 <div class="col-4">Value</div>
                                                 <div class="col-4">Description</div>
                                             </div>
-                                            var commandParams = DeviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == device.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                                            var commandParams = commandDef.Payloads;
                                             @foreach (var param in commandParams.OrderBy(c => c.Index))
                                             {
                                                 <div class="row border">

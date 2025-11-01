@@ -1,0 +1,137 @@
+﻿{
+  "DeviceType": "Hub3",
+  "ApiDeviceTypeString": "Hub 3",
+  "WebhookDeviceTypeString": "Hub 3",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": false,
+  "DisplayName": "Hub 3",
+  "Fields": [
+    {
+      "FieldName": "temperature",
+      "FieldSourceType": "both",
+      "StatusKey": "temperature",
+      "WebhookKey": "temperature",
+      "FieldDataType": "Float",
+      "Description": "\"the current temperature reading,,temperature in celsius\"",
+      "IsBinary": false,
+      "SensorDeviceClass": "temperature",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "°C"
+    },
+    {
+      "FieldName": "lightLevel",
+      "FieldSourceType": "both",
+      "StatusKey": "lightLevel",
+      "WebhookKey": "lightLevel",
+      "FieldDataType": "Integer",
+      "Description": "the level of illuminance of the ambience light, 1~10",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V4.2",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "humidity",
+      "FieldSourceType": "both",
+      "StatusKey": "humidity",
+      "WebhookKey": "humidity",
+      "FieldDataType": "Integer",
+      "Description": "humidity percentage",
+      "IsBinary": false,
+      "SensorDeviceClass": "humidity",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "moveDetected",
+      "FieldSourceType": "status",
+      "StatusKey": "moveDetected",
+      "FieldDataType": "String",
+      "Description": "determines if motion is detected",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "online",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "scale",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "scale",
+      "FieldDataType": "String",
+      "Description": "the current temperature unit being used",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "detectionState",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "detectionState",
+      "FieldDataType": "String",
+      "Description": "the motion state of the device, 'DETECTED' stands for motion is detected; 'NOT_DETECTED' stands for motion has not been detected for some time",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "motion",
+      "OnValue": "DETECTED",
+      "OffValue": "NOT_DETECTED"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Hub 3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "Hub ID, equivalent to device ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": []
+}

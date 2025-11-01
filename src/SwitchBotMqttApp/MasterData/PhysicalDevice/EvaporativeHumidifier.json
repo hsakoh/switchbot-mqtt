@@ -1,0 +1,202 @@
+﻿{
+  "DeviceType": "EvaporativeHumidifier",
+  "ApiDeviceTypeString": "Humidifier2",
+  "WebhookDeviceTypeString": "Humidifier2",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Evaporative Humidifier",
+  "Fields": [
+    {
+      "FieldName": "power",
+      "FieldSourceType": "both",
+      "StatusKey": "power",
+      "WebhookKey": "power",
+      "FieldDataType": "String",
+      "Description": "ON/OFF state",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "humidity",
+      "FieldSourceType": "status",
+      "StatusKey": "humidity",
+      "FieldDataType": "Integer",
+      "Description": "humidity percentage",
+      "IsBinary": false,
+      "SensorDeviceClass": "humidity",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "mode",
+      "FieldSourceType": "both",
+      "StatusKey": "mode",
+      "WebhookKey": "mode",
+      "FieldDataType": "Integer",
+      "Description": "the current mode. 1, level 4; 2, level 3; 3, level 2; 4, level 1; 5, humidity mode; 6, sleep mode; 7, auto mode; 8, drying mode",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "drying",
+      "FieldSourceType": "both",
+      "StatusKey": "drying",
+      "WebhookKey": "drying",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the device is drying its filter or not",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "filterElementEffectiveUsageHours",
+      "FieldSourceType": "status",
+      "StatusKey": "filterElement.effectiveUsageHours",
+      "FieldDataType": "Integer",
+      "Description": "the effective duration of the filter in hours",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "filterElementUsedHours",
+      "FieldSourceType": "status",
+      "StatusKey": "filterElement.usedHours",
+      "FieldDataType": "Integer",
+      "Description": "the number of hours the filter has been used",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "childLock",
+      "FieldSourceType": "status",
+      "StatusKey": "childLock",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the safety lock is on or not",
+      "IsBinary": false,
+      "Icon": "mdi:human-child"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "Integer",
+      "Description": "firmware version",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "returns null if not a bluetooth device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:air-humidifier-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:air-humidifier",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMode",
+      "PayloadType": "Json",
+      "Description": "set the mode. mode_int, 1, level 4; 2, level 3; 3, level 2; 4, level 1; 5, humidity mode; 6, sleep mode; 7, auto mode; 8, drying mode; targetHumidify, the target humidity level in percentage, 0~100.",
+      "Icon": "mdi:cog",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setMode",
+          "Name": "mode",
+          "Index": 1,
+          "Description": "1, level 4; 2, level 3; 3, level 2; 4, level 1; 5, humidity mode; 6, sleep mode; 7, auto mode; 8, drying mode;",
+          "ParameterType": "Select",
+          "Icon": "mdi:cogs",
+          "Options": "1|2|3|4|5|6|7|8",
+          "OptionsDescription": "level 4|level 3|level 2|level 1|humidity mode|sleep mode|auto mode|drying mode",
+          "DefaultValue": "1"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setMode",
+          "Name": "targetHumidify",
+          "Index": 2,
+          "Description": "the target humidity level in percentage, 0~100.",
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setChildLock",
+      "PayloadType": "SingleValue",
+      "Description": "enable or disable child lock. true, enable; false, disable",
+      "Icon": "mdi:human-child",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setChildLock",
+          "Name": "childLock",
+          "Index": 1,
+          "Description": "enable or disable child lock. true, enable; false, disable",
+          "ParameterType": "Select",
+          "Icon": "mdi:human-child",
+          "Options": "true|false",
+          "OptionsDescription": "enable|disable",
+          "DefaultValue": "true"
+        }
+      ]
+    }
+  ]
+}

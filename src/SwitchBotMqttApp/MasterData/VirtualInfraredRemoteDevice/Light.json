@@ -1,0 +1,45 @@
+﻿{
+  "DeviceType": "Light",
+  "ApiDeviceTypeString": "Light",
+  "CustomizedDeviceTypeString": "DIY Light",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Light",
+  "Fields": [],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned on by default",
+      "Icon": "mdi:lightbulb-on",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "every home appliance can be turned off by default",
+      "Icon": "mdi:lightbulb-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "brightnessUp",
+      "PayloadType": "Default",
+      "Description": "brightness up",
+      "Icon": "mdi:numeric-positive-1",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "brightnessDown",
+      "PayloadType": "Default",
+      "Description": "brightness down",
+      "Icon": "mdi:numeric-negative-1",
+      "Payloads": []
+    }
+  ]
+}

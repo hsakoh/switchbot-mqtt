@@ -1,0 +1,12 @@
+﻿{
+  "DeviceType": "WalletFinderCard",
+  "ApiDeviceTypeString": "Wallet Finder Card",
+  "WebhookDeviceTypeString": "WoFinderCard",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "Wallet Finder Card",
+  "Fields": [],
+  "Commands": []
+}

@@ -1,0 +1,11 @@
+﻿{
+  "DeviceType": "Others",
+  "ApiDeviceTypeString": "Others",
+  "PhysicalOrVirtual": "VirtualInfraredRemoteDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": true,
+  "DisplayName": "Others",
+  "Fields": [],
+  "Commands": []
+}

@@ -1,5 +1,4 @@
 using HomeAssistantAddOn.Mqtt;
-using Microsoft.AspNetCore;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Logics;
@@ -77,7 +76,7 @@ public class MqttCoreService(
 
     private async Task PublishFieldEntities(DeviceDefinition deviceDef, DeviceMqtt deviceMqtt, PhysicalDevice physicalDevice, CancellationToken cancellationToken)
     {
-        var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+        var fieldDefs = deviceDef.Fields;
         var statusEntities = physicalDevice.Fields.Where(s => s.Enable)
             .Select(s =>
             {
@@ -179,20 +178,18 @@ public class MqttCoreService(
             if (command.CommandType == CommandType.Command)
             {
                 //Difiend command
-                commandDef = deviceDefinitionsManager.CommandDefinitions.First(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                commandDef = deviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == deviceConf.DeviceType).Commands.First(c => c.CommandType == command.CommandType && c.Command == command.Command);
             }
             else
             {
                 //Costmize or Tag command
                 commandDef = new CommandDefinition()
                 {
-                    DeviceType = deviceConf.DeviceType,
                     CommandType = command.CommandType,
                     Command = command.Command,
                     ButtonDeviceClass = ButtonDeviceClass.None,
                     Description = command.DisplayName,
                     DisplayName = command.DisplayName,
-                    DisplayNameJa = command.DisplayName,
                     Icon = null,
                     PayloadType = PayloadType.Default,
                 };
@@ -213,7 +210,7 @@ public class MqttCoreService(
                 buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
                 buttonEntities.Add(MqttEntityHelper.CreateKeypadReloadButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
 
-                var paramDef = deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command).First();
+                var paramDef = commandDef.Payloads.First(c => c.CommandType == command.CommandType && c.Command == command.Command);
                 var payloadDict = CommandPayloadDictionary.GetOrAdd(deviceConf.DeviceId, new ConcurrentDictionary<string, object>());
 
                 var (response, responseRaw) = await switchBotApiClient.GetDevicesAsync(CancellationToken.None);
@@ -239,7 +236,7 @@ public class MqttCoreService(
                     commandDeviceEntities.Add(deviceMqttForCommand);
                     buttonEntities.Add(MqttEntityHelper.CreateCommandButtonEntity(deviceMqttForCommand, deviceConf, commandIndex, command, commandDef));
 
-                    var paramDefs = deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == deviceConf.DeviceType && c.CommandType == command.CommandType && c.Command == command.Command);
+                    var paramDefs = commandDef.Payloads.Where(c => c.CommandType == command.CommandType && c.Command == command.Command);
                     var payloadDict = CommandPayloadDictionary.GetOrAdd(deviceConf.DeviceId, new ConcurrentDictionary<string, object>());
                     foreach (var paramDef in paramDefs)
                     {
@@ -314,7 +311,7 @@ public class MqttCoreService(
             var commandType = payload.CommandType.ToEnumFromEnumMember<CommandType>()!;
 
             var commandConf = device.Commands.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
-            var commandDef = deviceDefinitionsManager.CommandDefinitions.FirstOrDefault(c => c.DeviceType == device.DeviceType && c.CommandType == commandType && c.Command == payload.Command);
+            var commandDef = deviceDefinitionsManager.DeviceDefinitions.First(d => d.DeviceType == device.DeviceType).Commands.FirstOrDefault(c => c.CommandType == commandType && c.Command == payload.Command);
 
             if (commandConf == null)
             {
@@ -330,7 +327,7 @@ public class MqttCoreService(
             {
                 if (payload.ParamValue == "reloadkeys")
                 {
-                    var paramDef = deviceDefinitionsManager.CommandPayloadDefinitions.Where(c => c.DeviceType == device.DeviceType && c.CommandType == commandType && c.Command == payload.Command).First();
+                    var paramDef = commandDef.Payloads.First(c => c.CommandType == commandType && c.Command == payload.Command);
                     var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
 
                     var (response, responseRaw) = await switchBotApiClient.GetDevicesAsync(CancellationToken.None);
@@ -373,7 +370,7 @@ public class MqttCoreService(
             }
             {
 
-                var paramDefs = deviceDefinitionsManager.CommandPayloadDefinitions.Where(p => p.DeviceType == device.DeviceType && p.CommandType == commandType && p.Command == payload.Command).OrderBy(p => p.Index).ToList();
+                var paramDefs = commandDef.Payloads.Where(c => c.CommandType == commandType && c.Command == payload.Command).OrderBy(p => p.Index).ToList();
                 var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
                 if (commandDef.PayloadType == PayloadType.SingleValue)
                 {
@@ -394,7 +391,7 @@ public class MqttCoreService(
                     {
                         value = paramDef.DescriptionToOption((string)payloadDict[paramDef.Name]);
                     }
-                    if(device.DeviceType == DeviceType.RollerShade
+                    if (device.DeviceType == DeviceType.RollerShade
                         && commandConf.Command == "setPosition"
                         && paramDef.ParameterType == ParameterType.Range)
                     {
@@ -514,7 +511,7 @@ public class MqttCoreService(
             return;
         }
         var webhook = await deviceStatePersistanceManager.LoadAsync(physicalDevice.DeviceId);
-        var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+        var fieldDefs = deviceDefinitionsManager.DeviceDefinitions.First(f => f.DeviceType == physicalDevice.DeviceType).Fields;
         var contentKvDict = webhookContent.AsObject().ToDictionary();
         foreach (var rootKv in inputRawRoot.AsObject())
         {
@@ -562,10 +559,10 @@ public class MqttCoreService(
             }
             if (
                 (
-                    (fieldDef.DeviceType == DeviceType.Lock
-                    || fieldDef.DeviceType == DeviceType.LockPro
-                    || fieldDef.DeviceType == DeviceType.LockLite
-                    || fieldDef.DeviceType == DeviceType.LockUltra)
+                    (physicalDevice.DeviceType == DeviceType.Lock
+                    || physicalDevice.DeviceType == DeviceType.LockPro
+                    || physicalDevice.DeviceType == DeviceType.LockLite
+                    || physicalDevice.DeviceType == DeviceType.LockUltra)
                     && fieldDef.FieldName == "lockState")
               )
             {
@@ -578,28 +575,28 @@ public class MqttCoreService(
             }
             if (
                 (
-                    (fieldDef.DeviceType == DeviceType.PlugMiniJp
-                    || fieldDef.DeviceType == DeviceType.PlugMiniUs
-                    || fieldDef.DeviceType == DeviceType.PlugMiniEu)
+                    (physicalDevice.DeviceType == DeviceType.PlugMiniJp
+                    || physicalDevice.DeviceType == DeviceType.PlugMiniUs
+                    || physicalDevice.DeviceType == DeviceType.PlugMiniEu)
                     && fieldDef.FieldName == "powerState")
                 ||
                 (
-                    (fieldDef.DeviceType == DeviceType.CeilingLight
-                    || fieldDef.DeviceType == DeviceType.CeilingLightPro
-                    || fieldDef.DeviceType == DeviceType.StripLight
-                    || fieldDef.DeviceType == DeviceType.ColorBulb
-                    || fieldDef.DeviceType == DeviceType.StripLight3
-                    || fieldDef.DeviceType == DeviceType.FloorLamp
-                    || fieldDef.DeviceType == DeviceType.RGBICWWStripLight
-                    || fieldDef.DeviceType == DeviceType.RGBICWWFloorLamp
-                    || fieldDef.DeviceType == DeviceType.RGBICNeonWireRopeLight
-                    || fieldDef.DeviceType == DeviceType.BatteryCirculatorFan
-                    || fieldDef.DeviceType == DeviceType.CirculatorFan
-                    || fieldDef.DeviceType == DeviceType.EvaporativeHumidifier
-                    || fieldDef.DeviceType == DeviceType.AirPurifierPM25
-                    || fieldDef.DeviceType == DeviceType.AirPurifierTablePM25
-                    || fieldDef.DeviceType == DeviceType.AirPurifierVOC
-                    || fieldDef.DeviceType == DeviceType.AirPurifierTableVOC)
+                    (physicalDevice.DeviceType == DeviceType.CeilingLight
+                    || physicalDevice.DeviceType == DeviceType.CeilingLightPro
+                    || physicalDevice.DeviceType == DeviceType.StripLight
+                    || physicalDevice.DeviceType == DeviceType.ColorBulb
+                    || physicalDevice.DeviceType == DeviceType.StripLight3
+                    || physicalDevice.DeviceType == DeviceType.FloorLamp
+                    || physicalDevice.DeviceType == DeviceType.RGBICWWStripLight
+                    || physicalDevice.DeviceType == DeviceType.RGBICWWFloorLamp
+                    || physicalDevice.DeviceType == DeviceType.RGBICNeonWireRopeLight
+                    || physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
+                    || physicalDevice.DeviceType == DeviceType.CirculatorFan
+                    || physicalDevice.DeviceType == DeviceType.EvaporativeHumidifier
+                    || physicalDevice.DeviceType == DeviceType.AirPurifierPM25
+                    || physicalDevice.DeviceType == DeviceType.AirPurifierTablePM25
+                    || physicalDevice.DeviceType == DeviceType.AirPurifierVOC
+                    || physicalDevice.DeviceType == DeviceType.AirPurifierTableVOC)
                     && fieldDef.FieldName == "power")
               )
             {
@@ -618,7 +615,7 @@ public class MqttCoreService(
             var rawStatus = await switchBotApiClient.GetDeviceStatus(physicalDevice.DeviceId, cancellationToken);
             var status = await deviceStatePersistanceManager.LoadAsync(physicalDevice.DeviceId);
 
-            var fieldDefs = deviceDefinitionsManager.FieldDefinitions.Where(f => f.DeviceType == physicalDevice.DeviceType);
+            var fieldDefs = deviceDefinitionsManager.DeviceDefinitions.First(f => f.DeviceType == physicalDevice.DeviceType).Fields;
 
             List<KeyValuePair<string, JsonNode?>> keyValuePairs = [];
             foreach (var kv in rawStatus.AsObject())
@@ -662,11 +659,11 @@ public class MqttCoreService(
                 status[fieldDef.FieldName] = kv.Value!.Copy();
                 if (
                     (
-                        (fieldDef.DeviceType == DeviceType.EvaporativeHumidifier
-                        || fieldDef.DeviceType == DeviceType.AirPurifierPM25
-                        || fieldDef.DeviceType == DeviceType.AirPurifierTablePM25
-                        || fieldDef.DeviceType == DeviceType.AirPurifierVOC
-                        || fieldDef.DeviceType == DeviceType.AirPurifierTableVOC)
+                        (physicalDevice.DeviceType == DeviceType.EvaporativeHumidifier
+                        || physicalDevice.DeviceType == DeviceType.AirPurifierPM25
+                        || physicalDevice.DeviceType == DeviceType.AirPurifierTablePM25
+                        || physicalDevice.DeviceType == DeviceType.AirPurifierVOC
+                        || physicalDevice.DeviceType == DeviceType.AirPurifierTableVOC)
                         && fieldDef.FieldName == "power")
                   )
                 {
@@ -674,10 +671,10 @@ public class MqttCoreService(
                 }
                 if (
                     (
-                        (fieldDef.DeviceType == DeviceType.Lock
-                        || fieldDef.DeviceType == DeviceType.LockPro
-                        || fieldDef.DeviceType == DeviceType.LockLite
-                        || fieldDef.DeviceType == DeviceType.LockUltra)
+                        (physicalDevice.DeviceType == DeviceType.Lock
+                        || physicalDevice.DeviceType == DeviceType.LockPro
+                        || physicalDevice.DeviceType == DeviceType.LockLite
+                        || physicalDevice.DeviceType == DeviceType.LockUltra)
                         && fieldDef.FieldName == "lockState")
                   )
                 {
