@@ -29,6 +29,7 @@ public enum DeviceType
     KeypadVision,
     Remote,
     MotionSensor,
+    PresenceSensor,
     ContactSensor,
     WaterDetector,
     CeilingLight,
@@ -75,6 +76,7 @@ public enum DeviceType
     OutdoorSpotlightCam2K,
     WalletFinderCard,
     VideoDoorbell,
+    ClimatePanel,
 
     //VirtualInfraredRemoteDevice
     AirConditioner,

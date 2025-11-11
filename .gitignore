@@ -401,5 +401,7 @@ src/SwitchBotMqttApp/ngrok.exe
 src/SwitchBotMqttApp/ngrok-v3-stable-windows-amd64.zip
 _docker-compose/options.json
 _docker-compose/switchbot_config.json
+_docker-compose/switchbot_config_*.json
+_docker-compose/PersistKeys/key-*.xml
 data/PersistKeys/key-*.xml
 data/*.json

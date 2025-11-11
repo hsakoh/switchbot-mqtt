@@ -46,6 +46,7 @@ We have implemented all devices according to the published API specifications, b
 | [Relay Switch 2PM][RelaySwitch2PMProduct]                                                                                          |          [✅][RelaySwitch2PMList]           |          [✅][RelaySwitch2PMStatus]          |          [✅][RelaySwitch2PMWebhook]          |          [✅][RelaySwitch2PMCommand]          |      ✅      |
 | [Garage Door Opener][GarageDoorOpenerProduct]                                                                                      |         [✅][GarageDoorOpenerList]          |         [✅][GarageDoorOpenerStatus]         |         [✅][GarageDoorOpenerWebhook]         |         [✅][GarageDoorOpenerCommand]         |              |
 | [Smart Radiator Thermostat][SmartRadiatorThermostatProduct]                                                                        |      [✅][SmartRadiatorThermostatList]      |     [✅][SmartRadiatorThermostatStatus]      |     [✅][SmartRadiatorThermostatWebhook]      |     [✅][SmartRadiatorThermostatCommand]      |              |
+| [Climate Panel][ClimatePanelProduct] [[JP][ClimatePanelProductJP]]                                                                 |                     ✅                      |                      ✅                      |                      ✅                       |                       -                       |              |
 | **Home Appliance**                                                                                                                 |                      -                      |                      -                       |                       -                       |                       -                       |      -       |
 | Humidifier [[JP][HumidifierProductJP]]                                                                                             |            [✅][HumidifierList]             |            [✅][HumidifierStatus]            |                       -                       |            [✅][HumidifierCommand]            |              |
 | Evaporative Humidifier [[JP][EvaporativeHumidifierProductJP]]                                                                      |       [✅][EvaporativeHumidifierList]       |      [✅][EvaporativeHumidifierStatus]       |      [✅][EvaporativeHumidifierWebhook]       |      [✅][EvaporativeHumidifierCommand]       |              |
@@ -74,6 +75,7 @@ We have implemented all devices according to the published API specifications, b
 | [Meter Pro CO2][MeterProCO2Product] [[JP][MeterProCO2ProductJP]]                                                                   |            [✅][MeterProCO2List]            |           [✅][MeterProCO2Status]            |           [✅][MeterProCO2Webhook]            |                       -                       |      ✅      |
 | [Outdoor Meter][OutdoorMeterProduct] [[JP][OutdoorMeterProductJP]]                                                                 |           [✅][OutdoorMeterList]            |           [✅][OutdoorMeterStatus]           |           [✅][OutdoorMeterWebhook]           |                       -                       |      ✅      |
 | [Motion Sensor][MotionSensorProduct] [[JP][MotionSensorProductJP]]                                                                 |           [✅][MotionSensorList]            |           [✅][MotionSensorStatus]           |           [✅][MotionSensorWebhook]           |                       -                       |      ✅      |
+| [Presence Sensor][PresenceSensorProduct] [[JP][PresenceSensorProductJP]]                                                           |                     ✅                      |                      ✅                      |                      ✅                       |                       -                       |      ✅      |
 | [Contact Sensor][ContactSensorProduct] [[JP][ContactSensorProductJP]]                                                              |           [✅][ContactSensorList]           |          [✅][ContactSensorStatus]           |          [✅][ContactSensorWebhook]           |                       -                       |      ✅      |
 | [Water Leak Detector][WaterLeakDetectorProduct] [[JP][WaterLeakDetectorProductJP]]                                                 |         [✅][WaterLeakDetectorList]         |        [✅][WaterLeakDetectorStatus]         |        [✅][WaterLeakDetectorWebhook]         |                       -                       |              |
 | **Security(Lock)**                                                                                                                 |                      -                      |                      -                       |                       -                       |                       -                       |      -       |
@@ -186,6 +188,11 @@ We have implemented all devices according to the published API specifications, b
 [SmartRadiatorThermostatWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#smart-radiator-thermostat-3
 [SmartRadiatorThermostatCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#smart-radiator-thermostat-2
 [HumidifierProductJP]: https://www.switchbot.jp/products/switchbot-smart-humidifier?variant=40981225799855
+[PresenceSensorProduct]: https://www.switch-bot.com/products/switchbot-presence-sensor
+[PresenceSensorProductJP]: https://www.switchbot.jp/products/switchbot-presence-sensor
+[!PresenceSensorList]: https://github.com/OpenWonderLabs/SwitchBotAPI#presence-sensor
+[!PresenceSensorStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#presence-sensor-1
+[!PresenceSensorWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#presence-sensor-2
 [HumidifierList]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier
 [HumidifierStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier-1
 [HumidifierCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#humidifier-2
@@ -314,6 +321,11 @@ We have implemented all devices according to the published API specifications, b
 [MotionSensorList]: https://github.com/OpenWonderLabs/SwitchBotAPI#motion-sensor
 [MotionSensorStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#motion-sensor-1
 [MotionSensorWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#motion-sensor-2
+[ClimatePanelProduct]: https://www.switch-bot.com/products/switchbot-home-climate-panel
+[ClimatePanelProductJP]: https://www.switchbot.jp/products/switchbot-climate-panel
+[!ClimatePanelList]: https://github.com/OpenWonderLabs/SwitchBotAPI#climate-panel
+[!ClimatePanelStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#climate-panel-1
+[!ClimatePanelWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#climate-panel-2
 [ContactSensorProduct]: https://www.switch-bot.com/products/contact-sensor
 [ContactSensorProductJP]: https://www.switchbot.jp/products/switchbot-contact-sensor
 [ContactSensorList]: https://github.com/OpenWonderLabs/SwitchBotAPI#contact-sensor
@@ -384,7 +396,7 @@ We have implemented all devices according to the published API specifications, b
 [IndoorCamProductJP]: https://www.switchbot.jp/products/switchbot-indoor-cam
 [IndoorCamList]: https://github.com/OpenWonderLabs/SwitchBotAPI#indoor-cam
 [IndoorCamWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#indoor-cam-1
-[VideoDoorbellProduct]: https://www.switch-bot.com/products/switchbot-smart-video-doorbell
+[VideoDoorbellProduct]: https://www.switch-bot.com/products/switchbot-video-doorbell
 [VideoDoorbellProductJP]: https://www.switchbot.jp/products/switchbot-smart-video-doorbell
 [VideoDoorbellList]: https://github.com/OpenWonderLabs/SwitchBotAPI#video-doorbell
 [VideoDoorbellStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#video-doorbell-1
