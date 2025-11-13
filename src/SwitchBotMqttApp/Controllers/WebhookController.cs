@@ -6,9 +6,17 @@ using System.Text.Json.Serialization;
 
 namespace SwitchBotMqttApp.Controllers;
 
+/// <summary>
+/// API controller for receiving webhook notifications from SwitchBot Cloud.
+/// Processes real-time device event notifications and publishes to MQTT.
+/// </summary>
 public class WebhookController(ILogger<WebhookController> logger
         , MqttCoreService mqttCoreService) : Controller
 {
+    /// <summary>
+    /// Webhook endpoint that receives device event notifications from SwitchBot Cloud.
+    /// </summary>
+    /// <returns>OK response on success, 500 on error.</returns>
     [Route("/webhook")]
     [HttpPost]
     public async Task<IActionResult> WebhookAsync()
@@ -30,12 +38,26 @@ public class WebhookController(ILogger<WebhookController> logger
         }
     }
 
+    /// <summary>
+    /// Raw webhook payload structure from SwitchBot Cloud.
+    /// </summary>
     public class WebhookRaw
     {
+        /// <summary>
+        /// Gets or sets the event type (e.g., "changeReport").
+        /// </summary>
         [JsonPropertyName("eventType")]
         public string EventType { get; set; } = default!;
+        
+        /// <summary>
+        /// Gets or sets the webhook event version.
+        /// </summary>
         [JsonPropertyName("eventVersion")]
         public string EventVersion { get; set; } = default!;
+        
+        /// <summary>
+        /// Gets or sets the context containing device event data.
+        /// </summary>
         [JsonPropertyName("context")]
         public JsonNode Context { get; set; } = default!;
     }

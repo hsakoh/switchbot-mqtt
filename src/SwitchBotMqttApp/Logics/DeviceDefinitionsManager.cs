@@ -9,8 +9,16 @@ using System.Text.Json;
 
 namespace SwitchBotMqttApp.Logics;
 
+/// <summary>
+/// Loads and manages device definitions from JSON files and CSV keyset definitions.
+/// Provides metadata about device types, fields, commands, and capabilities.
+/// </summary>
 public class DeviceDefinitionsManager
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DeviceDefinitionsManager"/> class.
+    /// Loads device definitions from JSON files and keyset definitions from CSV.
+    /// </summary>
     public DeviceDefinitionsManager()
     {
         {
@@ -36,9 +44,19 @@ public class DeviceDefinitionsManager
         }
     }
 
+    /// <summary>
+    /// Gets the collection of device definitions for all supported physical and virtual IR remote devices.
+    /// </summary>
     public IReadOnlyList<DeviceDefinition> DeviceDefinitions { get; set; }
+    
+    /// <summary>
+    /// Gets the collection of keyset definitions for devices like Keypad that support key management.
+    /// </summary>
     public IReadOnlyList<KeySetDefinition> KeySetDefinitions { get; set; }
 
+    /// <summary>
+    /// CSV class map for parsing KeySetDefinition from CSV files.
+    /// </summary>
     private class KeySetDefinitionMap : ClassMap<KeySetDefinition>
     {
         public KeySetDefinitionMap()
@@ -50,6 +68,10 @@ public class DeviceDefinitionsManager
         }
     }
 
+    /// <summary>
+    /// Generic enum converter for CSV parsing with TryParse support.
+    /// </summary>
+    /// <typeparam name="T">Enum type to convert.</typeparam>
     public class EnumConverter<T> : EnumConverter where T : struct
     {
         public EnumConverter() : base(typeof(T))

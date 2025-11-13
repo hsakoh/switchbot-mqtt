@@ -1,11 +1,20 @@
 ﻿namespace SwitchBotMqttApp.Services;
 
+/// <summary>
+/// Periodically polls device status from SwitchBot API for configured physical devices.
+/// Uses timer-based polling intervals configured per device.
+/// </summary>
 public class PollingService(
     ILogger<PollingService> logger
         , MqttCoreService mqttCoreService) : ManagedServiceBase
 {
     private readonly List<System.Timers.Timer> pollingTimers = [];
 
+    /// <summary>
+    /// Starts the polling service and creates timers for each device configured to use polling.
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public override Task StartAsync(CancellationToken cancellationToken = default)
     {
         try
@@ -43,6 +52,11 @@ public class PollingService(
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Stops the polling service and disposes all active polling timers.
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public override Task StopAsync(CancellationToken cancellationToken = default)
     {
         foreach (var pollingTimer in pollingTimers)

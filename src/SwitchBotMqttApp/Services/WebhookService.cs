@@ -7,6 +7,10 @@ using SwitchBotMqttApp.Logics;
 
 namespace SwitchBotMqttApp.Services;
 
+/// <summary>
+/// Manages webhook registration with SwitchBot Cloud for real-time device event notifications.
+/// Supports both direct webhook URL and Ngrok tunnel for development/testing.
+/// </summary>
 public class WebhookService : ManagedServiceBase
 {
     private readonly ILogger<WebhookService> _logger;
@@ -15,6 +19,15 @@ public class WebhookService : ManagedServiceBase
     private readonly INgrokService _ngrokService;
     private readonly IServer _server;
     private string? webhookUrl = null;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="WebhookService"/> class.
+    /// </summary>
+    /// <param name="logger">Logger instance.</param>
+    /// <param name="webhookServiceOptions">Webhook service configuration options.</param>
+    /// <param name="ngrokService">Ngrok service for creating tunnels.</param>
+    /// <param name="switchBotApiClient">SwitchBot API client.</param>
+    /// <param name="server">ASP.NET Core server instance.</param>
     public WebhookService(
         ILogger<WebhookService> logger
         , IOptions<WebhookServiceOptions> webhookServiceOptions
@@ -33,6 +46,12 @@ public class WebhookService : ManagedServiceBase
         }
     }
 
+    /// <summary>
+    /// Starts the webhook service, creates Ngrok tunnel if configured, and registers webhook with SwitchBot Cloud.
+    /// Enables existing webhooks if already registered.
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public override async Task StartAsync(CancellationToken cancellationToken = default)
     {
         if (!_webhookServiceOptions.Value.UseWebhook)
@@ -88,6 +107,12 @@ public class WebhookService : ManagedServiceBase
         }
     }
 
+    /// <summary>
+    /// Stops the webhook service, disables and deletes the webhook from SwitchBot Cloud,
+    /// and stops Ngrok tunnel if used.
+    /// </summary>
+    /// <param name="cancellationToken">Token to cancel the operation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public override async Task StopAsync(CancellationToken cancellationToken = default)
     {
         try
