@@ -13,6 +13,7 @@ public class NumberConfig(
             , name: name
             , uniqueId: objectId
             , objectId: objectId
+            , component : "number"
             , device: device
             , deviceClass: deviceClass.ToEnumMemberValue()
             , icon: null)

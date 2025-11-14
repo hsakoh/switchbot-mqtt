@@ -15,6 +15,7 @@ public class BinarySensorConfig(
             , name: name
             , uniqueId: objectId
             , objectId: objectId
+            , component : "binary_sensor"
             , device: device
             , deviceClass: deviceClass.ToEnumMemberValue()
             , icon: icon)

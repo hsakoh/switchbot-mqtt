@@ -13,6 +13,7 @@ public class ButtonConfig(
             , name: name
             , uniqueId: objectId
             , objectId: objectId
+            , component : "button"
             , device: device
             , deviceClass: deviceClass?.ToEnumMemberValue()
             , icon: icon)

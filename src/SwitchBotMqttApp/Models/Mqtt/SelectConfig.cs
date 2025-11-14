@@ -12,6 +12,7 @@ public class SelectConfig(
             , name: name
             , uniqueId: objectId
             , objectId: objectId
+            , component: "select"
             , device: device
             , deviceClass: null
             , icon: null)

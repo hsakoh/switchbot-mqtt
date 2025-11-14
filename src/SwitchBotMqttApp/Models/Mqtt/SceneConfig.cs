@@ -11,6 +11,7 @@ public class SceneConfig(string sceneId, string commandTopic, string name) : Mqt
             , name: name
             , uniqueId: sceneId
             , objectId: sceneId
+            , component : "scene"
             , device: null
             , deviceClass: null
             , icon: null)

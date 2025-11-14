@@ -13,6 +13,7 @@ public class TextConfig(
             , name: name
             , uniqueId: objectId
             , objectId: objectId
+            , component : "text"
             , device: device
             , deviceClass: null
             , icon: null)

@@ -2,11 +2,12 @@
 
 namespace SwitchBotMqttApp.Models.Mqtt;
 
-public class MqttControlBase(string topic, string? defaultValue, string commandTopic, string? commandTemplate, string name, string uniqueId, string objectId, DeviceMqtt? device, string? deviceClass, string? icon) : MqttEntityBase(
+public class MqttControlBase(string topic, string? defaultValue, string commandTopic, string? commandTemplate, string name, string uniqueId, string objectId, string component, DeviceMqtt? device, string? deviceClass, string? icon) : MqttEntityBase(
         topic: topic
             , name: name
             , uniqueId: uniqueId
             , objectId: objectId
+            , component: component
             , device: device
             , deviceClass: deviceClass
             , icon: icon)

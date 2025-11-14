@@ -16,6 +16,7 @@ public class SensorConfig(
             , name: name
             , uniqueId: objectId
             , objectId: objectId
+            , component : "sensor"
             , device: device
             , deviceClass: deviceClass?.ToEnumMemberValue()
             , icon: icon)
