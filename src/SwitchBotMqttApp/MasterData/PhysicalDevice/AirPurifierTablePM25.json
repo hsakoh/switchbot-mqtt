@@ -40,6 +40,15 @@
       "Icon": "mdi:human-child"
     },
     {
+      "FieldName": "fanGear",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "fanGear",
+      "FieldDataType": "Integer",
+      "Description": "the fan level 1~3",
+      "IsBinary": false,
+      "Icon": "mdi:fan"
+    },
+    {
       "FieldName": "version",
       "FieldSourceType": "status",
       "StatusKey": "version",
