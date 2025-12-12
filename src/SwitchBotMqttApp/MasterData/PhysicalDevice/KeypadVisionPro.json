@@ -1,7 +1,7 @@
 {
   "DeviceType": "KeypadVisionPro",
   "ApiDeviceTypeString": "Keypad Vision Pro",
-  "WebhookDeviceTypeString": "WoKeypadVisionPro",
+  "WebhookDeviceTypeString": "Keypad Vision Pro",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,

@@ -33,7 +33,7 @@ We have implemented all devices according to the published API specifications, b
 | [Hub Mini][HubMiniProduct] [[JP][HubMiniProductJP]]                                                                                |              [✅][HubMiniList]               |                      -                      |                      -                       |                      -                       |      -       |
 | [Hub 2][Hub2Product] [[JP][Hub2ProductJP]]                                                                                         |                [✅][Hub2List]                |               [✅][Hub2Status]               |               [✅][Hub2Webhook]               |                      -                       |      ✅       |
 | [Hub 3][Hub3Product] [[JP][Hub3ProductJP]]                                                                                         |                [✅][Hub3List]                |               [✅][Hub3Status]               |               [✅][Hub3Webhook]               |                      -                       |      ✅       |
-| [AI Hub][AIHubProduct] [[JP][AIHubProductJP]]                                                                                      |               [✅][AIHubList]                |              [✅][AIHubStatus]               |                      -                       |                      -                       |              |
+| AI Hub [[JP][AIHubProductJP]]                                                                                                      |               [✅][AIHubList]                |              [✅][AIHubStatus]               |                      -                       |                      -                       |              |
 | **Home Automation**                                                                                                                |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | [Bot][BotProduct] [[JP][BotProductJP]]                                                                                             |                [✅][BotList]                 |               [✅][BotStatus]                |               [✅][BotWebhook]                |               [✅][BotCommand]                |              |
 | [Curtain][CurtainProduct]                                                                                                          |              [✅][CurtainList]               |             [✅][CurtainStatus]              |             [✅][CurtainWebhook]              |             [✅][CurtainCommand]              |      ✅       |
@@ -55,7 +55,7 @@ We have implemented all devices according to the published API specifications, b
 | Fan                                                                                                                                |                      -                      |                                             |                                              |                                              |              |
 | [Battery Circulator Fan][BatteryCirculatorFanProduct] [[JP][BatteryCirculatorFanProductJP]]                                        |        [✅][BatteryCirculatorFanList]        |       [✅][BatteryCirculatorFanStatus]       |       [✅][BatteryCirculatorFanWebhook]       |       [✅][BatteryCirculatorFanCommand]       |              |
 | [Circulator Fan][CirculatorFanProduct] [[JP][CirculatorFanProductJP]]                                                              |           [✅][CirculatorFanList]            |          [✅][CirculatorFanStatus]           |          [✅][CirculatorFanWebhook]           |          [✅][CirculatorFanCommand]           |      ✅       |
-| [Standing Circulator Fan][StandingCirculatorFanProduct] [[JP][StandingCirculatorFanProductJP]]                                     |       [✅][StandingCirculatorFanList]        |      [✅][StandingCirculatorFanStatus]       |      [✅][StandingCirculatorFanWebhook]       |      [✅][StandingCirculatorFanCommand]       |              |
+| Standing Circulator Fan [JP]                                                                                                       |       [✅][StandingCirculatorFanList]        |      [✅][StandingCirculatorFanStatus]       |      [✅][StandingCirculatorFanWebhook]       |      [✅][StandingCirculatorFanCommand]       |              |
 | [Air Purifier PM2.5][AirPurifierPM25Product]                                                                                       |          [✅][AirPurifierPM25List]           |         [✅][AirPurifierPM25Status]          |         [✅][AirPurifierPM25Webhook]          |         [✅][AirPurifierPM25Command]          |              |
 | [Air Purifier Table PM2.5][AirPurifierTablePM25Product]                                                                            |        [✅][AirPurifierTablePM25List]        |       [✅][AirPurifierTablePM25Status]       |       [✅][AirPurifierTablePM25Webhook]       |       [✅][AirPurifierTablePM25Command]       |              |
 | Air Purifier VOC [[JP][AirPurifierVOCProductJP]]                                                                                   |           [✅][AirPurifierVOCList]           |          [✅][AirPurifierVOCStatus]          |          [✅][AirPurifierVOCWebhook]          |          [✅][AirPurifierVOCCommand]          |              |
@@ -89,7 +89,7 @@ We have implemented all devices according to the published API specifications, b
 | Keypad [JP][KeypadProductJP]                                                                                                       |               [✅][KeypadList]               |              [✅][KeypadStatus]              |              [✅][KeypadWebhook]              |              [✅][KeypadCommand]              |              |
 | [Keypad Touch][KeypadTouchProduct] [[JP][KeypadTouchProductJP]]                                                                    |            [✅][KeypadTouchList]             |           [✅][KeypadTouchStatus]            |           [✅][KeypadTouchWebhook]            |           [✅][KeypadTouchCommand]            |      ✅       |
 | [Keypad Vision][KeypadVisionProduct] [[JP][KeypadVisionProductJP]]                                                                 |            [✅][KeypadVisionList]            |           [✅][KeypadVisionStatus]           |           [✅][KeypadVisionWebhook]           |           [✅][KeypadVisionCommand]           |              |
-| [Keypad Vision Pro][KeypadVisionProProduct] [[JP][KeypadVisionProProductJP]]                                                       |          [✅][KeypadVisionProList]           |         [✅][KeypadVisionProStatus]          |         [✅][KeypadVisionProWebhook]          |        [✅][KeypadVisionPro   Command]        |              |
+| [Keypad Vision Pro][KeypadVisionProProduct] [[JP][KeypadVisionProProductJP]]                                                       |          [✅][KeypadVisionProList]           |         [✅][KeypadVisionProStatus]          |         [✅][KeypadVisionProWebhook]          |         [✅][KeypadVisionProCommand]          |              |
 | **Security(Camera)**                                                                                                               |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | [Outdoor Spotlight Cam 1080P][OutdoorSpotlightCam1080PProduct] [[JP][OutdoorSpotlightCam1080PProductJP]]                           |                      -                      |                                             |                                              |                                              |              |
 | [Outdoor Spotlight Cam 2K(3MP)][OutdoorSpotlightCam2K3MPProduct] [[JP][OutdoorSpotlightCam2K3MPProductJP]]                         |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
@@ -115,7 +115,7 @@ We have implemented all devices according to the published API specifications, b
 | [RGBICWW Strip Light][RGBICWWStripLightProduct] [[JP][RGBICWWStripLightProductJP]]                                                 |         [✅][RGBICWWStripLightList]          |        [✅][RGBICWWStripLightStatus]         |        [✅][RGBICWWStripLightWebhook]         |        [✅][RGBICWWStripLightCommand]         |              |
 | [RGBICWW Floor Lamp][RGBICWWFlooLampProduct] [[JP][RGBICWWFlooLampProductJP]]                                                      |          [✅][RGBICWWFlooLampList]           |         [✅][RGBICWWFlooLampStatus]          |         [✅][RGBICWWFlooLampWebhook]          |         [✅][RGBICWWFlooLampCommand]          |              |
 | [RGBIC Neon Wire Rope Light][RGBICNeonWireRopeLightProduct] [[JP][RGBICNeonWireRopeLightProductJP]]                                |       [✅][RGBICNeonWireRopeLightList]       |      [✅][RGBICNeonWireRopeLightStatus]      |      [✅][RGBICNeonWireRopeLightWebhook]      |      [✅][RGBICNeonWireRopeLightCommand]      |      ✅       |
-| [RGBIC Neon Rope Light][RGBICNeonRopeLightProduct] [[JP][RGBICNeonRopeLightProductJP]]                                             |         [✅][RGBICNeonRopeLightList]         |        [✅][RGBICNeonRopeLightStatus]        |        [✅][RGBICNeonRopeLightWebhook]        |        [✅][RGBICNeonRopeLightCommand]        |              |
+| RGBIC Neon Rope Light [JP]                                                                                                         |         [✅][RGBICNeonRopeLightList]         |        [✅][RGBICNeonRopeLightStatus]        |        [✅][RGBICNeonRopeLightWebhook]        |        [✅][RGBICNeonRopeLightCommand]        |              |
 | [Candle Warmer Lamp][CandleWarmerLampProduct] [[JP][CandleWarmerLampProductJP]]                                                    |          [✅][CandleWarmerLampList]          |         [✅][CandleWarmerLampStatus]         |         [✅][CandleWarmerLampWebhook]         |         [✅][CandleWarmerLampCommand]         |              |
 
 [GetDeviceList]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-list
@@ -137,7 +137,7 @@ We have implemented all devices according to the published API specifications, b
 [Hub3List]: https://github.com/OpenWonderLabs/SwitchBotAPI#hubhub-plushub-minihub-2hub-3
 [Hub3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#hub-3
 [Hub3Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#hub-3-1
-[AIHubProduct]: https://www.switch-bot.com/pages/switchbot-hub-3
+[!AIHubProduct]: https://www.switch-bot.com/pages/switchbot-hub-3
 [AIHubProductJP]: https://www.switchbot.jp/products/switchbot-aihub
 [AIHubList]: https://github.com/OpenWonderLabs/SwitchBotAPI#ai-hub
 [AIHubStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#ai-hub-1
@@ -229,8 +229,8 @@ We have implemented all devices according to the published API specifications, b
 [CirculatorFanStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan-1
 [CirculatorFanWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan-3
 [CirculatorFanCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#circulator-fan-2
-[StandingCirculatorFanProduct]: https://www.switch-bot.com/products/switchbot-standing-circulator-fan
-[StandingCirculatorFanProductJP]: https://www.switchbot.jp/products/switchbot-standing-circulator-fan
+[!StandingCirculatorFanProduct]: https://www.switch-bot.com/products/switchbot-standing-circulator-fan
+[!StandingCirculatorFanProductJP]: https://www.switchbot.jp/products/switchbot-standing-circulator-fan
 [StandingCirculatorFanList]: https://github.com/OpenWonderLabs/SwitchBotAPI#Standing-Circulator-Fan
 [StandingCirculatorFanStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#standing-circulator-fan-1
 [StandingCirculatorFanWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#standing-circulator-fan-3
@@ -506,14 +506,14 @@ We have implemented all devices according to the published API specifications, b
 [RGBICNeonWireRopeLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-1
 [RGBICNeonWireRopeLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-3
 [RGBICNeonWireRopeLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-2
-[RGBICNeonRopeLightProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-rope-light
-[RGBICNeonRopeLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-rope-light
+[!RGBICNeonRopeLightProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-rope-light
+[!RGBICNeonRopeLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-rope-light
 [RGBICNeonRopeLightList]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light
 [RGBICNeonRopeLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light-1
 [RGBICNeonRopeLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light-3
 [RGBICNeonRopeLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light-2
-[CandleWarmerLampProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-rope-light
-[CandleWarmerLampProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-rope-light
+[CandleWarmerLampProduct]: https://us.switch-bot.com/products/switchbot-candle-warmer-lamp
+[CandleWarmerLampProductJP]: https://www.switchbot.jp/products/switchbot-candle-warmer-lamp
 [CandleWarmerLampList]: https://github.com/OpenWonderLabs/SwitchBotAPI#candle-warmer-lamp
 [CandleWarmerLampStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#candle-warmer-lamp-1
 [CandleWarmerLampWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#candle-warmer-lamp-3
