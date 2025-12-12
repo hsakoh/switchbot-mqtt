@@ -14,7 +14,7 @@
       "StatusKey": "battery",
       "WebhookKey": "battery",
       "FieldDataType": "Integer",
-      "Description": "the current battery level, 0-100",
+      "Description": "Four-segment battery level division,`<10%, shown as 9;10%~20%, shown as 19;20%~60%, shown as 59;≥60%, shown as 100`",
       "IsBinary": false,
       "SensorDeviceClass": "battery",
       "StateClass": "measurement",

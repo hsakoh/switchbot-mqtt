@@ -25,7 +25,7 @@
       "FieldSourceType": "status",
       "StatusKey": "version",
       "FieldDataType": "String",
-      "Description": "the current firmware version, e.g. V4.2",
+      "Description": "the current BLE and Wi-Fi firmware version, e.g. V3.1-6.3",
       "IsBinary": false,
       "Icon": "mdi:information",
       "EntityCategory": "diagnostic"
@@ -47,7 +47,8 @@
       "StatusKey": "brightness",
       "WebhookKey": "brightness",
       "FieldDataType": "String",
-      "Description": "the ambient brightness picked up by the sensor. bright or dim",
+      //TODO status spec [brightness	Integer	the brightness value, range from 1 to 100]
+      "Description": "the brightness level. `bright` or `dim`",
       "IsBinary": false,
       "Icon": "mdi:brightness-5"
     },
@@ -80,11 +81,20 @@
       "StatusKey": "temperature",
       "WebhookKey": "temperature",
       "FieldDataType": "Float",
-      "Description": "\"the current temperature reading,,temperature in celsius\"",
+      "Description": "the current temperature reading,temperature in celsius",
       "IsBinary": false,
       "SensorDeviceClass": "temperature",
       "StateClass": "measurement",
       "UnitOfMeasurement": "°C"
+    },
+    {
+      "FieldName": "scale",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "scale",
+      "FieldDataType": "String",
+      "Description": "the current temperature unit being used",
+      "IsBinary": false,
+      "Icon": "mdi:information"
     },
     {
       "FieldName": "deviceId",

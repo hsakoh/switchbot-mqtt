@@ -1,0 +1,61 @@
+{
+  "DeviceType": "AIHub",
+  "ApiDeviceTypeString": "AI Hub",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "AI Hub",
+  "Fields": [
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V4.2",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "attributes of the context object. the connection status of the device. *online* or *offline*",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceId",
+      "FieldDataType": "String",
+      "Description": "device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. AI Hub",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": []
+}

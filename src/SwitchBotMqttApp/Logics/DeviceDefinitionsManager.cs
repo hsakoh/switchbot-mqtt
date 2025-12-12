@@ -32,13 +32,17 @@ public class DeviceDefinitionsManager
         {
             List<DeviceDefinition> deviceDefinitions = [];
             var basePath = Path.Combine(AppContext.BaseDirectory, "MasterData");
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                ReadCommentHandling = JsonCommentHandling.Skip
+            };
             foreach (var filePath in Directory.GetFiles(Path.Combine(basePath, nameof(PhysicalOrVirtual.PhysicalDevice))))
             {
-                deviceDefinitions.Add(JsonSerializer.Deserialize<DeviceDefinition>(File.ReadAllText(filePath, Encoding.UTF8))!);
+                deviceDefinitions.Add(JsonSerializer.Deserialize<DeviceDefinition>(File.ReadAllText(filePath, Encoding.UTF8), options)!);
             }
             foreach (var filePath in Directory.GetFiles(Path.Combine(basePath, nameof(PhysicalOrVirtual.VirtualInfraredRemoteDevice))))
             {
-                deviceDefinitions.Add(JsonSerializer.Deserialize<DeviceDefinition>(File.ReadAllText(filePath, Encoding.UTF8))!);
+                deviceDefinitions.Add(JsonSerializer.Deserialize<DeviceDefinition>(File.ReadAllText(filePath, Encoding.UTF8), options)!);
             }
             DeviceDefinitions = deviceDefinitions.ToList().AsReadOnly();
         }

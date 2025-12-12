@@ -250,7 +250,8 @@ public class MqttCoreService(
             // Special handling for Keypad deleteKey command - requires loading keys from API
             if ((deviceConf.DeviceType == DeviceType.Keypad
                 || deviceConf.DeviceType == DeviceType.KeypadTouch
-                || deviceConf.DeviceType == DeviceType.KeypadVision)
+                || deviceConf.DeviceType == DeviceType.KeypadVision
+                || deviceConf.DeviceType == DeviceType.KeypadVisionPro)
                 && command.Command == "deleteKey")
             {
                 // Create separate device for deleteKey command
@@ -398,7 +399,8 @@ public class MqttCoreService(
             // Special handling for Keypad deleteKey command
             if ((device.DeviceType == DeviceType.Keypad
                 || device.DeviceType == DeviceType.KeypadTouch
-                || device.DeviceType == DeviceType.KeypadVision)
+                || device.DeviceType == DeviceType.KeypadVision
+                || device.DeviceType == DeviceType.KeypadVisionPro)
                 && payload.Command == "deleteKey")
             {
                 // Handle reload keys request
@@ -709,6 +711,8 @@ public class MqttCoreService(
                     || physicalDevice.DeviceType == DeviceType.RGBICWWStripLight
                     || physicalDevice.DeviceType == DeviceType.RGBICWWFloorLamp
                     || physicalDevice.DeviceType == DeviceType.RGBICNeonWireRopeLight
+                    || physicalDevice.DeviceType == DeviceType.RGBICNeonRopeLight
+                    || physicalDevice.DeviceType == DeviceType.CandleWarmerLamp
                     || physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
                     || physicalDevice.DeviceType == DeviceType.CirculatorFan
                     || physicalDevice.DeviceType == DeviceType.EvaporativeHumidifier

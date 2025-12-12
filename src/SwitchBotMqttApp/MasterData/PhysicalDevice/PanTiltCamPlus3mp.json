@@ -1,12 +1,12 @@
 {
   "DeviceType": "PanTiltCamPlus5mp",
-  "ApiDeviceTypeString": "Pan/Tilt Cam Plus 3K",
-  "WebhookDeviceTypeString": "WoCamKvs3mp",
+  "ApiDeviceTypeString": "Pan/Tilt Cam Plus 2K",
+  "WebhookDeviceTypeString": "WoCamKvs",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": false,
   "IsSupportWebhook": true,
   "IsSupportCommand": false,
-  "DisplayName": "Pan/Tilt Cam Plus 3K(5MP)",
+  "DisplayName": "Pan/Tilt Cam Plus 2K(3MP)",
   "Fields": [
     {
       "FieldName": "detectionState",

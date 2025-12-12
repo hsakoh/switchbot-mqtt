@@ -228,6 +228,28 @@
           "DefaultValue": "100"
         }
       ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "closeDelay",
+      "PayloadType": "SingleValue",
+      "Description": "Set fan close time.1~36000",
+      "Icon": "mdi:timer-cancel",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "closeDelay",
+          "Name": "delay",
+          "Index": 1,
+          "Description": "Set fan close time.1~36000",
+          "ParameterType": "Range",
+          "Icon": "mdi:timer-10",
+          "RangeMin": 1,
+          "RangeMax": 36000,
+          "UnitOfMeasurement": "seconds",
+          "DefaultValue": "100"
+        }
+      ]
     }
   ]
 }

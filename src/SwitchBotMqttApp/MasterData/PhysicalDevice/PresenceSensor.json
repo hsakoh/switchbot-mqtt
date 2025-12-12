@@ -14,7 +14,7 @@
       "StatusKey": "battery",
       "WebhookKey": "battery",
       "FieldDataType": "Integer",
-      "Description": "the current battery level, 0-100",
+      "Description": "Four-segment battery level division,`<10%, shown as 10;10%~20%, shown as 20;20%~60%, shown as 60;≥60%, shown as 100`",
       "IsBinary": false,
       "SensorDeviceClass": "battery",
       "StateClass": "measurement",
@@ -33,9 +33,9 @@
     {
       "FieldName": "detected",
       "FieldSourceType": "status",
-      "StatusKey": "detected",
+      "StatusKey": "detected",//TODO spec "Detected"
       "FieldDataType": "Boolean",
-      "Description": "determines if motion is detected",
+      "Description": "determines if human is detected",
       "IsBinary": true,
       "BinarySensorDeviceClass": "motion",
       "OnValue": "true",
@@ -51,6 +51,17 @@
       "BinarySensorDeviceClass": "motion",
       "OnValue": "DETECTED",
       "OffValue": "NOT_DETECTED"
+    },
+    {
+      "FieldName": "lightLevel",
+      "FieldSourceType": "both",
+      "StatusKey": "lightLevel",
+      "WebhookKey": "lightLevel",
+      "FieldDataType": "Integer",
+      "Description": "the level of illuminance of the ambience light, 1~10",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement"
     },
     {
       "FieldName": "deviceId",

@@ -1,0 +1,110 @@
+{
+  "DeviceType": "AIArtFrame",
+  "ApiDeviceTypeString": "AI Art Frame",
+  "WebhookDeviceTypeString": "AI Art Frame",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "AI Art Frame",
+  "Fields": [
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "displayMode",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "displayMode",
+      "FieldDataType": "String",
+      "Description": "Current mode of the device,0 = Static image; 1 = Slideshow",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "imageUrl",
+      "FieldSourceType": "status",
+      "StatusKey": "imageUrl",
+      "FieldDataType": "String",
+      "Description": "the URL of the image currently displayed on the photo frame",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V4.2",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. AI Art Frame",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "next",
+      "PayloadType": "Default",
+      "Description": "Switch to the next image",
+      "Icon": "mdi:page-next",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "previous",
+      "PayloadType": "Default",
+      "Description": "Switch to the previous image",
+      "Icon": "mdi:page-previous",
+      "Payloads": []
+    }
+  ]
+}
