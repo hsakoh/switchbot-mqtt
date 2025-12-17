@@ -17,8 +17,6 @@ RUN \
   fi \
   && dotnet publish "SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r $rid -p:PublishSingleFile=true --self-contained -c Release -o /app --no-restore
 
-RUN ls -l /app
-
 FROM $BUILD_FROM AS final
 
 ARG BUILD_ARCH
