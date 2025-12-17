@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir ./_compile_self/${{ matrix.arch }}
           dotnet restore "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj"
-          dotnet publish "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r ${{ matrix.rid }} -p:PublishSingleFile=true --no-self-contained -c Release -o "./_compile_self/${{ matrix.arch }}" --no-restore
+          dotnet publish "./src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" -r ${{ matrix.rid }} -p:PublishSingleFile=true --self-contained -c Release -o "./_compile_self/${{ matrix.arch }}" --no-restore
       
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
