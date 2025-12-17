@@ -70,7 +70,7 @@ public class DeviceStatePersistanceManager(IOptions<CommonOptions> commonOption)
     /// </summary>
     /// <param name="deviceId">Device identifier (MAC address).</param>
     /// <returns>Full file path for device state JSON file.</returns>
-    private string GetStateFilePath(string deviceId)
+    private static string GetStateFilePath(string deviceId)
     {
         return Path.Combine(Utility.GetBaseDataDirectory(), $"{deviceId}.json");
     }

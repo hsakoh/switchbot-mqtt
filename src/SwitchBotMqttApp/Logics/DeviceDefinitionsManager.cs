@@ -32,7 +32,7 @@ public class DeviceDefinitionsManager
         {
             List<DeviceDefinition> deviceDefinitions = [];
             var basePath = Path.Combine(AppContext.BaseDirectory, "MasterData");
-            JsonSerializerOptions options = new JsonSerializerOptions
+            JsonSerializerOptions options = new()
             {
                 ReadCommentHandling = JsonCommentHandling.Skip
             };

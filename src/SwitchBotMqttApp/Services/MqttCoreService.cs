@@ -406,7 +406,7 @@ public class MqttCoreService(
                 // Handle reload keys request
                 if (payload.ParamValue == "reloadkeys")
                 {
-                    var paramDef = commandDef.Payloads.First(c => c.CommandType == commandType && c.Command == payload.Command);
+                    var paramDef = commandDef!.Payloads.First(c => c.CommandType == commandType && c.Command == payload.Command);
                     var payloadDict = CommandPayloadDictionary.GetOrAdd(device.DeviceId, new ConcurrentDictionary<string, object>());
 
                     // Fetch updated key list from API
