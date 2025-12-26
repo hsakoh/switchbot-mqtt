@@ -33,7 +33,7 @@ We have implemented all devices according to the published API specifications, b
 | [Hub Mini][HubMiniProduct] [[JP][HubMiniProductJP]]                                                                                |              [✅][HubMiniList]               |                      -                      |                      -                       |                      -                       |      -       |
 | [Hub 2][Hub2Product] [[JP][Hub2ProductJP]]                                                                                         |                [✅][Hub2List]                |               [✅][Hub2Status]               |               [✅][Hub2Webhook]               |                      -                       |      ✅       |
 | [Hub 3][Hub3Product] [[JP][Hub3ProductJP]]                                                                                         |                [✅][Hub3List]                |               [✅][Hub3Status]               |               [✅][Hub3Webhook]               |                      -                       |      ✅       |
-| AI Hub [[JP][AIHubProductJP]]                                                                                                      |               [✅][AIHubList]                |              [✅][AIHubStatus]               |                      -                       |                      -                       |              |
+| [AI Hub](AIHubProduct) [[JP][AIHubProductJP]]                                                                                      |               [✅][AIHubList]                |              [✅][AIHubStatus]               |                      -                       |                      -                       |              |
 | **Home Automation**                                                                                                                |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | [Bot][BotProduct] [[JP][BotProductJP]]                                                                                             |                [✅][BotList]                 |               [✅][BotStatus]                |               [✅][BotWebhook]                |               [✅][BotCommand]                |              |
 | [Curtain][CurtainProduct]                                                                                                          |              [✅][CurtainList]               |             [✅][CurtainStatus]              |             [✅][CurtainWebhook]              |             [✅][CurtainCommand]              |      ✅       |
@@ -115,7 +115,7 @@ We have implemented all devices according to the published API specifications, b
 | [RGBICWW Strip Light][RGBICWWStripLightProduct] [[JP][RGBICWWStripLightProductJP]]                                                 |         [✅][RGBICWWStripLightList]          |        [✅][RGBICWWStripLightStatus]         |        [✅][RGBICWWStripLightWebhook]         |        [✅][RGBICWWStripLightCommand]         |              |
 | [RGBICWW Floor Lamp][RGBICWWFlooLampProduct] [[JP][RGBICWWFlooLampProductJP]]                                                      |          [✅][RGBICWWFlooLampList]           |         [✅][RGBICWWFlooLampStatus]          |         [✅][RGBICWWFlooLampWebhook]          |         [✅][RGBICWWFlooLampCommand]          |              |
 | [RGBIC Neon Wire Rope Light][RGBICNeonWireRopeLightProduct] [[JP][RGBICNeonWireRopeLightProductJP]]                                |       [✅][RGBICNeonWireRopeLightList]       |      [✅][RGBICNeonWireRopeLightStatus]      |      [✅][RGBICNeonWireRopeLightWebhook]      |      [✅][RGBICNeonWireRopeLightCommand]      |      ✅       |
-| RGBIC Neon Rope Light [JP]                                                                                                         |         [✅][RGBICNeonRopeLightList]         |        [✅][RGBICNeonRopeLightStatus]        |        [✅][RGBICNeonRopeLightWebhook]        |        [✅][RGBICNeonRopeLightCommand]        |              |
+| [RGBIC Neon Rope Light][RGBICNeonRopeLightProduct] [[JP][RGBICNeonRopeLightProductJP]]                                             |         [✅][RGBICNeonRopeLightList]         |        [✅][RGBICNeonRopeLightStatus]        |        [✅][RGBICNeonRopeLightWebhook]        |        [✅][RGBICNeonRopeLightCommand]        |              |
 | [Candle Warmer Lamp][CandleWarmerLampProduct] [[JP][CandleWarmerLampProductJP]]                                                    |          [✅][CandleWarmerLampList]          |         [✅][CandleWarmerLampStatus]         |         [✅][CandleWarmerLampWebhook]         |         [✅][CandleWarmerLampCommand]         |              |
 
 [GetDeviceList]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-list
@@ -137,7 +137,7 @@ We have implemented all devices according to the published API specifications, b
 [Hub3List]: https://github.com/OpenWonderLabs/SwitchBotAPI#hubhub-plushub-minihub-2hub-3
 [Hub3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#hub-3
 [Hub3Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#hub-3-1
-[!AIHubProduct]: https://www.switch-bot.com/pages/switchbot-hub-3
+[AIHubProduct]: https://www.switch-bot.com/products/switchbot-ai-hub
 [AIHubProductJP]: https://www.switchbot.jp/products/switchbot-aihub
 [AIHubList]: https://github.com/OpenWonderLabs/SwitchBotAPI#ai-hub
 [AIHubStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#ai-hub-1
@@ -506,8 +506,8 @@ We have implemented all devices according to the published API specifications, b
 [RGBICNeonWireRopeLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-1
 [RGBICNeonWireRopeLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-3
 [RGBICNeonWireRopeLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-wire-rope-light-2
-[!RGBICNeonRopeLightProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-rope-light
-[!RGBICNeonRopeLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-rope-light
+[RGBICNeonRopeLightProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-rope-light
+[RGBICNeonRopeLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-rope-light
 [RGBICNeonRopeLightList]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light
 [RGBICNeonRopeLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light-1
 [RGBICNeonRopeLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#rgbic-neon-rope-light-3
