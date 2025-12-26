@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/HomeAssistant/">
+    <Project Path="src/HomeAssistant/HomeAssistantAddOn.Core/HomeAssistantAddOn.Core.csproj" />
+    <Project Path="src/HomeAssistant/HomeAssistantAddOn.Mqtt/HomeAssistantAddOn.Mqtt.csproj" />
+  </Folder>
+  <Project Path="src/SwitchBotMqttApp/SwitchBotMqttApp.csproj" />
+</Solution>
