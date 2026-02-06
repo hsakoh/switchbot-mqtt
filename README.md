@@ -1,13 +1,13 @@
-# SwitchBot MQTT Home Assistant add-on
+# SwitchBot MQTT Home Assistant App/Add-on
 
-This project is a Home Assistant add-on that allows you to control various SwitchBot products through the API.
+This project is a Home Assistant app that allows you to control various SwitchBot products through the API.
 
-The add-on can also receive Webhooks to obtain the device's status.
+The app can also receive Webhooks to obtain the device's status.
 Via an MQTT broker, it will be detected as an MQTT integration in Home Assistant.
 
 You can perform manual scene executions that were configured in the SwitchBot app, as well as control virtual infrared remote devices.
 
-**Important: Please note that this add-on does not support operations on SwitchBot devices via Bluetooth.**
+**Important: Please note that this app does not support operations on SwitchBot devices via Bluetooth.**
 
 **New custom integration for Pan/Tilt Cam Plus [here](https://github.com/hsakoh/ha-switchbot-kvs-camera).**
 
