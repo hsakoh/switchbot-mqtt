@@ -297,10 +297,10 @@ We have implemented all devices according to the published API specifications, b
 [FloorCleaningRobotS10Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s10-2
 [FloorCleaningRobotS20Product]: https://www.switch-bot.com/products/switchbot-floor-cleaning-robot-s20
 [FloorCleaningRobotS20ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-s20
-[FloorCleaningRobotS20List]: https://github.com/OpenWonderLabs/SwitchBotAPI#s20
-[FloorCleaningRobotS20Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#s20-missing
-[FloorCleaningRobotS20Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#s20-2
-[FloorCleaningRobotS20Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#s20-1
+[FloorCleaningRobotS20List]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s20
+[FloorCleaningRobotS20Status]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s20-1
+[FloorCleaningRobotS20Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s20-3
+[FloorCleaningRobotS20Command]: https://github.com/OpenWonderLabs/SwitchBotAPI#floor-cleaning-robot-s20-2
 [RobotVacuumK10+ProComboProduct]: https://www.switch-bot.com/products/switchbot-k10-pro-combo
 [RobotVacuumK10+ProComboProductJP]: https://www.switchbot.jp/products/robot-vacuum-cleaner-k10-pro-combo
 [RobotVacuumK10+ProComboList]: https://github.com/OpenWonderLabs/SwitchBotAPI#k10-pro-combo
