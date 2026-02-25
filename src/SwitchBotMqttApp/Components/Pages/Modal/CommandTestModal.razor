@@ -185,6 +185,12 @@
                 {
                     value = int.Parse((string)value);
                 }
+                if (Device.DeviceType == DeviceType.RobotVacuumCleanerS20
+                    && CommandConf.Command == "selfClean"
+                    && CommandParams[0].def.ParameterType == ParameterType.Select)
+                {
+                    value = int.Parse((string)value);
+                }
                 Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, value, CancellationToken.None);
             }
             else if (CommandDef.PayloadType == PayloadType.Json)

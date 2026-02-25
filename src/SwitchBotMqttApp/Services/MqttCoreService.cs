@@ -487,6 +487,13 @@ public class MqttCoreService(
                     {
                         value = int.Parse((string)value);
                     }
+                    // S20 selfClean requires integer value
+                    if (device.DeviceType == DeviceType.RobotVacuumCleanerS20
+                        && commandConf.Command == "selfClean"
+                        && paramDef.ParameterType == ParameterType.Select)
+                    {
+                        value = int.Parse((string)value);
+                    }
                     await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, value, CancellationToken.None);
                     return;
                 }
