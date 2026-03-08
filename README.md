@@ -379,9 +379,9 @@ We have implemented all devices according to the published API specifications, b
 [SmartLockUltraProduct]: https://www.switch-bot.com/products/switchbot-lock-ultra
 [SmartLockUltraProductJP]: https://www.switchbot.jp/products/switchbot-lock-ultra
 [SmartLockUltraList]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra
-[SmartLockUltraStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-missing
-[SmartLockUltraWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-2
-[SmartLockUltraCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-1
+[SmartLockUltraStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-1
+[SmartLockUltraWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-3
+[SmartLockUltraCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-2
 [KeypadProductJP]: https://www.switchbot.jp/products/switchbot-keypad
 [KeypadList]: https://github.com/OpenWonderLabs/SwitchBotAPI#keypad
 [KeypadStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#keypad-1
