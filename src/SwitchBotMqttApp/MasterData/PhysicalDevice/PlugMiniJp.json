@@ -114,6 +114,17 @@
       "Description": "the time stamp when the event is sent",
       "IsBinary": false,
       "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "online",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "online",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the device is connected to the internet or disconnected",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "true",
+      "OffValue": "false"
     }
   ],
   "Commands": [

@@ -43,8 +43,9 @@
     },
     {
       "FieldName": "brightness",
-      "FieldSourceType": "status",
+      "FieldSourceType": "both",
       "StatusKey": "brightness",
+      "WebhookKey": "brightness",
       "FieldDataType": "String",
       "Description": "the ambient brightness picked up by the sensor. bright or dim",
       "IsBinary": false,

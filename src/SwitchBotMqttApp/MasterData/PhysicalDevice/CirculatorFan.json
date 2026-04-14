@@ -68,6 +68,15 @@
       "IsBinary": false
     },
     {
+      "FieldName": "chargingStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "chargingStatus",
+      "WebhookKey": "chargingStatus",
+      "FieldDataType": "String",
+      "Description": "battery charge status. charging or uncharged",
+      "IsBinary": false
+    },
+    {
       "FieldName": "fanSpeed",
       "FieldSourceType": "both",
       "StatusKey": "fanSpeed",
