@@ -211,21 +211,36 @@ public class MqttCoreService(
     /// <param name="imageUrl">URL of the image to download.</param>
     /// <param name="mqttTopic">MQTT topic to publish the Base64-encoded image to.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
+    private const int ImageFetchMaxRetries = 5;
+    private static readonly TimeSpan ImageFetchRetryDelay = TimeSpan.FromSeconds(5);
+
     private async Task PublishImageAsync(string imageUrl, string mqttTopic)
     {
-        try
+        // System.Text.Json decodes \u0026 to & during deserialization, but ensure it just in case
+        imageUrl = imageUrl.Replace("\\u0026", "&");
+        using var client = httpClientFactory.CreateClient();
+
+        for (int attempt = 1; attempt <= ImageFetchMaxRetries; attempt++)
         {
-            // System.Text.Json decodes \u0026 to & during deserialization, but ensure it just in case
-            imageUrl = imageUrl.Replace("\\u0026", "&");
-            using var client = httpClientFactory.CreateClient();
-            var bytes = await client.GetByteArrayAsync(imageUrl);
-            var base64 = Convert.ToBase64String(bytes);
-            await mqttService.PublishAsync(mqttTopic, base64, messageRetailOptions.Value.State);
-            logger.LogDebug("Published image to {topic}", mqttTopic);
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Failed to fetch and publish image from {url}", imageUrl);
+            try
+            {
+                var bytes = await client.GetByteArrayAsync(imageUrl);
+                var base64 = Convert.ToBase64String(bytes);
+                await mqttService.PublishAsync(mqttTopic, base64, messageRetailOptions.Value.State);
+                logger.LogDebug("Published image to {topic}", mqttTopic);
+                return;
+            }
+            catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound && attempt < ImageFetchMaxRetries)
+            {
+                logger.LogWarning("Image not yet available (404) from {url}, retrying in {delay}s (attempt {attempt}/{max})",
+                    imageUrl, ImageFetchRetryDelay.TotalSeconds, attempt, ImageFetchMaxRetries);
+                await Task.Delay(ImageFetchRetryDelay);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to fetch and publish image from {url}", imageUrl);
+                return;
+            }
         }
     }
 
