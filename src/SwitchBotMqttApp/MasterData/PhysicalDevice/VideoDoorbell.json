@@ -131,6 +131,8 @@
       "FieldDataType": "Long",
       "Description": "the Unix timestamp (seconds) when the motion event occurred",
       "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
       "Icon": "mdi:clock"
     },
     {
@@ -162,6 +164,8 @@
       "FieldDataType": "Long",
       "Description": "the Unix timestamp (seconds) when the ring event occurred",
       "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
       "Icon": "mdi:clock"
     }
   ],

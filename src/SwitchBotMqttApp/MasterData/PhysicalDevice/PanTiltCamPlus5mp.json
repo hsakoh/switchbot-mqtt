@@ -77,6 +77,8 @@
       "FieldDataType": "Long",
       "Description": "the Unix timestamp (seconds) when the motion event started",
       "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
       "Icon": "mdi:clock"
     }
   ],

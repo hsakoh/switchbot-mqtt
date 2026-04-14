@@ -146,10 +146,12 @@ public class MqttCoreService(
                 {
                     // Non-binary fields become sensor entities
                     string? value_template = null;
-                    // Special handling for Unix timestamp conversion
-                    if (fieldDef.FieldName == "timeOfSample")
+                    if (fieldDef.SensorDeviceClass == SensorDeviceClass.Timestamp)
                     {
-                        value_template = UnixTimeValueTemplateFormat.Replace("%FIELD%", "timeOfSample");
+                        var fmt = fieldDef.IsTimestampSeconds
+                            ? UnixTimeSecondsValueTemplateFormat
+                            : UnixTimeValueTemplateFormat;
+                        value_template = fmt.Replace("%FIELD%", fieldDef.FieldName);
                     }
                     return new SensorConfig(
                         deviceMqtt
@@ -245,9 +247,14 @@ public class MqttCoreService(
     }
 
     /// <summary>
-    /// Value template format for converting Unix timestamps to local datetime in Home Assistant.
+    /// Value template format for converting Unix timestamps (milliseconds) to local datetime in Home Assistant.
     /// </summary>
     private const string UnixTimeValueTemplateFormat = "{% set ts = value_json.get('%FIELD%', {})  %} {% if ts %}\n  {{ (ts / 1000) | timestamp_local | as_datetime }}\n{% else %}\n  {{ this.state }}\n{% endif %}";
+
+    /// <summary>
+    /// Value template format for converting Unix timestamps (seconds) to local datetime in Home Assistant.
+    /// </summary>
+    private const string UnixTimeSecondsValueTemplateFormat = "{% set ts = value_json.get('%FIELD%', {})  %} {% if ts %}\n  {{ ts | timestamp_local | as_datetime }}\n{% else %}\n  {{ this.state }}\n{% endif %}";
 
     /// <summary>
     /// Publishes an MQTT entity configuration to Home Assistant Discovery topic.

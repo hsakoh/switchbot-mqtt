@@ -19,6 +19,7 @@ public class FieldDefinition
     public string? OffValue { get; set; } = default!;
     public string? Icon { get; set; } = default!;
     public SensorDeviceClass? SensorDeviceClass { get; set; } = default!;
+    public bool IsTimestampSeconds { get; set; } = false;
     public string? EntityCategory { get; set; } = default!;
     public string? StateClass { get; set; } = default!;
     public string? UnitOfMeasurement { get; set; } = default!;
