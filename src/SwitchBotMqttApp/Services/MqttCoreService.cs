@@ -24,7 +24,8 @@ public class MqttCoreService(
         , MqttService mqttService
         , SwitchBotApiClient switchBotApiClient
         , IOptions<MessageRetainOptions> messageRetailOptions
-        , DeviceStatePersistanceManager deviceStatePersistanceManager) : ManagedServiceBase
+        , DeviceStatePersistanceManager deviceStatePersistanceManager
+        , IHttpClientFactory httpClientFactory) : ManagedServiceBase
 {
     /// <summary>
     /// Gets or sets the current device configuration including physical and virtual IR remote devices.
@@ -131,6 +132,16 @@ public class MqttCoreService(
                         , value_template: null
                     );
                 }
+                else if (fieldDef.IsImage)
+                {
+                    return new ImageConfig(
+                        deviceMqtt
+                        , name: fieldDef.DisplayName ?? fieldDef.FieldName
+                        , objectId: $"{fieldDef.FieldSourceType.ToEnumMemberValue()!}_{fieldDef.FieldName}_{deviceMqtt.Identifiers[0]}"
+                        , imageTopic: MqttEntityHelper.GetImageTopic(deviceMqtt.Identifiers[0], fieldDef.FieldName)
+                        , icon: fieldDef.Icon
+                    );
+                }
                 else
                 {
                     // Non-binary fields become sensor entities
@@ -192,6 +203,30 @@ public class MqttCoreService(
 
         // Fetch and publish initial device status
         await PollingAndPublishStatusAsync(physicalDevice, cancellationToken);
+    }
+
+    /// <summary>
+    /// Downloads an image from the specified URL and publishes it as a Base64-encoded string to an MQTT image topic.
+    /// </summary>
+    /// <param name="imageUrl">URL of the image to download.</param>
+    /// <param name="mqttTopic">MQTT topic to publish the Base64-encoded image to.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    private async Task PublishImageAsync(string imageUrl, string mqttTopic)
+    {
+        try
+        {
+            // System.Text.Json decodes \u0026 to & during deserialization, but ensure it just in case
+            imageUrl = imageUrl.Replace("\\u0026", "&");
+            using var client = httpClientFactory.CreateClient();
+            var bytes = await client.GetByteArrayAsync(imageUrl);
+            var base64 = Convert.ToBase64String(bytes);
+            await mqttService.PublishAsync(mqttTopic, base64, messageRetailOptions.Value.State);
+            logger.LogDebug("Published image to {topic}", mqttTopic);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to fetch and publish image from {url}", imageUrl);
+        }
     }
 
     /// <summary>
@@ -646,7 +681,43 @@ public class MqttCoreService(
         // Process each webhook field
         foreach (var kv in contentKvDict)
         {
-            var fieldDef = fieldDefs.FirstOrDefault(f => f.WebhookKey == kv.Key);
+            // Handle nested event objects (e.g., motionEvent, ringEvent)
+            if (kv.Value is JsonObject nestedObj)
+            {
+                var nestedFieldDefs = fieldDefs.Where(f => f.WebhookParentKey == kv.Key).ToList();
+                if (nestedFieldDefs.Count == 0)
+                {
+                    logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    continue;
+                }
+                foreach (var nestedFieldDef in nestedFieldDefs)
+                {
+                    var subValue = nestedObj[nestedFieldDef.WebhookKey!];
+                    if (subValue == null)
+                    {
+                        logger.LogTrace("missing nested webhook key {deviceType},{parentKey}.{key}", physicalDevice.DeviceType, kv.Key, nestedFieldDef.WebhookKey);
+                        continue;
+                    }
+                    var nestedField = physicalDevice.Fields.FirstOrDefault(f => f.FieldName == nestedFieldDef.FieldName);
+                    if (nestedField == null || !nestedField.Enable)
+                    {
+                        logger.LogTrace("disable webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, nestedFieldDef.WebhookKey, subValue.ToJsonString());
+                        continue;
+                    }
+                    if (nestedFieldDef.IsImage)
+                    {
+                        // Download image and publish as Base64 to image topic (do not store time-limited URL in state)
+                        await PublishImageAsync(subValue.GetValue<string>(), MqttEntityHelper.GetImageTopic(physicalDevice.DeviceId, nestedFieldDef.FieldName));
+                    }
+                    else
+                    {
+                        webhook[nestedFieldDef.FieldName] = subValue.Copy();
+                    }
+                }
+                continue;
+            }
+
+            var fieldDef = fieldDefs.FirstOrDefault(f => f.WebhookKey == kv.Key && f.WebhookParentKey == null);
             if (fieldDef == null)
             {
                 logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());

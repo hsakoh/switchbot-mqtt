@@ -1,7 +1,7 @@
 {
   "DeviceType": "PanTiltCamPlus5mp",
   "ApiDeviceTypeString": "Pan/Tilt Cam Plus 3K",
-  "WebhookDeviceTypeString": "WoCamKvs3mp",
+  "WebhookDeviceTypeString": "WoCamKvs5mp",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": false,
   "IsSupportWebhook": true,
@@ -47,6 +47,37 @@
       "Description": "the time stamp when the event is sent",
       "IsBinary": false,
       "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "motionDetectionType",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "motionEvent",
+      "WebhookKey": "detectionType",
+      "FieldDataType": "String",
+      "Description": "the type of detection from motion event (e.g. motion, human)",
+      "IsBinary": false,
+      "Icon": "mdi:motion-sensor"
+    },
+    {
+      "FieldName": "motionImageUrl",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "motionEvent",
+      "WebhookKey": "img",
+      "FieldDataType": "String",
+      "Description": "the image URL captured on motion event",
+      "IsBinary": false,
+      "IsImage": true,
+      "Icon": "mdi:image"
+    },
+    {
+      "FieldName": "motionStartTimestamp",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "motionEvent",
+      "WebhookKey": "startTimestamp",
+      "FieldDataType": "Long",
+      "Description": "the Unix timestamp (seconds) when the motion event started",
+      "IsBinary": false,
+      "Icon": "mdi:clock"
     }
   ],
   "Commands": []

@@ -22,6 +22,11 @@ public static class MqttEntityHelper
     {
         return $"switchbot/{deviceId}/cmd";
     }
+
+    public static string GetImageTopic(string deviceId, string fieldName)
+    {
+        return $"switchbot/{deviceId}/image/{fieldName}";
+    }
     public static string GetCommandParamObjectId(string deviceId, int commandIndex, string paramName)
     {
         return $"{paramName}_{commandIndex}_cmd_{deviceId}";
