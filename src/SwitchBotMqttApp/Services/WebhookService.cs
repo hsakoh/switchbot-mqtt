@@ -10,6 +10,7 @@ namespace SwitchBotMqttApp.Services;
 /// <summary>
 /// Manages webhook registration with SwitchBot Cloud for real-time device event notifications.
 /// Supports both direct webhook URL and Ngrok tunnel for development/testing.
+/// Includes an automatic watchdog that restarts the service if it fails.
 /// </summary>
 public class WebhookService : ManagedServiceBase
 {
@@ -19,6 +20,14 @@ public class WebhookService : ManagedServiceBase
     private readonly INgrokService _ngrokService;
     private readonly IServer _server;
     private string? webhookUrl = null;
+
+    private CancellationTokenSource? _watchdogCts;
+    private Task? _watchdogTask;
+
+    // How long to wait between watchdog checks (60 seconds)
+    private static readonly TimeSpan WatchdogInterval = TimeSpan.FromSeconds(60);
+    // How long to wait before retrying after a failure (30 seconds)
+    private static readonly TimeSpan RetryDelay = TimeSpan.FromSeconds(30);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebhookService"/> class.
@@ -49,6 +58,7 @@ public class WebhookService : ManagedServiceBase
     /// <summary>
     /// Starts the webhook service, creates Ngrok tunnel if configured, and registers webhook with SwitchBot Cloud.
     /// Enables existing webhooks if already registered.
+    /// Also starts a background watchdog that automatically restarts the service on failure.
     /// </summary>
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
@@ -59,6 +69,19 @@ public class WebhookService : ManagedServiceBase
             Status = ServiceStatus.Disabled;
             return;
         }
+
+        await StartInternalAsync(cancellationToken);
+
+        // Start the watchdog background loop
+        _watchdogCts = new CancellationTokenSource();
+        _watchdogTask = Task.Run(() => WatchdogLoopAsync(_watchdogCts.Token), CancellationToken.None);
+    }
+
+    /// <summary>
+    /// Internal start logic — can be called both on initial start and by the watchdog on restart.
+    /// </summary>
+    private async Task StartInternalAsync(CancellationToken cancellationToken = default)
+    {
         try
         {
             Status = ServiceStatus.Starting;
@@ -102,19 +125,88 @@ public class WebhookService : ManagedServiceBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
+            _logger.LogError(ex, $"{nameof(StartInternalAsync)} failed.");
             Status = ServiceStatus.Failed;
         }
     }
 
     /// <summary>
+    /// Background watchdog loop. Checks every 60 seconds if the service is still running.
+    /// If the status is Failed, it attempts a clean restart after a short delay.
+    /// </summary>
+    private async Task WatchdogLoopAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Webhook watchdog started.");
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            try
+            {
+                await Task.Delay(WatchdogInterval, cancellationToken);
+
+                if (Status == ServiceStatus.Failed)
+                {
+                    _logger.LogWarning("Webhook watchdog detected Failed status. Attempting restart in {delay}s...", RetryDelay.TotalSeconds);
+                    await Task.Delay(RetryDelay, cancellationToken);
+
+                    // Clean up Ngrok state before restarting
+                    if (_webhookServiceOptions.Value.UseNgrok)
+                    {
+                        try
+                        {
+                            await _ngrokService.StopAsync(cancellationToken);
+                            typeof(NgrokService).GetField("_isInitialized", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!
+                                .SetValue(_ngrokService, false);
+                        }
+                        catch (Exception cleanupEx)
+                        {
+                            _logger.LogWarning(cleanupEx, "Webhook watchdog: cleanup before restart failed (ignored).");
+                        }
+                    }
+                    webhookUrl = null;
+
+                    _logger.LogInformation("Webhook watchdog: restarting WebhookService now.");
+                    await StartInternalAsync(cancellationToken);
+
+                    if (Status == ServiceStatus.Started)
+                    {
+                        _logger.LogInformation("Webhook watchdog: restart successful.");
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Webhook watchdog: restart failed again, will retry in next cycle.");
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Webhook watchdog encountered an unexpected error.");
+            }
+        }
+        _logger.LogInformation("Webhook watchdog stopped.");
+    }
+
+    /// <summary>
     /// Stops the webhook service, disables and deletes the webhook from SwitchBot Cloud,
-    /// and stops Ngrok tunnel if used.
+    /// stops Ngrok tunnel if used, and stops the watchdog.
     /// </summary>
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public override async Task StopAsync(CancellationToken cancellationToken = default)
     {
+        // Stop the watchdog first so it doesn't interfere with shutdown
+        if (_watchdogCts != null)
+        {
+            _watchdogCts.Cancel();
+            if (_watchdogTask != null)
+            {
+                try { await _watchdogTask; } catch { /* ignored */ }
+            }
+        }
+
         try
         {
             if (_webhookServiceOptions.Value.UseNgrok)
