@@ -1,6 +1,7 @@
 {
   "LogLevel": "Trace",
   "AutoStartServices": false,
+  "ExitOnServiceFailure": false,
   "Mqtt": {
     "AutoConfig": false,
     "Host": "homeassistant",
@@ -24,7 +25,8 @@
     "UseWebhook": true,
     "UseNgrok": true,
     "NgrokAuthToken": "<Configuration required only when using Webhook with ngrok>",
-    "HostUrl": "<Configuration required only when using Webhook without ngrok>"
+    "HostUrl": "<Configuration required only when using Webhook without ngrok>",
+    "ExitOnFailure": false
   },
   "MessageRetain": {
     "Entity": true,

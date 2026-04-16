@@ -1,4 +1,8 @@
-﻿namespace SwitchBotMqttApp.Services;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using SwitchBotMqttApp.Configurations;
+
+namespace SwitchBotMqttApp.Services;
 
 /// <summary>
 /// Periodically polls device status from SwitchBot API for configured physical devices.
@@ -6,7 +10,9 @@
 /// </summary>
 public class PollingService(
     ILogger<PollingService> logger
-        , MqttCoreService mqttCoreService) : ManagedServiceBase
+        , MqttCoreService mqttCoreService
+        , IOptions<CommonOptions> commonOptions
+        , IHostApplicationLifetime appLifetime) : ManagedServiceBase
 {
     private readonly List<System.Timers.Timer> pollingTimers = [];
 
@@ -24,6 +30,11 @@ public class PollingService(
             {
                 logger.LogWarning("{Service} has not started", nameof(MqttCoreService));
                 Status = ServiceStatus.Failed;
+                if (commonOptions.Value.ExitOnServiceFailure)
+                {
+                    logger.LogCritical("ExitOnServiceFailure is enabled. Stopping application.");
+                    appLifetime.StopApplication();
+                }
                 return Task.CompletedTask;
             }
             var pollingDevice = mqttCoreService.CurrentDevicesConfig.PhysicalDevices.Where(d => d.UsePolling && d.Enable).ToList();
@@ -48,6 +59,11 @@ public class PollingService(
         {
             logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
             Status = ServiceStatus.Failed;
+            if (commonOptions.Value.ExitOnServiceFailure)
+            {
+                logger.LogCritical("ExitOnServiceFailure is enabled. Stopping application.");
+                appLifetime.StopApplication();
+            }
         }
         return Task.CompletedTask;
     }

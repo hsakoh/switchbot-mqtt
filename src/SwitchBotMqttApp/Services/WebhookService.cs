@@ -1,6 +1,7 @@
 using FluffySpoon.Ngrok;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Logics;
@@ -16,8 +17,10 @@ public class WebhookService : ManagedServiceBase
     private readonly ILogger<WebhookService> _logger;
     private readonly SwitchBotApiClient _switchBotApiClient;
     private readonly IOptions<WebhookServiceOptions> _webhookServiceOptions;
+    private readonly IOptions<CommonOptions> _commonOptions;
     private readonly INgrokService _ngrokService;
     private readonly IServer _server;
+    private readonly IHostApplicationLifetime _appLifetime;
     private string? webhookUrl = null;
 
     /// <summary>
@@ -31,15 +34,19 @@ public class WebhookService : ManagedServiceBase
     public WebhookService(
         ILogger<WebhookService> logger
         , IOptions<WebhookServiceOptions> webhookServiceOptions
+        , IOptions<CommonOptions> commonOptions
         , INgrokService ngrokService
         , SwitchBotApiClient switchBotApiClient
-        , IServer server)
+        , IServer server
+        , IHostApplicationLifetime appLifetime)
     {
         _logger = logger;
         _switchBotApiClient = switchBotApiClient;
         _webhookServiceOptions = webhookServiceOptions;
+        _commonOptions = commonOptions;
         _ngrokService = ngrokService;
         _server = server;
+        _appLifetime = appLifetime;
         if (!_webhookServiceOptions.Value.UseWebhook)
         {
             Status = ServiceStatus.Disabled;
@@ -104,6 +111,11 @@ public class WebhookService : ManagedServiceBase
         {
             _logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
             Status = ServiceStatus.Failed;
+            if (_commonOptions.Value.ExitOnServiceFailure)
+            {
+                _logger.LogCritical("ExitOnServiceFailure is enabled. Stopping application.");
+                _appLifetime.StopApplication();
+            }
         }
     }
 

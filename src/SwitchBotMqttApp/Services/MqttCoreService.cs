@@ -1,4 +1,5 @@
 using HomeAssistantAddOn.Mqtt;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Logics;
@@ -25,7 +26,9 @@ public class MqttCoreService(
         , SwitchBotApiClient switchBotApiClient
         , IOptions<MessageRetainOptions> messageRetailOptions
         , DeviceStatePersistanceManager deviceStatePersistanceManager
-        , IHttpClientFactory httpClientFactory) : ManagedServiceBase
+        , IHttpClientFactory httpClientFactory
+        , IOptions<CommonOptions> commonOptions
+        , IHostApplicationLifetime appLifetime) : ManagedServiceBase
 {
     /// <summary>
     /// Gets or sets the current device configuration including physical and virtual IR remote devices.
@@ -84,6 +87,11 @@ public class MqttCoreService(
         {
             logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
             Status = ServiceStatus.Failed;
+            if (commonOptions.Value.ExitOnServiceFailure)
+            {
+                logger.LogCritical("ExitOnServiceFailure is enabled. Stopping application.");
+                appLifetime.StopApplication();
+            }
         }
     }
 
