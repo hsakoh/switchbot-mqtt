@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project is a **Home Assistant Add-on** that bridges SwitchBot devices with MQTT, enabling integration with Home Assistant. It is a .NET 8 Blazor Server application that:
+This project is a **Home Assistant App (or add-on)** that bridges SwitchBot devices with MQTT, enabling integration with Home Assistant. It is a .NET 8 Blazor Server application that:
 
 - Communicates with SwitchBot Cloud API to control physical and virtual infrared remote devices
 - Publishes device states and accepts commands via MQTT protocol
