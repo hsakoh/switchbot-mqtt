@@ -69,6 +69,11 @@ public class Program
             {
                 configuration.GetSection("MessageRetain").Bind(settings);
             });
+        builder.Services.AddOptions<ImageFetchOptions>().
+            Configure<IConfiguration>((settings, configuration) =>
+            {
+                configuration.GetSection("ImageFetch").Bind(settings);
+            });
 
         builder.Services.AddSingleton<DeviceConfigurationManager>();
         builder.Services.AddSingleton<DeviceDefinitionsManager>();

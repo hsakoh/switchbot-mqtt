@@ -28,6 +28,7 @@ public class MqttCoreService(
         , DeviceStatePersistanceManager deviceStatePersistanceManager
         , IHttpClientFactory httpClientFactory
         , IOptions<CommonOptions> commonOptions
+        , IOptions<ImageFetchOptions> imageFetchOptions
         , IHostApplicationLifetime appLifetime) : ManagedServiceBase
 {
     /// <summary>
@@ -221,16 +222,16 @@ public class MqttCoreService(
     /// <param name="imageUrl">URL of the image to download.</param>
     /// <param name="mqttTopic">MQTT topic to publish the Base64-encoded image to.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private const int ImageFetchMaxRetries = 5;
-    private static readonly TimeSpan ImageFetchRetryDelay = TimeSpan.FromSeconds(5);
-
     private async Task PublishImageAsync(string imageUrl, string mqttTopic)
     {
+        var maxRetries = imageFetchOptions.Value.MaxRetries;
+        var retryDelay = TimeSpan.FromMilliseconds(imageFetchOptions.Value.RetryIntervalMs);
+
         // System.Text.Json decodes \u0026 to & during deserialization, but ensure it just in case
         imageUrl = imageUrl.Replace("\\u0026", "&");
         using var client = httpClientFactory.CreateClient();
 
-        for (int attempt = 1; attempt <= ImageFetchMaxRetries; attempt++)
+        for (int attempt = 1; attempt <= maxRetries; attempt++)
         {
             try
             {
@@ -240,11 +241,11 @@ public class MqttCoreService(
                 logger.LogDebug("Published image to {topic}", mqttTopic);
                 return;
             }
-            catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound && attempt < ImageFetchMaxRetries)
+            catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound && attempt < maxRetries)
             {
-                logger.LogWarning("Image not yet available (404) from {url}, retrying in {delay}s (attempt {attempt}/{max})",
-                    imageUrl, ImageFetchRetryDelay.TotalSeconds, attempt, ImageFetchMaxRetries);
-                await Task.Delay(ImageFetchRetryDelay);
+                logger.LogWarning("Image not yet available (404) from {url}, retrying in {delay}ms (attempt {attempt}/{max})",
+                    imageUrl, retryDelay.TotalMilliseconds, attempt, maxRetries);
+                await Task.Delay(retryDelay);
             }
             catch (Exception ex)
             {
