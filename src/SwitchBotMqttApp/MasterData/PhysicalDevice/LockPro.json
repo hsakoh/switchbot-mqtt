@@ -44,8 +44,9 @@
     },
     {
       "FieldName": "doorState",
-      "FieldSourceType": "status",
+      "FieldSourceType": "both",
       "StatusKey": "doorState",
+      "WebhookKey": "doorState",
       "FieldDataType": "String",
       "Description": "determines if the door is closed or not",
       "IsBinary": true,

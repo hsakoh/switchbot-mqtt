@@ -801,6 +801,19 @@ public class MqttCoreService(
                 }
                 webhook[fieldDef.FieldName] = val;
             }
+
+            // Normalize doorState value for Lock devices (webhook sends uppercase e.g. "OPENED")
+            if (
+                (
+                    (physicalDevice.DeviceType == DeviceType.Lock
+                    || physicalDevice.DeviceType == DeviceType.LockPro
+                    || physicalDevice.DeviceType == DeviceType.LockLite
+                    || physicalDevice.DeviceType == DeviceType.LockUltra)
+                    && fieldDef.FieldName == "doorState")
+              )
+            {
+                webhook[fieldDef.FieldName] = webhook[fieldDef.FieldName]!.GetValue<string>().ToLower();
+            }
             
             // Normalize power state to lowercase for consistency
             if (
