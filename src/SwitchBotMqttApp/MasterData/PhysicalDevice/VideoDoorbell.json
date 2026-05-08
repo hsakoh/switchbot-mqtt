@@ -167,6 +167,39 @@
       "SensorDeviceClass": "timestamp",
       "IsTimestampSeconds": true,
       "Icon": "mdi:clock"
+    },
+    {
+      "FieldName": "humanDetectionType",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "humanEvent",
+      "WebhookKey": "detectionType",
+      "FieldDataType": "String",
+      "Description": "the type of detection from human event (e.g. motion, human)",
+      "IsBinary": false,
+      "Icon": "mdi:account-eye"
+    },
+    {
+      "FieldName": "humanImageUrl",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "humanEvent",
+      "WebhookKey": "img",
+      "FieldDataType": "String",
+      "Description": "the image URL captured on human event",
+      "IsBinary": false,
+      "IsImage": true,
+      "Icon": "mdi:image"
+    },
+    {
+      "FieldName": "humanEventTime",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "humanEvent",
+      "WebhookKey": "eventTime",
+      "FieldDataType": "Long",
+      "Description": "the Unix timestamp (seconds) when the human event occurred",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
+      "Icon": "mdi:clock"
     }
   ],
   "Commands": [

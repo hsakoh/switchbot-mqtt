@@ -57,7 +57,7 @@ public class PollingService(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
+            logger.LogError(ex, $"{nameof(StartAsync)} failed.");
             Status = ServiceStatus.Failed;
             if (commonOptions.Value.ExitOnServiceFailure)
             {

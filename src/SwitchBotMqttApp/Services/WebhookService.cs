@@ -109,7 +109,7 @@ public class WebhookService : ManagedServiceBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(StartAsync)}  failed.");
+            _logger.LogError(ex, $"{nameof(StartAsync)} failed.");
             Status = ServiceStatus.Failed;
             if (_commonOptions.Value.ExitOnServiceFailure)
             {

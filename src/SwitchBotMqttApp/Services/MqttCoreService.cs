@@ -718,7 +718,7 @@ public class MqttCoreService(
                 var nestedFieldDefs = fieldDefs.Where(f => f.WebhookParentKey == kv.Key).ToList();
                 if (nestedFieldDefs.Count == 0)
                 {
-                    logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    logger.LogWarning("unknown webhook payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
                 foreach (var nestedFieldDef in nestedFieldDefs)
@@ -732,7 +732,7 @@ public class MqttCoreService(
                     var nestedField = physicalDevice.Fields.FirstOrDefault(f => f.FieldName == nestedFieldDef.FieldName);
                     if (nestedField == null || !nestedField.Enable)
                     {
-                        logger.LogTrace("disable webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, nestedFieldDef.WebhookKey, subValue.ToJsonString());
+                        logger.LogTrace("disable webhook payload {deviceType},{key},{value}", physicalDevice.DeviceType, nestedFieldDef.WebhookKey, subValue.ToJsonString());
                         continue;
                     }
                     if (nestedFieldDef.IsImage)
@@ -751,14 +751,14 @@ public class MqttCoreService(
             var fieldDef = fieldDefs.FirstOrDefault(f => f.WebhookKey == kv.Key && f.WebhookParentKey == null);
             if (fieldDef == null)
             {
-                logger.LogWarning("unknown webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                logger.LogWarning("unknown webhook payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                 continue;
             }
 
             var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
             if (!field.Enable)
             {
-                logger.LogTrace("disable webhook paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                logger.LogTrace("disable webhook payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                 continue;
             }
 
@@ -884,19 +884,19 @@ public class MqttCoreService(
                 var fieldDef = fieldDefs.FirstOrDefault(f => f.StatusKey == kv.Key);
                 if (fieldDef == null)
                 {
-                    logger.LogWarning("unknown status paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    logger.LogWarning("unknown status payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
 
                 var field = physicalDevice.Fields.FirstOrDefault(f => f.FieldName == fieldDef.FieldName);
                 if (field == null)
                 {
-                    logger.LogWarning("missing device field difinition(might need to remove and refetch the device) {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    logger.LogWarning("missing device field definition(might need to remove and refetch the device) {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
                 if (!field.Enable)
                 {
-                    logger.LogTrace("disable polling paylod {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
+                    logger.LogTrace("disable polling payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
                 
