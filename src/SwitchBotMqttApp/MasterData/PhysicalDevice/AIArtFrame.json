@@ -10,10 +10,11 @@
   "Fields": [
     {
       "FieldName": "battery",
-      "FieldSourceType": "webhook",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
       "WebhookKey": "battery",
       "FieldDataType": "Integer",
-      "Description": "the current battery level",
+      "Description": "the current battery level, 0-100",
       "IsBinary": false,
       "SensorDeviceClass": "battery",
       "StateClass": "measurement",
@@ -21,10 +22,11 @@
     },
     {
       "FieldName": "displayMode",
-      "FieldSourceType": "webhook",
+      "FieldSourceType": "both",
+      "StatusKey": "displayMode",
       "WebhookKey": "displayMode",
-      "FieldDataType": "String",
-      "Description": "Current mode of the device,0 = Static image; 1 = Slideshow",
+      "FieldDataType": "Integer",
+      "Description": "display mode: 0 = Static image; 1 = Slideshow",
       "IsBinary": false,
       "Icon": "mdi:information"
     },
@@ -42,7 +44,7 @@
       "FieldSourceType": "status",
       "StatusKey": "version",
       "FieldDataType": "String",
-      "Description": "the current firmware version, e.g. V4.2",
+      "Description": "the current firmware version, e.g. V0.0-0.5",
       "IsBinary": false,
       "Icon": "mdi:information",
       "EntityCategory": "diagnostic"
@@ -105,6 +107,25 @@
       "Description": "Switch to the previous image",
       "Icon": "mdi:page-previous",
       "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "uploadImage",
+      "PayloadType": "Json",
+      "Description": "upload an image (imageUrl or imageBase64)",
+      "Icon": "mdi:image-plus",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "uploadImage",
+          "Name": "imageUrl",
+          "Index": 1,
+          "Description": "URL of the image to upload. Alternatively use imageBase64 field.",
+          "ParameterType": "String",
+          "Icon": "mdi:link",
+          "DefaultValue": "https://"
+        }
+      ]
     }
   ]
 }

@@ -313,11 +313,13 @@ public class MqttCoreService(
                 };
             }
 
-            // Special handling for Keypad deleteKey command - requires loading keys from API
+            // Special handling for Keypad/LockVision deleteKey command - requires loading keys from API
             if ((deviceConf.DeviceType == DeviceType.Keypad
                 || deviceConf.DeviceType == DeviceType.KeypadTouch
                 || deviceConf.DeviceType == DeviceType.KeypadVision
-                || deviceConf.DeviceType == DeviceType.KeypadVisionPro)
+                || deviceConf.DeviceType == DeviceType.KeypadVisionPro
+                || deviceConf.DeviceType == DeviceType.LockVision
+                || deviceConf.DeviceType == DeviceType.LockVisionPro)
                 && command.Command == "deleteKey")
             {
                 // Create separate device for deleteKey command
@@ -462,11 +464,13 @@ public class MqttCoreService(
                 return;
             }
 
-            // Special handling for Keypad deleteKey command
+            // Special handling for Keypad/LockVision deleteKey command
             if ((device.DeviceType == DeviceType.Keypad
                 || device.DeviceType == DeviceType.KeypadTouch
                 || device.DeviceType == DeviceType.KeypadVision
-                || device.DeviceType == DeviceType.KeypadVisionPro)
+                || device.DeviceType == DeviceType.KeypadVisionPro
+                || device.DeviceType == DeviceType.LockVision
+                || device.DeviceType == DeviceType.LockVisionPro)
                 && payload.Command == "deleteKey")
             {
                 // Handle reload keys request
@@ -789,7 +793,10 @@ public class MqttCoreService(
                     (physicalDevice.DeviceType == DeviceType.Lock
                     || physicalDevice.DeviceType == DeviceType.LockPro
                     || physicalDevice.DeviceType == DeviceType.LockLite
-                    || physicalDevice.DeviceType == DeviceType.LockUltra)
+                    || physicalDevice.DeviceType == DeviceType.LockUltra
+                    || physicalDevice.DeviceType == DeviceType.LockProMatterEnabled
+                    || physicalDevice.DeviceType == DeviceType.LockVision
+                    || physicalDevice.DeviceType == DeviceType.LockVisionPro)
                     && fieldDef.FieldName == "lockState")
               )
             {
@@ -808,7 +815,10 @@ public class MqttCoreService(
                     (physicalDevice.DeviceType == DeviceType.Lock
                     || physicalDevice.DeviceType == DeviceType.LockPro
                     || physicalDevice.DeviceType == DeviceType.LockLite
-                    || physicalDevice.DeviceType == DeviceType.LockUltra)
+                    || physicalDevice.DeviceType == DeviceType.LockUltra
+                    || physicalDevice.DeviceType == DeviceType.LockProMatterEnabled
+                    || physicalDevice.DeviceType == DeviceType.LockVision
+                    || physicalDevice.DeviceType == DeviceType.LockVisionPro)
                     && fieldDef.FieldName == "doorState")
               )
             {
@@ -935,7 +945,10 @@ public class MqttCoreService(
                         (physicalDevice.DeviceType == DeviceType.Lock
                         || physicalDevice.DeviceType == DeviceType.LockPro
                         || physicalDevice.DeviceType == DeviceType.LockLite
-                        || physicalDevice.DeviceType == DeviceType.LockUltra)
+                        || physicalDevice.DeviceType == DeviceType.LockUltra
+                        || physicalDevice.DeviceType == DeviceType.LockProMatterEnabled
+                        || physicalDevice.DeviceType == DeviceType.LockVision
+                        || physicalDevice.DeviceType == DeviceType.LockVisionPro)
                         && fieldDef.FieldName == "lockState")
                   )
                 {

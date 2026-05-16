@@ -1,0 +1,220 @@
+{
+  "DeviceType": "LockVision",
+  "ApiDeviceTypeString": "Lock Vision",
+  "WebhookDeviceTypeString": "W1141000",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Lock Vision",
+  "Fields": [
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "lockState",
+      "FieldSourceType": "both",
+      "StatusKey": "lockState",
+      "WebhookKey": "lockState",
+      "FieldDataType": "String",
+      "Description": "jammed, unlock, lock, latchBoltLocked",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "lock",
+      "OnValue": "unlocked",
+      "OffValue": "locked"
+    },
+    {
+      "FieldName": "doorState",
+      "FieldSourceType": "both",
+      "StatusKey": "doorState",
+      "WebhookKey": "doorState",
+      "FieldDataType": "String",
+      "Description": "open, close",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "door",
+      "OnValue": "opened",
+      "OffValue": "closed"
+    },
+    {
+      "FieldName": "calibrate",
+      "FieldSourceType": "status",
+      "StatusKey": "calibrate",
+      "FieldDataType": "Boolean",
+      "Description": "determines if Lock has been calibrated or not",
+      "IsBinary": false,
+      "Icon": "mdi:check-circle"
+    },
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": false,
+      "Icon": "mdi:lan-connect"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Lock Vision",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "lock",
+      "PayloadType": "Default",
+      "Description": "rotate to locked position",
+      "Icon": "mdi:lock",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "unlock",
+      "PayloadType": "Default",
+      "Description": "rotate to unlocked position",
+      "Icon": "mdi:lock-open-variant",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "createKey",
+      "PayloadType": "Json",
+      "Description": "create a passcode",
+      "Icon": "mdi:key-plus",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "name",
+          "Index": 1,
+          "Description": "a unique name for the passcode. duplicates under the same device are not allowed.",
+          "ParameterType": "String",
+          "Icon": "mdi:form-textbox",
+          "DefaultValue": "new passcode"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "type",
+          "Index": 2,
+          "Description": "type of the passcode.",
+          "ParameterType": "Select",
+          "Icon": "mdi:key-chain",
+          "Options": "permanent|timeLimit|disposable|urgent",
+          "OptionsDescription": "a permanent passcode.|a temporary passcode.|a one-time passcode.|an emergency passcode.",
+          "DefaultValue": "disposable"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "password",
+          "Index": 3,
+          "Description": "a 6 to 12-digit passcode in plain text",
+          "ParameterType": "String",
+          "Icon": "mdi:numeric",
+          "LengthMin": 6,
+          "LengthMax": 12,
+          "DefaultValue": "111111"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "startTime",
+          "Index": 4,
+          "Description": "set the time the passcode becomes valid from, mandatory for one-time passcode and temporary passcode. a 10-digit timestamp.If minus 1 is specified, it is treated as unspecified.",
+          "ParameterType": "Long",
+          "Icon": "mdi:clock-start",
+          "RangeMin": 0,
+          "RangeMax": 9999999999,
+          "DefaultValue": "0"
+        },
+        {
+          "CommandType": "command",
+          "Command": "createKey",
+          "Name": "endTime",
+          "Index": 5,
+          "Description": "set the time the passcode becomes expired, mandatory for one-time passcode and temporary passcode. a 10-digit timestamp.If minus 1 is specified, it is treated as unspecified.",
+          "ParameterType": "Long",
+          "Icon": "mdi:clock-end",
+          "RangeMin": 0,
+          "RangeMax": 9999999999,
+          "DefaultValue": "9999999999"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "deleteKey",
+      "PayloadType": "Json",
+      "Description": "delete a passcode by id",
+      "Icon": "mdi:key-remove",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "deleteKey",
+          "Name": "id",
+          "Index": 6,
+          "Description": "the id of the passcode",
+          "ParameterType": "Long",
+          "Icon": "mdi:identifier"
+        }
+      ]
+    }
+  ]
+}

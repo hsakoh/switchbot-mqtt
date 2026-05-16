@@ -1,0 +1,156 @@
+{
+  "DeviceType": "WeatherStation",
+  "ApiDeviceTypeString": "WeatherStation",
+  "WebhookDeviceTypeString": "WeatherStation",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Weather Station",
+  "Fields": [
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "temperature",
+      "FieldSourceType": "both",
+      "StatusKey": "temperature",
+      "WebhookKey": "temperature",
+      "FieldDataType": "Float",
+      "Description": "temperature in celsius",
+      "IsBinary": false,
+      "SensorDeviceClass": "temperature",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "°C"
+    },
+    {
+      "FieldName": "humidity",
+      "FieldSourceType": "both",
+      "StatusKey": "humidity",
+      "WebhookKey": "humidity",
+      "FieldDataType": "Integer",
+      "Description": "humidity percentage",
+      "IsBinary": false,
+      "SensorDeviceClass": "humidity",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "scale",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "scale",
+      "FieldDataType": "String",
+      "Description": "the current temperature unit being used",
+      "IsBinary": false,
+      "Icon": "mdi:information"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. WeatherStation",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID.",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "customQuote",
+      "PayloadType": "SingleValue",
+      "Description": "Set a custom quote",
+      "Icon": "mdi:message-text",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "customQuote",
+          "Name": "text",
+          "Index": 1,
+          "Description": "custom text to display, e.g. \"Oh sea, you have so much water!\"",
+          "ParameterType": "String",
+          "Icon": "mdi:form-textbox",
+          "DefaultValue": "Hello!"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "cancelCustom",
+      "PayloadType": "Default",
+      "Description": "Cancel the custom quote and revert to default",
+      "Icon": "mdi:message-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "customPage",
+      "PayloadType": "SingleValue",
+      "Description": "Set a custom page text",
+      "Icon": "mdi:message-text-outline",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "customPage",
+          "Name": "text",
+          "Index": 1,
+          "Description": "custom text to display, e.g. \"Oh, the ocean is so huge!\"",
+          "ParameterType": "String",
+          "Icon": "mdi:form-textbox",
+          "DefaultValue": "Hello!"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 name: "SwitchBot-Mqtt"
 description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
-version: "1.0.64"
+version: "1.0.65"
 slug: "switchbot_mqtt"
 url: "https://github.com/hsakoh/switchbot-mqtt"
 ports:
@@ -35,8 +35,7 @@ options:
     UseNgrok: true
     NgrokAuthToken: '<Configuration required only when using Webhook with ngrok>'
     HostUrl: '<Configuration required only when using Webhook without ngrok>'
-    ExitOnFailure: false
-  MessageRetain: 
+  MessageRetain:
     Entity: true
     State: false
   ImageFetch: 
@@ -66,8 +65,7 @@ schema:
     UseNgrok: bool
     NgrokAuthToken: str?
     HostUrl: str?
-    ExitOnFailure: bool?
-  MessageRetain: 
+  MessageRetain:
     Entity: bool
     State: bool
   ImageFetch: 

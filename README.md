@@ -77,6 +77,7 @@ We have implemented all devices according to the published API specifications, b
 | [Meter Pro][MeterProProduct] [[JP][MeterProProductJP]]                                                                             |              [✅][MeterProList]              |             [✅][MeterProStatus]             |             [✅][MeterProWebhook]             |                      -                       |              |
 | [Meter Pro CO2][MeterProCO2Product] [[JP][MeterProCO2ProductJP]]                                                                   |            [✅][MeterProCO2List]             |           [✅][MeterProCO2Status]            |           [✅][MeterProCO2Webhook]            |                      -                       |      ✅       |
 | [Outdoor Meter][OutdoorMeterProduct] [[JP][OutdoorMeterProductJP]]                                                                 |            [✅][OutdoorMeterList]            |           [✅][OutdoorMeterStatus]           |           [✅][OutdoorMeterWebhook]           |                      -                       |      ✅       |
+| Weather Station [[JP][WeatherStationProductJP]]                                                                                    |          [✅][WeatherStationList]            |          [✅][WeatherStationStatus]          |          [✅][WeatherStationWebhook]          |          [✅][WeatherStationCommand]          |              |
 | [Motion Sensor][MotionSensorProduct] [[JP][MotionSensorProductJP]]                                                                 |            [✅][MotionSensorList]            |           [✅][MotionSensorStatus]           |           [✅][MotionSensorWebhook]           |                      -                       |      ✅       |
 | [Presence Sensor][PresenceSensorProduct] [[JP][PresenceSensorProductJP]]                                                           |           [✅][PresenceSensorList]           |          [✅][PresenceSensorStatus]          |          [✅][PresenceSensorWebhook]          |                      -                       |      ✅       |
 | [Contact Sensor][ContactSensorProduct] [[JP][ContactSensorProductJP]]                                                              |           [✅][ContactSensorList]            |          [✅][ContactSensorStatus]           |          [✅][ContactSensorWebhook]           |                      -                       |      ✅       |
@@ -86,6 +87,9 @@ We have implemented all devices according to the published API specifications, b
 | [Smart Lock Pro][SmartLockProProduct] [[JP][SmartLockProProductJP]]                                                                |            [✅][SmartLockProList]            |           [✅][SmartLockProStatus]           |           [✅][SmartLockProWebhook]           |           [✅][SmartLockProCommand]           |              |
 | [Smart Lock Lite][SmartLockLiteProduct] [[JP][SmartLockLiteProductJP]]                                                             |           [✅][SmartLockLiteList]            |          [✅][SmartLockLiteStatus]           |          [✅][SmartLockLiteWebhook]           |          [✅][SmartLockLiteCommand]           |              |
 | [Smart Lock Ultra][SmartLockUltraProduct] [[JP][SmartLockUltraProductJP]]                                                          |           [✅][SmartLockUltraList]           |          [✅][SmartLockUltraStatus]          |          [✅][SmartLockUltraWebhook]          |          [✅][SmartLockUltraCommand]          |              |
+| [Smart Lock Pro (Matter Enabled)][LockProMatterEnabledProduct]                                                                     |    [✅][LockProMatterEnabledList]            |   [✅][LockProMatterEnabledStatus]           |   [✅][LockProMatterEnabledWebhook]           |   [✅][LockProMatterEnabledCommand]           |              |
+| [Lock Vision][LockVisionProduct]                                                                                                   |          [✅][LockVisionList]                |          [✅][LockVisionStatus]              |          [✅][LockVisionWebhook]              |          [✅][LockVisionCommand]              |              |
+| [Lock Vision Pro][LockVisionProProduct]                                                                                            |          [✅][LockVisionProList]             |          [✅][LockVisionProStatus]           |          [✅][LockVisionProWebhook]           |          [✅][LockVisionProCommand]           |              |
 | Keypad [JP][KeypadProductJP]                                                                                                       |               [✅][KeypadList]               |              [✅][KeypadStatus]              |              [✅][KeypadWebhook]              |              [✅][KeypadCommand]              |              |
 | [Keypad Touch][KeypadTouchProduct] [[JP][KeypadTouchProductJP]]                                                                    |            [✅][KeypadTouchList]             |           [✅][KeypadTouchStatus]            |           [✅][KeypadTouchWebhook]            |           [✅][KeypadTouchCommand]            |      ✅       |
 | [Keypad Vision][KeypadVisionProduct] [[JP][KeypadVisionProductJP]]                                                                 |            [✅][KeypadVisionList]            |           [✅][KeypadVisionStatus]           |           [✅][KeypadVisionWebhook]           |           [✅][KeypadVisionCommand]           |              |
@@ -338,6 +342,11 @@ We have implemented all devices according to the published API specifications, b
 [OutdoorMeterList]: https://github.com/OpenWonderLabs/SwitchBotAPI#outdoor-meter
 [OutdoorMeterStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#outdoor-meter-1
 [OutdoorMeterWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#outdoor-meter-2
+[WeatherStationProductJP]: https://www.switchbot.jp/products/switchbot-weather-station
+[WeatherStationList]: https://github.com/OpenWonderLabs/SwitchBotAPI#weather-station
+[WeatherStationStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#weather-station-1
+[WeatherStationWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#weather-station-3
+[WeatherStationCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#weather-station-2
 [MotionSensorProduct]: https://www.switch-bot.com/products/motion-sensor
 [MotionSensorProductJP]: https://www.switchbot.jp/products/switchbot-motion-sensor
 [MotionSensorList]: https://github.com/OpenWonderLabs/SwitchBotAPI#motion-sensor
@@ -382,6 +391,21 @@ We have implemented all devices according to the published API specifications, b
 [SmartLockUltraStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-1
 [SmartLockUltraWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-3
 [SmartLockUltraCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-ultra-2
+[LockProMatterEnabledProduct]: https://www.switch-bot.com/products/switchbot-lock-pro-matter-enabled
+[LockProMatterEnabledList]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-pro-matter-enabled
+[LockProMatterEnabledStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-pro-matter-enabled-1
+[LockProMatterEnabledWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-pro-matter-enabled-3
+[LockProMatterEnabledCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-pro-matter-enabled-2
+[LockVisionProduct]: https://us.switch-bot.com/products/switchbot-lock-vision
+[LockVisionList]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision
+[LockVisionStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-1
+[LockVisionWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-3
+[LockVisionCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-2
+[LockVisionProProduct]: https://us.switch-bot.com/products/switchbot-lock-vision-pro
+[LockVisionProList]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-pro
+[LockVisionProStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-pro-1
+[LockVisionProWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-pro-3
+[LockVisionProCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI#lock-vision-pro-2
 [KeypadProductJP]: https://www.switchbot.jp/products/switchbot-keypad
 [KeypadList]: https://github.com/OpenWonderLabs/SwitchBotAPI#keypad
 [KeypadStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI#keypad-1

@@ -1,12 +1,12 @@
 {
-  "DeviceType": "LockUltra",
-  "ApiDeviceTypeString": "Smart Lock Ultra",
-  "WebhookDeviceTypeString": "Smart Lock Ultra",
+  "DeviceType": "LockProMatterEnabled",
+  "ApiDeviceTypeString": "Smart Lock Pro Wifi",
+  "WebhookDeviceTypeString": "WoLockProWifi",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
   "IsSupportCommand": true,
-  "DisplayName": "Smart Lock Ultra",
+  "DisplayName": "Smart Lock Pro (Matter Enabled)",
   "Fields": [
     {
       "FieldName": "battery",
@@ -25,7 +25,7 @@
       "FieldSourceType": "status",
       "StatusKey": "version",
       "FieldDataType": "String",
-      "Description": "the current firmware version, e.g. V4.2",
+      "Description": "the current firmware version, e.g. V6.3",
       "IsBinary": false,
       "Icon": "mdi:information",
       "EntityCategory": "diagnostic"
@@ -48,7 +48,7 @@
       "StatusKey": "doorState",
       "WebhookKey": "doorState",
       "FieldDataType": "String",
-      "Description": "determines if the door is closed or not",
+      "Description": "open, close",
       "IsBinary": true,
       "BinarySensorDeviceClass": "door",
       "OnValue": "opened",
@@ -62,6 +62,15 @@
       "Description": "determines if Lock has been calibrated or not",
       "IsBinary": false,
       "Icon": "mdi:check-circle"
+    },
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": false,
+      "Icon": "mdi:lan-connect"
     },
     {
       "FieldName": "deviceId",
@@ -80,7 +89,7 @@
       "StatusKey": "deviceType",
       "WebhookKey": "deviceType",
       "FieldDataType": "String",
-      "Description": "the type of the device",
+      "Description": "device type. Smart Lock Pro Wifi",
       "IsBinary": false,
       "Icon": "mdi:information",
       "EntityCategory": "diagnostic"
@@ -90,7 +99,7 @@
       "FieldSourceType": "status",
       "StatusKey": "hubDeviceId",
       "FieldDataType": "String",
-      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi.",
+      "Description": "device's parent Hub ID.",
       "IsBinary": false,
       "Icon": "mdi:information",
       "EntityCategory": "diagnostic"
@@ -120,6 +129,14 @@
       "PayloadType": "Default",
       "Description": "rotate to unlocked position",
       "Icon": "mdi:lock-open-variant",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "nightLatchUnlock",
+      "PayloadType": "Default",
+      "Description": "unlock night latch (EU)",
+      "Icon": "mdi:lock-open-outline",
       "Payloads": []
     },
     {
