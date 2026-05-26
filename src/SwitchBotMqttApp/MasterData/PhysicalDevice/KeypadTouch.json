@@ -9,6 +9,27 @@
   "DisplayName": "Keypad Touch",
   "Fields": [
     {
+      "FieldName": "battery",
+      "FieldSourceType": "status",
+      "StatusKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V3.1",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
       "FieldName": "eventName",
       "FieldSourceType": "webhook",
       "WebhookKey": "eventName",
