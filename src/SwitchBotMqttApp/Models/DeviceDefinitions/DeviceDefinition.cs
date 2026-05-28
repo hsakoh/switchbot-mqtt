@@ -17,7 +17,13 @@ public class DeviceDefinition
     /// Gets or sets the device type string as returned by SwitchBot API.
     /// </summary>
     public string ApiDeviceTypeString { get; set; } = default!;
-    
+
+    /// <summary>
+    /// Gets or sets additional API device type strings that this device may report.
+    /// Used when the SwitchBot API returns a different string than documented (e.g., firmware or spec discrepancies).
+    /// </summary>
+    public string[]? AdditionalApiDeviceTypeStrings { get; set; }
+
     /// <summary>
     /// Gets or sets the device type string for customized IR remote devices.
     /// </summary>

@@ -769,9 +769,10 @@ public class MqttCoreService(
             // Special handling for deviceType field
             if (kv.Key == "deviceType")
             {
-                // CirculatorFan devices report incorrect device type in webhook
+                // CirculatorFan/StandingCirculatorFan devices report incorrect device type in webhook
                 if (physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
-                    || physicalDevice.DeviceType == DeviceType.CirculatorFan)
+                    || physicalDevice.DeviceType == DeviceType.CirculatorFan
+                    || physicalDevice.DeviceType == DeviceType.StandingCirculatorFan)
                 {
                     webhook[fieldDef.FieldName] = deviceDefinitionsManager.DeviceDefinitions.First(x => x.DeviceType == physicalDevice.DeviceType).ApiDeviceTypeString;
                 }

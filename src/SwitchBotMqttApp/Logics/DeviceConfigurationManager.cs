@@ -2,6 +2,7 @@ using HomeAssistantAddOn.Core;
 using Microsoft.Extensions.Options;
 using SwitchBotMqttApp.Configurations;
 using SwitchBotMqttApp.Models.DeviceConfiguration;
+using SwitchBotMqttApp.Models.Enums;
 using System.Text;
 using System.Text.Json;
 
@@ -100,8 +101,12 @@ public class DeviceConfigurationManager(
             List<PhysicalDevice> physicalDevices = [];
             foreach (var d in response.DeviceList)
             {
-                // Map API device type string to enum
-                var deviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.DeviceType)?.DeviceType;
+                // Map API device type string to enum (physical devices only)
+                // Also check AdditionalApiDeviceTypeStrings for devices that report a different type than documented
+                var deviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd =>
+                    dd.PhysicalOrVirtual == PhysicalOrVirtual.PhysicalDevice
+                    && (dd.ApiDeviceTypeString == d.DeviceType
+                        || (dd.AdditionalApiDeviceTypeStrings != null && dd.AdditionalApiDeviceTypeStrings.Contains(d.DeviceType))))?.DeviceType;
                 if (deviceType == null)
                 {
                     logger.LogWarning("{Method} unknown device type. {MacAddress},{DeviceType},{DeviceName}", nameof(LoadDevicesAsync), d.DeviceId, d.DeviceType, d.DeviceName);
@@ -153,10 +158,10 @@ public class DeviceConfigurationManager(
             {
                 DeviceId = d.DeviceId,
                 DeviceName = d.DeviceName,
-                // Map to device type, check both API type and customized type
-                DeviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.ApiDeviceTypeString == d.RemoteType)?.DeviceType
+                // Map to device type, check both API type and customized type (virtual devices only)
+                DeviceType = deviceDefinitionsManager.DeviceDefinitions.FirstOrDefault(dd => dd.PhysicalOrVirtual == PhysicalOrVirtual.VirtualInfraredRemoteDevice && dd.ApiDeviceTypeString == d.RemoteType)?.DeviceType
                             ?? deviceDefinitionsManager.DeviceDefinitions.First(dd => dd.CustomizedDeviceTypeString == d.RemoteType).DeviceType,
-                IsCustomized = !deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.ApiDeviceTypeString == d.RemoteType),
+                IsCustomized = !deviceDefinitionsManager.DeviceDefinitions.Any(dd => dd.PhysicalOrVirtual == PhysicalOrVirtual.VirtualInfraredRemoteDevice && dd.ApiDeviceTypeString == d.RemoteType),
                 RawValue = responseRaw.InfraredRemoteList.Where(rd => rd!.AsObject()["deviceId"]!.AsValue().GetValue<string>() == d.DeviceId).FirstOrDefault()?.AsObject()
             })];
             // Remove redundant properties from raw value

@@ -1,6 +1,7 @@
 {
   "DeviceType": "StandingCirculatorFan",
   "ApiDeviceTypeString": "Standing Circulator Fan",
+  "AdditionalApiDeviceTypeStrings": [ "Fan" ],
   "WebhookDeviceTypeString": "Standing Fan",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
