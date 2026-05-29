@@ -9,6 +9,17 @@
   "DisplayName": "Smart Lock Ultra",
   "Fields": [
     {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
       "FieldName": "battery",
       "FieldSourceType": "both",
       "StatusKey": "battery",
