@@ -31,7 +31,7 @@ options:
     - DeviceId : 'E2F67E000000(Example)'
       DeviceType : 'Curtain'
   WebhookService: 
-    TunnelMode: 'Ngrok'
+    TunnelMode: 'TryCloudflare'
     NgrokAuthToken: '<Required when TunnelMode is Ngrok>'
     HostUrl: '<Required when TunnelMode is HostUrl or CloudflareZeroTrust>'
     CloudflareTunnelToken: '<Required when TunnelMode is CloudflareZeroTrust>'
