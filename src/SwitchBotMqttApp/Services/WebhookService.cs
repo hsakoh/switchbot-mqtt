@@ -1,3 +1,4 @@
+using CloudflaredKit;
 using FluffySpoon.Ngrok;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
@@ -10,7 +11,7 @@ namespace SwitchBotMqttApp.Services;
 
 /// <summary>
 /// Manages webhook registration with SwitchBot Cloud for real-time device event notifications.
-/// Supports both direct webhook URL and Ngrok tunnel for development/testing.
+/// Supports multiple tunnel modes: Disabled, HostUrl, Ngrok, TryCloudflare, and CloudflareZeroTrust.
 /// </summary>
 public class WebhookService : ManagedServiceBase
 {
@@ -19,6 +20,7 @@ public class WebhookService : ManagedServiceBase
     private readonly IOptions<WebhookServiceOptions> _webhookServiceOptions;
     private readonly IOptions<CommonOptions> _commonOptions;
     private readonly INgrokService _ngrokService;
+    private readonly ICloudflaredService _cloudflaredService;
     private readonly IServer _server;
     private readonly IHostApplicationLifetime _appLifetime;
     private string? webhookUrl = null;
@@ -26,16 +28,12 @@ public class WebhookService : ManagedServiceBase
     /// <summary>
     /// Initializes a new instance of the <see cref="WebhookService"/> class.
     /// </summary>
-    /// <param name="logger">Logger instance.</param>
-    /// <param name="webhookServiceOptions">Webhook service configuration options.</param>
-    /// <param name="ngrokService">Ngrok service for creating tunnels.</param>
-    /// <param name="switchBotApiClient">SwitchBot API client.</param>
-    /// <param name="server">ASP.NET Core server instance.</param>
     public WebhookService(
         ILogger<WebhookService> logger
         , IOptions<WebhookServiceOptions> webhookServiceOptions
         , IOptions<CommonOptions> commonOptions
         , INgrokService ngrokService
+        , ICloudflaredService cloudflaredService
         , SwitchBotApiClient switchBotApiClient
         , IServer server
         , IHostApplicationLifetime appLifetime)
@@ -45,23 +43,23 @@ public class WebhookService : ManagedServiceBase
         _webhookServiceOptions = webhookServiceOptions;
         _commonOptions = commonOptions;
         _ngrokService = ngrokService;
+        _cloudflaredService = cloudflaredService;
         _server = server;
         _appLifetime = appLifetime;
-        if (!_webhookServiceOptions.Value.UseWebhook)
+        if (_webhookServiceOptions.Value.TunnelMode == WebhookTunnelMode.Disabled)
         {
             Status = ServiceStatus.Disabled;
         }
     }
 
     /// <summary>
-    /// Starts the webhook service, creates Ngrok tunnel if configured, and registers webhook with SwitchBot Cloud.
-    /// Enables existing webhooks if already registered.
+    /// Starts the webhook service, establishes the tunnel (if configured), and registers webhook with SwitchBot Cloud.
     /// </summary>
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
     public override async Task StartAsync(CancellationToken cancellationToken = default)
     {
-        if (!_webhookServiceOptions.Value.UseWebhook)
+        if (_webhookServiceOptions.Value.TunnelMode == WebhookTunnelMode.Disabled)
         {
             Status = ServiceStatus.Disabled;
             return;
@@ -69,10 +67,11 @@ public class WebhookService : ManagedServiceBase
         try
         {
             Status = ServiceStatus.Starting;
-            if (_webhookServiceOptions.Value.UseNgrok)
+            var mode = _webhookServiceOptions.Value.TunnelMode;
+
+            if (mode == WebhookTunnelMode.Ngrok)
             {
                 await _ngrokService.InitializeAsync(cancellationToken);
-
                 await Task.Delay(5000, cancellationToken);
 
                 IServerAddressesFeature? feature = _server.Features.Get<IServerAddressesFeature>()
@@ -85,10 +84,22 @@ public class WebhookService : ManagedServiceBase
                 var tunnel = await _ngrokService.StartAsync(address, cancellationToken);
                 webhookUrl = tunnel.PublicUrl;
             }
-            else
+            else if (mode == WebhookTunnelMode.TryCloudflare)
+            {
+                var tunnel = await _cloudflaredService.StartAsync(cancellationToken);
+                webhookUrl = tunnel.PublicUrl;
+            }
+            else if (mode == WebhookTunnelMode.CloudflareZeroTrust)
+            {
+                await _cloudflaredService.StartAsync(cancellationToken);
+                // In permanent tunnel mode, PublicUrl is null. Use the configured HostUrl.
+                webhookUrl = _webhookServiceOptions.Value.HostUrl;
+            }
+            else // HostUrl
             {
                 webhookUrl = _webhookServiceOptions.Value.HostUrl;
             }
+
             webhookUrl += "/webhook";
             var webhooks = await _switchBotApiClient.GetWebhooksAsync(cancellationToken);
 
@@ -121,7 +132,7 @@ public class WebhookService : ManagedServiceBase
 
     /// <summary>
     /// Stops the webhook service, disables and deletes the webhook from SwitchBot Cloud,
-    /// and stops Ngrok tunnel if used.
+    /// and stops the tunnel if used.
     /// </summary>
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
@@ -129,12 +140,18 @@ public class WebhookService : ManagedServiceBase
     {
         try
         {
-            if (_webhookServiceOptions.Value.UseNgrok)
+            var mode = _webhookServiceOptions.Value.TunnelMode;
+
+            if (mode == WebhookTunnelMode.Ngrok)
             {
                 await _ngrokService.StopAsync(cancellationToken);
-
                 typeof(NgrokService).GetField("_isInitialized", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)!.SetValue(_ngrokService, false);
             }
+            else if (mode == WebhookTunnelMode.TryCloudflare || mode == WebhookTunnelMode.CloudflareZeroTrust)
+            {
+                await _cloudflaredService.StopAsync(cancellationToken);
+            }
+
             if (webhookUrl != null)
             {
                 await _switchBotApiClient.UpdateWebhookAsync(webhookUrl, enable: false, cancellationToken);

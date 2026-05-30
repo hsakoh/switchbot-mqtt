@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudflaredKit" Version="0.1.1" />
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="FluffySpoon.Ngrok" Version="1.164.0" />
     <PackageReference Include="Macross.Json.Extensions" Version="3.0.0" />

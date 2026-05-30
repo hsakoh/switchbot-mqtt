@@ -1,6 +1,6 @@
 name: "SwitchBot-Mqtt"
 description: "Integrate SwitchBot Devices into Home Assistant via MQTT"
-version: "1.0.67"
+version: "1.1.0"
 slug: "switchbot_mqtt"
 url: "https://github.com/hsakoh/switchbot-mqtt"
 ports:
@@ -31,10 +31,10 @@ options:
     - DeviceId : 'E2F67E000000(Example)'
       DeviceType : 'Curtain'
   WebhookService: 
-    UseWebhook: true
-    UseNgrok: true
-    NgrokAuthToken: '<Configuration required only when using Webhook with ngrok>'
-    HostUrl: '<Configuration required only when using Webhook without ngrok>'
+    TunnelMode: 'TryCloudflare'
+    NgrokAuthToken: '<Required when TunnelMode is Ngrok>'
+    HostUrl: '<Required when TunnelMode is HostUrl or CloudflareZeroTrust>'
+    CloudflareTunnelToken: '<Required when TunnelMode is CloudflareZeroTrust>'
   MessageRetain:
     Entity: true
     State: false
@@ -61,10 +61,10 @@ schema:
     - DeviceId : str
       DeviceType : str
   WebhookService: 
-    UseWebhook: bool
-    UseNgrok: bool
+    TunnelMode: list(Disabled|HostUrl|Ngrok|TryCloudflare|CloudflareZeroTrust)
     NgrokAuthToken: str?
     HostUrl: str?
+    CloudflareTunnelToken: str?
   MessageRetain:
     Entity: bool
     State: bool

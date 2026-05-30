@@ -1,4 +1,5 @@
 using Blazored.Modal;
+using CloudflaredKit;
 using FluffySpoon.Ngrok;
 using HomeAssistantAddOn.Core;
 using Microsoft.AspNetCore.DataProtection;
@@ -95,7 +96,7 @@ public class Program
         builder.Services.AddNgrok(options =>
         {
             var config = builder.Configuration.GetSection("WebhookService").Get<WebhookServiceOptions>()!;
-            if (config.UseNgrok)
+            if (config.TunnelMode == WebhookTunnelMode.Ngrok)
             {
                 options.AuthToken = config.NgrokAuthToken;
 #if DEBUG
@@ -103,6 +104,16 @@ public class Program
 #else
                 options.ShowNgrokWindow = false;
 #endif
+            }
+        });
+        builder.Services.AddTryCloudflare(options =>
+        {
+            var config = builder.Configuration.GetSection("WebhookService").Get<WebhookServiceOptions>()!;
+            options.LocalPort = 8098;
+            options.LocalHostName = "127.0.0.1";
+            if (config.TunnelMode == WebhookTunnelMode.CloudflareZeroTrust)
+            {
+                options.TunnelToken = config.CloudflareTunnelToken;
             }
         });
         builder.Services.AddSingleton<MqttCoreService>();
