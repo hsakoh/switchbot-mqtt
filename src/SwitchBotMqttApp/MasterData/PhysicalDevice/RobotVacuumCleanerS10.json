@@ -112,15 +112,6 @@
       "Description": "the time stamp when the event is sent",
       "IsBinary": false,
       "SensorDeviceClass": "timestamp"
-    },
-    {
-      "FieldName": "deviceName",
-      "FieldSourceType": "status",
-      "StatusKey": "deviceName",
-      "FieldDataType": "String",
-      "Description": "device name",
-      "IsBinary": false,
-      "Icon": "mdi:information"
     }
   ],
   "Commands": [

@@ -759,7 +759,12 @@ public class MqttCoreService(
                 continue;
             }
 
-            var field = physicalDevice.Fields.First(f => f.FieldName == fieldDef.FieldName);
+            var field = physicalDevice.Fields.FirstOrDefault(f => f.FieldName == fieldDef.FieldName);
+            if (field == null)
+            {
+                logger.LogWarning("webhook field '{fieldName}' exists in device definition but not in saved device config for {deviceType}({deviceId}). The device definition may have changed. Please delete and re-fetch the device to apply the latest definition.", fieldDef.FieldName, physicalDevice.DeviceType, physicalDevice.DeviceId);
+                continue;
+            }
             if (!field.Enable)
             {
                 logger.LogTrace("disable webhook payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());

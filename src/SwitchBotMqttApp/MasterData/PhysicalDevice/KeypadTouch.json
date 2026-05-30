@@ -10,8 +10,9 @@
   "Fields": [
     {
       "FieldName": "battery",
-      "FieldSourceType": "status",
+      "FieldSourceType": "both",
       "StatusKey": "battery",
+      "WebhookKey": "battery",
       "FieldDataType": "Integer",
       "Description": "the current battery level",
       "IsBinary": false,

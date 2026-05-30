@@ -116,17 +116,6 @@
       "SensorDeviceClass": "timestamp"
     },
     {
-      "FieldName": "onlineStatus",
-      "FieldSourceType": "status",
-      "StatusKey": "onlineStatus",
-      "FieldDataType": "String",
-      "Description": "the connection status of the device. online or offline",
-      "IsBinary": true,
-      "BinarySensorDeviceClass": "connectivity",
-      "OnValue": "online",
-      "OffValue": "offline"
-    },
-    {
       "FieldName": "online",
       "FieldSourceType": "webhook",
       "WebhookKey": "online",
