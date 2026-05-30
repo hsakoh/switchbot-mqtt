@@ -22,10 +22,10 @@
     }
   ],
   "WebhookService": {
-    "UseWebhook": true,
-    "UseNgrok": true,
-    "NgrokAuthToken": "<Configuration required only when using Webhook with ngrok>",
-    "HostUrl": "<Configuration required only when using Webhook without ngrok>",
+    "TunnelMode": "Ngrok",
+    "NgrokAuthToken": "<Required when TunnelMode is Ngrok>",
+    "HostUrl": "<Required when TunnelMode is HostUrl or CloudflareZeroTrust>",
+    "CloudflareTunnelToken": "<Required when TunnelMode is CloudflareZeroTrust>",
     "ExitOnFailure": false
   },
   "MessageRetain": {
