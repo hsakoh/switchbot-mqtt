@@ -1,0 +1,23 @@
+<svg width="250" height="100" viewBox="0 0 250 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="panel" x1="8" y1="10" x2="242" y2="90" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#163A62"/>
+      <stop offset="1" stop-color="#2E6FA2"/>
+    </linearGradient>
+    <linearGradient id="link" x1="24" y1="20" x2="88" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6FBFF"/>
+      <stop offset="1" stop-color="#7DD3FC"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="240" height="90" rx="24" fill="url(#panel)"/>
+  <rect x="5" y="5" width="240" height="90" rx="24" stroke="#D9F2FF" stroke-opacity="0.18" stroke-width="2"/>
+  <rect x="18" y="18" width="68" height="64" rx="18" fill="#0F172A" fill-opacity="0.14"/>
+  <path d="M34 38C47 38 46 50 59 50C69 50 68 62 72 62" stroke="url(#link)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M72 38C59 38 60 50 47 50C37 50 38 62 34 62" stroke="#DDF7FF" stroke-width="7" stroke-linecap="round" opacity="0.94"/>
+  <circle cx="34" cy="38" r="5" fill="#F8FFFE"/>
+  <circle cx="72" cy="62" r="5" fill="#F8FFFE"/>
+  <path d="M72 26C80.8366 26 88 33.1634 88 42" stroke="#D9F2FF" stroke-width="4" stroke-linecap="round" opacity="0.88"/>
+  <path d="M74 34C78.4183 34 82 37.5817 82 42" stroke="#D9F2FF" stroke-width="4" stroke-linecap="round" opacity="0.88"/>
+  <text x="102" y="46" fill="#FFFDF8" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="0.6">SwitchBot</text>
+  <text x="103" y="69" fill="#DDF7FF" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="1.2">MQTT Add-on</text>
+</svg>

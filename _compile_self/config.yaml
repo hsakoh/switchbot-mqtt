@@ -15,6 +15,7 @@ arch:
 services:
   - 'mqtt:need'
 ingress: true
+panel_icon: 'mdi:webhook'
 options:
   Mqtt: 
     AutoConfig: true
