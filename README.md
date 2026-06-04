@@ -1,3 +1,5 @@
+![logo](_build_on_haos/logo.svg)
+
 # SwitchBot MQTT Home Assistant App/Add-on
 
 This project is a Home Assistant app that allows you to control various SwitchBot products through the API.
