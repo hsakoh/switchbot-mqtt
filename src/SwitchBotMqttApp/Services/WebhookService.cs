@@ -12,6 +12,7 @@ namespace SwitchBotMqttApp.Services;
 /// <summary>
 /// Manages webhook registration with SwitchBot Cloud for real-time device event notifications.
 /// Supports multiple tunnel modes: Disabled, HostUrl, Ngrok, TryCloudflare, and CloudflareZeroTrust.
+/// When the cloudflared tunnel exits unexpectedly, this service handles restart and webhook re-registration.
 /// </summary>
 public class WebhookService : ManagedServiceBase
 {
@@ -24,6 +25,9 @@ public class WebhookService : ManagedServiceBase
     private readonly IServer _server;
     private readonly IHostApplicationLifetime _appLifetime;
     private string? webhookUrl = null;
+    private CancellationTokenSource? _restartCts;
+    private bool _tunnelEventSubscribed;
+    private const int MaxRestartAttempts = 5;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebhookService"/> class.
@@ -117,6 +121,12 @@ public class WebhookService : ManagedServiceBase
             }
             _logger.LogInformation("start listen {webhookUrl}", webhookUrl);
             Status = ServiceStatus.Started;
+            if ((mode == WebhookTunnelMode.TryCloudflare || mode == WebhookTunnelMode.CloudflareZeroTrust)
+                && !_tunnelEventSubscribed)
+            {
+                _cloudflaredService.TunnelExitedUnexpectedly += OnTunnelExitedUnexpectedly;
+                _tunnelEventSubscribed = true;
+            }
         }
         catch (Exception ex)
         {
@@ -140,6 +150,15 @@ public class WebhookService : ManagedServiceBase
     {
         try
         {
+            var prev = Interlocked.Exchange(ref _restartCts, null);
+            prev?.Cancel();
+
+            if (_tunnelEventSubscribed)
+            {
+                _cloudflaredService.TunnelExitedUnexpectedly -= OnTunnelExitedUnexpectedly;
+                _tunnelEventSubscribed = false;
+            }
+
             var mode = _webhookServiceOptions.Value.TunnelMode;
 
             if (mode == WebhookTunnelMode.Ngrok)
@@ -166,6 +185,123 @@ public class WebhookService : ManagedServiceBase
             _logger.LogError(ex, nameof(StopAsync));
             Status = ServiceStatus.Failed;
             throw;
+        }
+    }
+    /// <summary>
+    /// Called when <see cref="ICloudflaredService.TunnelExitedUnexpectedly"/> fires.
+    /// Cancels any previous restart attempt, sets status to Starting, and begins a new restart loop.
+    /// </summary>
+    private void OnTunnelExitedUnexpectedly(int exitCode)
+    {
+        _logger.LogWarning(
+            "Cloudflare tunnel exited unexpectedly (ExitCode={ExitCode}), scheduling restart",
+            exitCode);
+        Status = ServiceStatus.Starting;
+
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(_appLifetime.ApplicationStopping);
+        var prev = Interlocked.Exchange(ref _restartCts, cts);
+        prev?.Cancel();
+
+        _ = RestartAndReRegisterAsync(cts.Token);
+    }
+
+    /// <summary>
+    /// Restarts the cloudflared tunnel and re-registers the webhook with SwitchBot Cloud.
+    /// Retries with exponential back-off (5 s → 10 s → … → 60 s max) until successful or cancelled.
+    /// </summary>
+    private async Task RestartAndReRegisterAsync(CancellationToken cancellationToken)
+    {
+        var delay = TimeSpan.FromSeconds(5);
+        var attempt = 0;
+
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            attempt++;
+            _logger.LogInformation(
+                "Attempting cloudflared restart (attempt {Attempt}/{MaxAttempts})", attempt, MaxRestartAttempts);
+
+            try
+            {
+                await Task.Delay(delay, cancellationToken);
+
+                var mode = _webhookServiceOptions.Value.TunnelMode;
+                string newWebhookUrl;
+
+                if (mode == WebhookTunnelMode.TryCloudflare)
+                {
+                    var tunnel = await _cloudflaredService.StartAsync(cancellationToken);
+                    newWebhookUrl = tunnel.PublicUrl + "/webhook";
+                }
+                else // CloudflareZeroTrust
+                {
+                    await _cloudflaredService.StartAsync(cancellationToken);
+                    newWebhookUrl = _webhookServiceOptions.Value.HostUrl + "/webhook";
+                }
+
+                if (webhookUrl != null && webhookUrl != newWebhookUrl)
+                {
+                    try
+                    {
+                        await _switchBotApiClient.UpdateWebhookAsync(webhookUrl, enable: false, cancellationToken);
+                        await _switchBotApiClient.DeleteWebhookAsync(webhookUrl, cancellationToken);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "Failed to deregister old webhook {Url} during restart", webhookUrl);
+                    }
+                    webhookUrl = null;
+                }
+
+                webhookUrl = newWebhookUrl;
+
+                var webhooks = await _switchBotApiClient.GetWebhooksAsync(cancellationToken);
+                if (webhooks.Urls.Contains(webhookUrl))
+                {
+                    var details = await _switchBotApiClient.GetWebhookAsync([webhookUrl], cancellationToken);
+                    if (!details.First().Enable)
+                    {
+                        await _switchBotApiClient.UpdateWebhookAsync(webhookUrl, enable: true, cancellationToken);
+                    }
+                }
+                else
+                {
+                    await _switchBotApiClient.ConfigureWebhook(webhookUrl, cancellationToken);
+                }
+
+                _logger.LogInformation(
+                    "Webhook re-registered after cloudflared restart (attempt {Attempt}): {Url}",
+                    attempt, webhookUrl);
+                Status = ServiceStatus.Started;
+                return;
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("cloudflared restart cancelled");
+                return;
+            }
+            catch (Exception ex)
+            {
+                if (attempt >= MaxRestartAttempts)
+                {
+                    _logger.LogError(ex,
+                        "cloudflared restart failed after {MaxAttempts} attempts. Giving up.",
+                        MaxRestartAttempts);
+                    Status = ServiceStatus.Failed;
+                    if (_commonOptions.Value.ExitOnServiceFailure)
+                    {
+                        _logger.LogCritical("ExitOnServiceFailure is enabled. Stopping application.");
+                        _appLifetime.StopApplication();
+                    }
+                    return;
+                }
+
+                var nextDelay = Math.Min(delay.TotalSeconds * 2, 60);
+                _logger.LogError(
+                    ex,
+                    "cloudflared restart attempt {Attempt}/{MaxAttempts} failed, retrying in {Delay}s",
+                    attempt, MaxRestartAttempts, (int)nextDelay);
+                delay = TimeSpan.FromSeconds(nextDelay);
+            }
         }
     }
 }
