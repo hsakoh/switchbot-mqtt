@@ -1,0 +1,108 @@
+{
+  "DeviceType": "OutdoorPanTiltCam3K",
+  "ApiDeviceTypeString": "Outdoor Pan/Tilt Cam 3K",
+  "WebhookDeviceTypeString": "W1156000",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": false,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": false,
+  "DisplayName": "Outdoor Pan/Tilt Cam 3K",
+  "Fields": [
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "motionDetectionType",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "motionEvent",
+      "WebhookKey": "detectionType",
+      "FieldDataType": "String",
+      "Description": "the type of detection from motion event (e.g. motion, human)",
+      "IsBinary": false,
+      "Icon": "mdi:motion-sensor"
+    },
+    {
+      "FieldName": "motionImageUrl",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "motionEvent",
+      "WebhookKey": "img",
+      "FieldDataType": "String",
+      "Description": "the image URL captured on motion event",
+      "IsBinary": false,
+      "IsImage": true,
+      "Icon": "mdi:image"
+    },
+    {
+      "FieldName": "motionStartTimestamp",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "motionEvent",
+      "WebhookKey": "startTimestamp",
+      "FieldDataType": "Long",
+      "Description": "the Unix timestamp (seconds) when the motion event started",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
+      "Icon": "mdi:clock"
+    },
+    {
+      "FieldName": "humanDetectionType",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "humanEvent",
+      "WebhookKey": "detectionType",
+      "FieldDataType": "String",
+      "Description": "the type of detection from human event (e.g. motion, human)",
+      "IsBinary": false,
+      "Icon": "mdi:account-eye"
+    },
+    {
+      "FieldName": "humanImageUrl",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "humanEvent",
+      "WebhookKey": "img",
+      "FieldDataType": "String",
+      "Description": "the image URL captured on human event",
+      "IsBinary": false,
+      "IsImage": true,
+      "Icon": "mdi:image"
+    },
+    {
+      "FieldName": "humanStartTimestamp",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "humanEvent",
+      "WebhookKey": "startTimestamp",
+      "FieldDataType": "Long",
+      "Description": "the Unix timestamp (seconds) when the human event started",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
+      "Icon": "mdi:clock"
+    }
+  ],
+  "Commands": []
+}

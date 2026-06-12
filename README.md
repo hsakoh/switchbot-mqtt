@@ -105,6 +105,7 @@ We have implemented all devices according to the published API specifications, b
 | [Pan/Tilt Cam 2K(3MP)][PanTiltCam2K3MPProduct] [[JP][PanTiltCam2K3MPProductJP]]                                                    |          [✅][PanTiltCam2K3MPList]           |                                             |                                              |                                              |              |
 | [Pan/Tilt Cam Plus 2K(3MP)][PanTiltCamPlus3MPProduct] [[JP][PanTiltCamPlus3MPProductJP]]                                           |         [✅][PanTiltCamPlus3MPList]          |                      -                      |                                              |                      -                       |              |
 | [Pan/Tilt Cam Plus 3K(5MP)][PanTiltCamPlus5MPProduct] [[JP][PanTiltCamPlus5MPProductJP]]                                           |         [✅][PanTiltCamPlus5MPList]          |                      -                      |                      ✅📸                      |                      -                       |      ✅       |
+| [Outdoor Pan/Tilt Cam 3K][OutdoorPanTiltCam3KProduct] [[JP][OutdoorPanTiltCam3KProductJP]]                                         |                      -                      |                      -                      |                      ✅📸                      |                      -                       |      ✅       |
 | [Indoor Cam][IndoorCamProduct] [[JP][IndoorCamProductJP]]                                                                          |             [✅][IndoorCamList]              |                      -                      |            [✅][IndoorCamWebhook]             |                      -                       |      ✅       |
 | [Video Doorbell][VideoDoorbellProduct] [[JP][VideoDoorbellProductJP]]                                                              |           [✅][VideoDoorbellList]            |          [✅][VideoDoorbellStatus]           |          [✅][VideoDoorbellWebhook]📸          |          [✅][VideoDoorbellCommand]           |      ✅       |
 | **Power & Switch**                                                                                                                 |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
@@ -453,6 +454,8 @@ We have implemented all devices according to the published API specifications, b
 [PanTiltCamPlus5MPProduct]: https://us.switch-bot.com/pages/switchbot-pan-tilt-cam-plus-3k
 [PanTiltCamPlus5MPProductJP]: https://www.switchbot.jp/products/switchbot-pan-tilt-cam-plus-5mp
 [PanTiltCamPlus5MPList]: https://github.com/OpenWonderLabs/SwitchBotAPI#pantilt-cam-plus-3k
+[OutdoorPanTiltCam3KProduct]: https://www.switch-bot.com/products/outdoor-ptc-3k5mp
+[OutdoorPanTiltCam3KProductJP]: https://www.switchbot.jp/products/switchbot-outdoor-pan-tilt-cam-5mp
 [IndoorCamProduct]: https://switch-bot.com/pages/switchbot-indoor-cam
 [IndoorCamProductJP]: https://www.switchbot.jp/products/switchbot-indoor-cam
 [IndoorCamList]: https://github.com/OpenWonderLabs/SwitchBotAPI#indoor-cam

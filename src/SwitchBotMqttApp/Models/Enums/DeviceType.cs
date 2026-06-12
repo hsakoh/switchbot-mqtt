@@ -84,6 +84,7 @@ public enum DeviceType
     UniversalRemote,
     PanTiltCamPlus3mp,
     PanTiltCamPlus5mp,
+    OutdoorPanTiltCam3K,
     OutdoorSpotlightCam2K,
     WalletFinderCard,
     VideoDoorbell,
