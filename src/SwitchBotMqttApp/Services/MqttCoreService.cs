@@ -928,7 +928,14 @@ public class MqttCoreService(
                     logger.LogTrace("disable polling payload {deviceType},{key},{value}", physicalDevice.DeviceType, kv.Key, kv.Value?.ToJsonString());
                     continue;
                 }
-                
+
+                if (fieldDef.IsImage)
+                {
+                    // Download image and publish as Base64 to image topic (do not store time-limited URL in state)
+                    await PublishImageAsync(kv.Value!.GetValue<string>(), MqttEntityHelper.GetImageTopic(physicalDevice.DeviceId, fieldDef.FieldName));
+                    continue;
+                }
+
                 status[fieldDef.FieldName] = kv.Value!.Copy();
                 
                 // Normalize power state to lowercase for specific devices

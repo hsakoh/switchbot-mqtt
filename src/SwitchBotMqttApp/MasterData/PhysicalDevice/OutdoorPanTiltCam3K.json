@@ -1,16 +1,18 @@
 {
   "DeviceType": "OutdoorPanTiltCam3K",
-  "ApiDeviceTypeString": "Outdoor Pan/Tilt Cam 3K",
+  "ApiDeviceTypeString": "Outdoor PTC 3K",
+  "AdditionalApiDeviceTypeStrings": [ "Outdoor Pan/Tilt Cam 3K" ],
   "WebhookDeviceTypeString": "W1156000",
   "PhysicalOrVirtual": "PhysicalDevice",
-  "IsSupportPolling": false,
+  "IsSupportPolling": true,
   "IsSupportWebhook": true,
   "IsSupportCommand": false,
   "DisplayName": "Outdoor Pan/Tilt Cam 3K",
   "Fields": [
     {
       "FieldName": "deviceId",
-      "FieldSourceType": "webhook",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
       "WebhookKey": "deviceMac",
       "FieldDataType": "String",
       "Description": "the MAC address of the device. device ID ",
@@ -20,12 +22,45 @@
     },
     {
       "FieldName": "deviceType",
-      "FieldSourceType": "webhook",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
       "WebhookKey": "deviceType",
       "FieldDataType": "String",
       "Description": "the type of the device",
       "IsBinary": false,
       "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "the device ID of the parent hub device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "latestImageUrl",
+      "FieldSourceType": "status",
+      "StatusKey": "latestImage.imageUrl",
+      "FieldDataType": "String",
+      "Description": "the latest captured image",
+      "IsBinary": false,
+      "IsImage": true,
+      "Icon": "mdi:image"
+    },
+    {
+      "FieldName": "latestImageExpireAt",
+      "FieldSourceType": "status",
+      "StatusKey": "latestImage.expireAt",
+      "FieldDataType": "Long",
+      "Description": "the Unix timestamp (seconds) when the latest image URL expires",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
+      "Icon": "mdi:clock",
       "EntityCategory": "diagnostic"
     },
     {
