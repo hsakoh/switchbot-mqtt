@@ -39,6 +39,15 @@
       "IsBinary": false
     },
     {
+      "FieldName": "keyName",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "keyName",
+      "FieldDataType": "String",
+      "Description": "attributes of the context object. the name of the passcode being created or deleted",
+      "IsBinary": false,
+      "Icon": "mdi:form-textbox"
+    },
+    {
       "FieldName": "commandId",
       "FieldSourceType": "webhook",
       "WebhookKey": "commandId",
