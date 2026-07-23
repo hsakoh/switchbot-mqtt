@@ -21,7 +21,7 @@ public class BinarySensorConfig(
             , icon: icon)
 {
     [JsonProperty("value_template")]
-    public string ValueTemplate { get; set; } = value_template ?? $"{{{{ value_json['{key}'] if (value_json['{key}'] is defined and value_json['{key}'] is not none) else states('sensor.{objectId}') }}}}";
+    public string ValueTemplate { get; set; } = value_template ?? $"{{{{ value_json['{key}'] if (value_json['{key}'] is defined and value_json['{key}'] is not none) else states('binary_sensor.{objectId}') }}}}";
 
     [JsonProperty("state_topic")]
     public string StateTopic { get; set; } = stateTopic;
