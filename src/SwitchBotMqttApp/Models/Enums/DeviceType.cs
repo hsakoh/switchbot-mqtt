@@ -55,9 +55,11 @@ public enum DeviceType
     FloorLamp,
     RGBICWWStripLight,
     RGBICWWFloorLamp,
+    RGBICWWCeilingLight,
     RGBICNeonWireRopeLight,
     RGBICNeonRopeLight,
     CandleWarmerLamp,
+    PermanentOutdoorLights,
     RobotVacuumCleanerS1,
     RobotVacuumCleanerS1Plus,
     MiniRobotVacuumK10Plus,
@@ -79,6 +81,7 @@ public enum DeviceType
     PanTiltCam2K,
     BlindTilt,
     BatteryCirculatorFan,
+    BatteryCirculatorFan2Pro,
     CirculatorFan,
     StandingCirculatorFan,
     UniversalRemote,
@@ -89,6 +92,8 @@ public enum DeviceType
     WalletFinderCard,
     VideoDoorbell,
     ClimatePanel,
+    KataFriends,
+    AIMindClip,
 
     //VirtualInfraredRemoteDevice
     AirConditioner,

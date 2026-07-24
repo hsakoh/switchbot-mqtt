@@ -1,0 +1,224 @@
+{
+  "DeviceType": "KataFriends",
+  "ApiDeviceTypeString": "Kata Friends",
+  "WebhookDeviceTypeString": "Kata Friends",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Kata Friends",
+  "Fields": [
+    {
+      "FieldName": "version",
+      "FieldSourceType": "both",
+      "StatusKey": "version",
+      "WebhookKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "onlineStatus",
+      "WebhookKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
+      "FieldName": "mode",
+      "FieldSourceType": "both",
+      "StatusKey": "mode",
+      "WebhookKey": "mode",
+      "FieldDataType": "String",
+      "Description": "current mode. Normal, Standby, or Sleep",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "status",
+      "FieldSourceType": "both",
+      "StatusKey": "status",
+      "WebhookKey": "status",
+      "FieldDataType": "String",
+      "Description": "current status. Strolling, Welcoming Home, Wake-up Call, Sleeping, Playing, or Returning",
+      "IsBinary": false,
+      "Icon": "mdi:robot"
+    },
+    {
+      "FieldName": "childLock",
+      "FieldSourceType": "both",
+      "StatusKey": "childLock",
+      "WebhookKey": "childLock",
+      "FieldDataType": "String",
+      "Description": "child lock state. on or off",
+      "IsBinary": false,
+      "Icon": "mdi:lock"
+    },
+    {
+      "FieldName": "hospitalized",
+      "FieldSourceType": "both",
+      "StatusKey": "hospitalized",
+      "WebhookKey": "hospitalized",
+      "FieldDataType": "Integer",
+      "Description": "service state. `0`, normal; `1`, repair; `2`, maintenance; `3`, cleaning",
+      "IsBinary": false,
+      "Icon": "mdi:hospital-box",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceId",
+      "FieldDataType": "String",
+      "Description": "device ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Kata Friends",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "mode",
+      "PayloadType": "SingleValue",
+      "Description": "set mode",
+      "Icon": "mdi:robot",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "mode",
+          "Name": "mode",
+          "Index": 1,
+          "Description": "set mode",
+          "ParameterType": "Select",
+          "Icon": "mdi:robot",
+          "Options": "Normal|Standby|Sleep",
+          "OptionsDescription": "normal mode|standby mode|sleep mode",
+          "DefaultValue": "Normal"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "childLock",
+      "PayloadType": "SingleValue",
+      "Description": "set child lock state",
+      "Icon": "mdi:lock",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "childLock",
+          "Name": "childLock",
+          "Index": 1,
+          "Description": "set child lock state",
+          "ParameterType": "Select",
+          "Icon": "mdi:lock",
+          "Options": "on|off",
+          "OptionsDescription": "lock on|lock off",
+          "DefaultValue": "off"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "backHome",
+      "PayloadType": "Default",
+      "Description": "return home",
+      "Icon": "mdi:home-import-outline",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "pictureTaking",
+      "PayloadType": "SingleValue",
+      "Description": "set album photo-taking switch",
+      "Icon": "mdi:camera",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "pictureTaking",
+          "Name": "pictureTaking",
+          "Index": 1,
+          "Description": "set album photo-taking switch",
+          "ParameterType": "Select",
+          "Icon": "mdi:camera",
+          "Options": "on|off",
+          "OptionsDescription": "enable|disable",
+          "DefaultValue": "on"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "snapshots",
+      "PayloadType": "SingleValue",
+      "Description": "set random snapshot switch",
+      "Icon": "mdi:camera-burst",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "snapshots",
+          "Name": "snapshots",
+          "Index": 1,
+          "Description": "set random snapshot switch",
+          "ParameterType": "Select",
+          "Icon": "mdi:camera-burst",
+          "Options": "on|off",
+          "OptionsDescription": "enable|disable",
+          "DefaultValue": "on"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "talk",
+      "PayloadType": "SingleValue",
+      "Description": "set talk feature switch",
+      "Icon": "mdi:account-voice",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "talk",
+          "Name": "talk",
+          "Index": 1,
+          "Description": "set talk feature switch",
+          "ParameterType": "Select",
+          "Icon": "mdi:account-voice",
+          "Options": "on|off",
+          "OptionsDescription": "enable|disable",
+          "DefaultValue": "on"
+        }
+      ]
+    }
+  ]
+}

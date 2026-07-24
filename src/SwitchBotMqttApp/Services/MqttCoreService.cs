@@ -681,7 +681,9 @@ public class MqttCoreService(
     /// <returns>A task representing the asynchronous operation.</returns>
     public async Task PublishWebhookAsync(JsonNode webhookContent, JsonNode inputRawRoot)
     {
-        var deviceMac = webhookContent["deviceMac"]?.GetValue<string>();
+        // Kata Friends webhook has no deviceMac and identifies the device by deviceId instead
+        var deviceMac = webhookContent["deviceMac"]?.GetValue<string>()
+            ?? webhookContent["deviceId"]?.GetValue<string>();
         PhysicalDevice? physicalDevice = CurrentDevicesConfig.PhysicalDevices.FirstOrDefault(d => d.DeviceId == deviceMac);
         if (physicalDevice == null)
         {
@@ -775,7 +777,9 @@ public class MqttCoreService(
             if (kv.Key == "deviceType")
             {
                 // CirculatorFan/StandingCirculatorFan devices report incorrect device type in webhook
+                // BatteryCirculatorFan2Pro: official doc reports the correct device type, but kept here like its siblings to be safe
                 if (physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
+                    || physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan2Pro
                     || physicalDevice.DeviceType == DeviceType.CirculatorFan
                     || physicalDevice.DeviceType == DeviceType.StandingCirculatorFan)
                 {
@@ -852,13 +856,19 @@ public class MqttCoreService(
                     || physicalDevice.DeviceType == DeviceType.RGBICNeonRopeLight
                     || physicalDevice.DeviceType == DeviceType.CandleWarmerLamp
                     || physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan
+                    || physicalDevice.DeviceType == DeviceType.BatteryCirculatorFan2Pro
                     || physicalDevice.DeviceType == DeviceType.CirculatorFan
                     || physicalDevice.DeviceType == DeviceType.EvaporativeHumidifier
                     || physicalDevice.DeviceType == DeviceType.AirPurifierPM25
                     || physicalDevice.DeviceType == DeviceType.AirPurifierTablePM25
                     || physicalDevice.DeviceType == DeviceType.AirPurifierVOC
-                    || physicalDevice.DeviceType == DeviceType.AirPurifierTableVOC)
+                    || physicalDevice.DeviceType == DeviceType.AirPurifierTableVOC
+                    || physicalDevice.DeviceType == DeviceType.PermanentOutdoorLights)
                     && fieldDef.FieldName == "power")
+                ||
+                (
+                    physicalDevice.DeviceType == DeviceType.RGBICWWCeilingLight
+                    && (fieldDef.FieldName == "mainLightPower" || fieldDef.FieldName == "colorLightPower"))
               )
             {
                 webhook[fieldDef.FieldName] = webhook[fieldDef.FieldName]!.GetValue<string>().ToLower();

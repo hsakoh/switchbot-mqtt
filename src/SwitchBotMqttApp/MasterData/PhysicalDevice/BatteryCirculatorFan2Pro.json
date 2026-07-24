@@ -1,0 +1,221 @@
+{
+  "DeviceType": "BatteryCirculatorFan2Pro",
+  "ApiDeviceTypeString": "Battery Circulator Fan 2 Pro",
+  "WebhookDeviceTypeString": "Battery Circulator Fan 2 Pro",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Battery Circulator Fan 2 Pro",
+  "Fields": [
+    {
+      "FieldName": "mode",
+      "FieldSourceType": "both",
+      "StatusKey": "mode",
+      "WebhookKey": "mode",
+      "FieldDataType": "String",
+      "Description": "fan mode. direct, natural, sleep, hurricane, or custom",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "power",
+      "FieldSourceType": "both",
+      "StatusKey": "power",
+      "WebhookKey": "powerState",
+      "FieldDataType": "String",
+      "Description": "ON/OFF state. on or off",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
+      "FieldName": "nightStatus",
+      "FieldSourceType": "both",
+      "StatusKey": "nightStatus",
+      "WebhookKey": "nightStatus",
+      "FieldDataType": "String",
+      "Description": "nightlight state. on or off",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "oscillation",
+      "FieldSourceType": "both",
+      "StatusKey": "oscillation",
+      "WebhookKey": "oscillation",
+      "FieldDataType": "String",
+      "Description": "horizontal oscillation. on or off",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "verticalOscillation",
+      "FieldSourceType": "both",
+      "StatusKey": "verticalOscillation",
+      "WebhookKey": "verticalOscillation",
+      "FieldDataType": "String",
+      "Description": "vertical oscillation. on or off",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "chargingStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "chargingStatus",
+      "FieldDataType": "String",
+      "Description": "battery charge status. charging or uncharged",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "fanSpeed",
+      "FieldSourceType": "both",
+      "StatusKey": "fanSpeed",
+      "WebhookKey": "fanSpeed",
+      "FieldDataType": "Integer",
+      "Description": "fan speed. 1-100",
+      "IsBinary": false
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "device ID. the MAC address of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Battery Circulator Fan 2 Pro",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:fan",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:fan-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setNightLightMode",
+      "PayloadType": "SingleValue",
+      "Description": "`off`, turn off; `0`, bright; `1`, soft",
+      "Icon": "mdi:ceiling-fan-light",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setNightLightMode",
+          "Name": "nightLightMode",
+          "Index": 1,
+          "Description": "`off`, turn off; `0`, bright; `1`, soft",
+          "ParameterType": "Select",
+          "Icon": "mdi:ceiling-fan-light",
+          "Options": "off|0|1",
+          "OptionsDescription": "turn off nightlight|bright|soft",
+          "DefaultValue": "off"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setWindMode",
+      "PayloadType": "SingleValue",
+      "Description": "set fan mode. `direct`, `natural`, `sleep`, or `hurricane`",
+      "Icon": "mdi:fan-auto",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setWindMode",
+          "Name": "windMode",
+          "Index": 1,
+          "Description": "set fan mode. `direct`, `natural`, `sleep`, or `hurricane`",
+          "ParameterType": "Select",
+          "Icon": "mdi:fan-auto",
+          "Options": "direct|natural|sleep|hurricane",
+          "OptionsDescription": "direct mode|natural mode|sleep mode|hurricane mode",
+          "DefaultValue": "direct"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setWindSpeed",
+      "PayloadType": "SingleValue",
+      "Description": "set fan speed. `{1-100}`",
+      "Icon": "mdi:percent",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setWindSpeed",
+          "Name": "windSpeed",
+          "Index": 1,
+          "Description": "set fan speed. `{1-100}`",
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        }
+      ]
+    }
+  ]
+}

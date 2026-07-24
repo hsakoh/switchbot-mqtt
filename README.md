@@ -52,12 +52,15 @@ We have implemented all devices according to the published API specifications, b
 | [Garage Door Opener][GarageDoorOpenerProduct]                                                                                      |          [✅][GarageDoorOpenerList]          |         [✅][GarageDoorOpenerStatus]         |         [✅][GarageDoorOpenerWebhook]         |         [✅][GarageDoorOpenerCommand]         |              |
 | [Smart Radiator Thermostat][SmartRadiatorThermostatProduct]                                                                        |      [✅][SmartRadiatorThermostatList]       |     [✅][SmartRadiatorThermostatStatus]      |     [✅][SmartRadiatorThermostatWebhook]      |     [✅][SmartRadiatorThermostatCommand]      |              |
 | [Home Climate Panel][ClimatePanelProduct] [[JP][ClimatePanelProductJP]]                                                            |            [✅][ClimatePanelList]            |           [✅][ClimatePanelStatus]           |           [✅][ClimatePanelWebhook]           |                      -                       |              |
+| [Kata Friends][KataFriendsProduct] [[JP][KataFriendsProductJP]]                                                                    |            [✅][KataFriendsList]             |           [✅][KataFriendsStatus]            |           [✅][KataFriendsWebhook]            |           [✅][KataFriendsCommand]            |              |
+| AI MindClip                                                                                                                        |             [✅][AIMindClipList]             |            [✅][AIMindClipStatus]            |            [✅][AIMindClipWebhook]            |                      -                       |              |
 | **Home Appliance**                                                                                                                 |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | Humidifier [[JP][HumidifierProductJP]]                                                                                             |             [✅][HumidifierList]             |            [✅][HumidifierStatus]            |                      -                       |            [✅][HumidifierCommand]            |              |
 | Evaporative Humidifier [[JP][EvaporativeHumidifierProductJP]]                                                                      |       [✅][EvaporativeHumidifierList]        |      [✅][EvaporativeHumidifierStatus]       |      [✅][EvaporativeHumidifierWebhook]       |      [✅][EvaporativeHumidifierCommand]       |              |
 | [Evaporative Humidifier Auto-refill][EvaporativeHumidifierAutoRefillProduct] [[JP][EvaporativeHumidifierAutoRefillProductJP]]      |  [✅][EvaporativeHumidifierAutoRefillList]   | [✅][EvaporativeHumidifierAutoRefillStatus]  | [✅][EvaporativeHumidifierAutoRefillWebhook]  | [✅][EvaporativeHumidifierAutoRefillCommand]  |              |
 | Fan                                                                                                                                |                      -                      |                                             |                                              |                                              |              |
 | [Battery Circulator Fan][BatteryCirculatorFanProduct] [[JP][BatteryCirculatorFanProductJP]]                                        |        [✅][BatteryCirculatorFanList]        |       [✅][BatteryCirculatorFanStatus]       |       [✅][BatteryCirculatorFanWebhook]       |       [✅][BatteryCirculatorFanCommand]       |              |
+| Battery Circulator Fan 2 Pro [[JP][BatteryCirculatorFan2ProProductJP]]                                                             |     [✅][BatteryCirculatorFan2ProList]      |    [✅][BatteryCirculatorFan2ProStatus]     |    [✅][BatteryCirculatorFan2ProWebhook]     |    [✅][BatteryCirculatorFan2ProCommand]     |              |
 | [Circulator Fan][CirculatorFanProduct] [[JP][CirculatorFanProductJP]]                                                              |           [✅][CirculatorFanList]            |          [✅][CirculatorFanStatus]           |          [✅][CirculatorFanWebhook]           |          [✅][CirculatorFanCommand]           |      ✅       |
 | Standing Circulator Fan [JP]                                                                                                       |       [✅][StandingCirculatorFanList]        |      [✅][StandingCirculatorFanStatus]       |      [✅][StandingCirculatorFanWebhook]       |      [✅][StandingCirculatorFanCommand]       |              |
 | [Air Purifier PM2.5][AirPurifierPM25Product]                                                                                       |          [✅][AirPurifierPM25List]           |         [✅][AirPurifierPM25Status]          |         [✅][AirPurifierPM25Webhook]          |         [✅][AirPurifierPM25Command]          |              |
@@ -123,11 +126,14 @@ We have implemented all devices according to the published API specifications, b
 | [RGBWW Floor Lamp][FloorLampProduct] [[JP][FloorLampProductJP]]                                                                    |             [✅][FloorLampList]              |            [✅][FloorLampStatus]             |            [✅][FloorLampWebhook]             |            [✅][FloorLampCommand]             |              |
 | [RGBICWW Strip Light][RGBICWWStripLightProduct] [[JP][RGBICWWStripLightProductJP]]                                                 |         [✅][RGBICWWStripLightList]          |        [✅][RGBICWWStripLightStatus]         |        [✅][RGBICWWStripLightWebhook]         |        [✅][RGBICWWStripLightCommand]         |              |
 | [RGBICWW Floor Lamp][RGBICWWFlooLampProduct] [[JP][RGBICWWFlooLampProductJP]]                                                      |          [✅][RGBICWWFlooLampList]           |         [✅][RGBICWWFlooLampStatus]          |         [✅][RGBICWWFlooLampWebhook]          |         [✅][RGBICWWFlooLampCommand]          |              |
+| [RGBICWW Ceiling Light][RGBICWWCeilingLightProduct]                                                                                |       [✅][RGBICWWCeilingLightList]        |      [✅][RGBICWWCeilingLightStatus]       |      [✅][RGBICWWCeilingLightWebhook]      |      [✅][RGBICWWCeilingLightCommand]      |              |
+| Permanent Outdoor Lights [[JP][PermanentOutdoorLightsProductJP]]                                                                   |     [✅][PermanentOutdoorLightsList]      |    [✅][PermanentOutdoorLightsStatus]     |    [✅][PermanentOutdoorLightsWebhook]    |    [✅][PermanentOutdoorLightsCommand]    |              |
 | [RGBIC Neon Wire Rope Light][RGBICNeonWireRopeLightProduct] [[JP][RGBICNeonWireRopeLightProductJP]]                                |       [✅][RGBICNeonWireRopeLightList]       |      [✅][RGBICNeonWireRopeLightStatus]      |      [✅][RGBICNeonWireRopeLightWebhook]      |      [✅][RGBICNeonWireRopeLightCommand]      |      ✅       |
 | [RGBIC Neon Rope Light][RGBICNeonRopeLightProduct] [[JP][RGBICNeonRopeLightProductJP]]                                             |         [✅][RGBICNeonRopeLightList]         |        [✅][RGBICNeonRopeLightStatus]        |        [✅][RGBICNeonRopeLightWebhook]        |        [✅][RGBICNeonRopeLightCommand]        |              |
 | [Candle Warmer Lamp][CandleWarmerLampProduct] [[JP][CandleWarmerLampProductJP]]                                                    |          [✅][CandleWarmerLampList]          |         [✅][CandleWarmerLampStatus]         |         [✅][CandleWarmerLampWebhook]         |         [✅][CandleWarmerLampCommand]         |              |
 
 * The 📸 icon indicates that snapshots included in the Webhook payload are detected as [MQTT Image](https://www.home-assistant.io/integrations/image.mqtt/).
+* The Feature APIs of Kata Friends (diary) and AI MindClip (recordings, summaries, todos, assistant) are out of scope for this MQTT bridge.
 * If you see errors such as **`unknown webhook payload`** or **`unknown status payload`** in the add-on logs, the API response or webhook body may have introduced new fields. Please share the relevant logs and API response or webhook body in a GitHub Issue.
 
 [GetDeviceList]: https://github.com/OpenWonderLabs/SwitchBotAPI#get-device-list
@@ -235,6 +241,11 @@ We have implemented all devices according to the published API specifications, b
 [BatteryCirculatorFanStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan.md#device-status
 [BatteryCirculatorFanWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan.md#webhook-events
 [BatteryCirculatorFanCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan.md#control-commands
+[BatteryCirculatorFan2ProProductJP]: https://www.switchbot.jp/products/switchbot-smart-circulator-fan-2-pro
+[BatteryCirculatorFan2ProList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan-2-pro.md#device-list-information
+[BatteryCirculatorFan2ProStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan-2-pro.md#device-status
+[BatteryCirculatorFan2ProWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan-2-pro.md#webhook-events
+[BatteryCirculatorFan2ProCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/battery-circulator-fan-2-pro.md#control-commands
 [CirculatorFanProduct]: https://www.switch-bot.com/products/switchbot-battery-circulator-fan?variant=46175199789223
 [CirculatorFanProductJP]: https://www.switchbot.jp/products/switchbot-smart-circulator-fan?variant=44221010182319
 [CirculatorFanList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/circulator-fan.md#device-list-information
@@ -365,6 +376,15 @@ We have implemented all devices according to the published API specifications, b
 [ClimatePanelList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/home-climate-panel.md#device-list-information
 [ClimatePanelStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/home-climate-panel.md#device-status
 [ClimatePanelWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/climate-control/home-climate-panel.md#webhook-events
+[KataFriendsProduct]: https://www.switch-bot.com/products/katafriends
+[KataFriendsProductJP]: https://www.switchbot.jp/products/katafriends
+[KataFriendsList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/kata-friends.md#device-list-information
+[KataFriendsStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/kata-friends.md#device-status
+[KataFriendsWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/kata-friends.md#webhook-events
+[KataFriendsCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/kata-friends.md#control-commands
+[AIMindClipList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-mindclip.md#device-list-information
+[AIMindClipStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-mindclip.md#device-status
+[AIMindClipWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-mindclip.md#webhook-events
 [ContactSensorProduct]: https://www.switch-bot.com/products/contact-sensor
 [ContactSensorProductJP]: https://www.switchbot.jp/products/switchbot-contact-sensor
 [ContactSensorList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/sensors/contact-sensor.md#device-list-information
@@ -534,6 +554,16 @@ We have implemented all devices according to the published API specifications, b
 [RGBICWWFlooLampStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-floor-lamp.md#device-status
 [RGBICWWFlooLampWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-floor-lamp.md#webhook-events
 [RGBICWWFlooLampCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-floor-lamp.md#control-commands
+[RGBICWWCeilingLightProduct]: https://www.switch-bot.com/products/switchbot-rgbicww-ceiling-light
+[RGBICWWCeilingLightList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-ceiling-light.md#device-list-information
+[RGBICWWCeilingLightStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-ceiling-light.md#device-status
+[RGBICWWCeilingLightWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-ceiling-light.md#webhook-events
+[RGBICWWCeilingLightCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbicww-ceiling-light.md#control-commands
+[PermanentOutdoorLightsProductJP]: https://www.switchbot.jp/products/switchbot-permanent-outdoor-lights
+[PermanentOutdoorLightsList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/permanent-outdoor-lights.md#device-list-information
+[PermanentOutdoorLightsStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/permanent-outdoor-lights.md#device-status
+[PermanentOutdoorLightsWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/permanent-outdoor-lights.md#webhook-events
+[PermanentOutdoorLightsCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/permanent-outdoor-lights.md#control-commands
 [RGBICNeonWireRopeLightProduct]: https://us.switch-bot.com/products/switchbot-rgbic-neon-wire-rope-light
 [RGBICNeonWireRopeLightProductJP]: https://www.switchbot.jp/products/switchbot-rgbic-neon-wire-rope-light
 [RGBICNeonWireRopeLightList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/lighting/rgbic-neon-wire-rope-light.md#device-list-information

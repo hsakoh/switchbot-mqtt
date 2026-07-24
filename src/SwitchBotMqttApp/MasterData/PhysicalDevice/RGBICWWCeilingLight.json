@@ -1,0 +1,314 @@
+{
+  "DeviceType": "RGBICWWCeilingLight",
+  "ApiDeviceTypeString": "RGBICWW Ceiling Light",
+  "WebhookDeviceTypeString": "RGBICWW Ceiling Light",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "RGBICWW Ceiling Light",
+  "Fields": [
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
+      "FieldName": "power",
+      "FieldSourceType": "status",
+      "StatusKey": "power",
+      "FieldDataType": "String",
+      "Description": "total power state. on, off, or partial",
+      "IsBinary": false,
+      "Icon": "mdi:power"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V6.3",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "mainLightPower",
+      "FieldSourceType": "both",
+      "StatusKey": "mainLightPower",
+      "WebhookKey": "powerState",
+      "FieldDataType": "String",
+      "Description": "main light power state. on or off",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "mainLightBrightness",
+      "FieldSourceType": "both",
+      "StatusKey": "mainLightBrightness",
+      "WebhookKey": "brightness",
+      "FieldDataType": "Integer",
+      "Description": "main light brightness",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "mainLightColorTemp",
+      "FieldSourceType": "both",
+      "StatusKey": "mainLightColorTemp",
+      "WebhookKey": "colorTemperature",
+      "FieldDataType": "Integer",
+      "Description": "main light color temperature",
+      "IsBinary": false,
+      "Icon": "mdi:palette",
+      "StateClass": "measurement"
+    },
+    {
+      "FieldName": "colorLightPower",
+      "FieldSourceType": "both",
+      "StatusKey": "colorLightPower",
+      "WebhookKey": "colorLightPowerState",
+      "FieldDataType": "String",
+      "Description": "color light power state. on or off",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "colorLightBrightness",
+      "FieldSourceType": "both",
+      "StatusKey": "colorLightBrightness",
+      "WebhookKey": "colorLightBrightness",
+      "FieldDataType": "Integer",
+      "Description": "color light brightness",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "colorLightRGB",
+      "FieldSourceType": "both",
+      "StatusKey": "colorLightRGB",
+      "WebhookKey": "colorLightColor",
+      "FieldDataType": "String",
+      "Description": "color light RGB value",
+      "IsBinary": false,
+      "Icon": "mdi:palette"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "device ID. the MAC address of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. RGBICWW Ceiling Light",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "turn on all lights",
+      "Icon": "mdi:lightbulb-on",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "turn off all lights",
+      "Icon": "mdi:lightbulb-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "toggle",
+      "PayloadType": "Default",
+      "Description": "toggle all lights",
+      "Icon": "mdi:power",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOnMainLight",
+      "PayloadType": "Default",
+      "Description": "turn on main light",
+      "Icon": "mdi:lightbulb-on",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOffMainLight",
+      "PayloadType": "Default",
+      "Description": "turn off main light",
+      "Icon": "mdi:lightbulb-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOnColorLight",
+      "PayloadType": "Default",
+      "Description": "turn on color light",
+      "Icon": "mdi:lightbulb-on",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOffColorLight",
+      "PayloadType": "Default",
+      "Description": "turn off color light",
+      "Icon": "mdi:lightbulb-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMainLightBrightness",
+      "PayloadType": "SingleValue",
+      "Description": "set main light brightness",
+      "Icon": "mdi:brightness-percent",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setMainLightBrightness",
+          "Name": "brightness",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMainLightColorTemp",
+      "PayloadType": "SingleValue",
+      "Description": "set main light color temp",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setMainLightColorTemp",
+          "Name": "colortemperature",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:palette",
+          "RangeMin": 2700,
+          "RangeMax": 6500,
+          "DefaultValue": "6500"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setColorLightBrightness",
+      "PayloadType": "SingleValue",
+      "Description": "set color light brightness",
+      "Icon": "mdi:brightness-percent",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setColorLightBrightness",
+          "Name": "brightness",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setColorLightRGB",
+      "PayloadType": "JoinColon",
+      "Description": "set color light RGB value",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setColorLightRGB",
+          "Name": "R",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-r",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setColorLightRGB",
+          "Name": "G",
+          "Index": 2,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-g",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setColorLightRGB",
+          "Name": "B",
+          "Index": 3,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-b",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        }
+      ]
+    }
+  ]
+}

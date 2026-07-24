@@ -1,0 +1,190 @@
+{
+  "DeviceType": "AIMindClip",
+  "ApiDeviceTypeString": "AI MindClip",
+  "WebhookDeviceTypeString": "AI MindClip",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": false,
+  "DisplayName": "AI MindClip",
+  "Fields": [
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "status",
+      "StatusKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "chargingStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "chargingStatus",
+      "FieldDataType": "Integer",
+      "Description": "charge state. `0`, uncharged; `1`, charging",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "battery_charging",
+      "OnValue": "1",
+      "OffValue": "0"
+    },
+    {
+      "FieldName": "recordingStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "recordingStatus",
+      "FieldDataType": "Integer",
+      "Description": "recording state. `0`, not recording; `1`, recording",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "running",
+      "OnValue": "1",
+      "OffValue": "0"
+    },
+    {
+      "FieldName": "uploadStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "uploadStatus",
+      "FieldDataType": "Integer",
+      "Description": "upload state. `0`, not uploaded; `1`, uploading",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "running",
+      "OnValue": "1",
+      "OffValue": "0"
+    },
+    {
+      "FieldName": "hasUntransferredFiles",
+      "FieldSourceType": "status",
+      "StatusKey": "hasUntransferredFiles",
+      "FieldDataType": "Boolean",
+      "Description": "determines if the device has files that are not transferred",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "problem",
+      "OnValue": "true",
+      "OffValue": "false",
+      "Icon": "mdi:file-clock"
+    },
+    {
+      "FieldName": "chargeUploadFileID",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "chargeUploadCompleted",
+      "WebhookKey": "fileID",
+      "FieldDataType": "String",
+      "Description": "recording file ID",
+      "IsBinary": false,
+      "Icon": "mdi:file-music"
+    },
+    {
+      "FieldName": "chargeUploadFileName",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "chargeUploadCompleted",
+      "WebhookKey": "fileName",
+      "FieldDataType": "String",
+      "Description": "recording file name",
+      "IsBinary": false,
+      "Icon": "mdi:file-music"
+    },
+    {
+      "FieldName": "chargeUploadStatus",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "chargeUploadCompleted",
+      "WebhookKey": "status",
+      "FieldDataType": "Integer",
+      "Description": "charge upload status. `1`, completed",
+      "IsBinary": false,
+      "Icon": "mdi:upload"
+    },
+    {
+      "FieldName": "chargeUploadTimestamp",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "chargeUploadCompleted",
+      "WebhookKey": "timestamp",
+      "FieldDataType": "Long",
+      "Description": "charge upload completion timestamp",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "transcriptionFileID",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "transcription",
+      "WebhookKey": "fileID",
+      "FieldDataType": "String",
+      "Description": "recording file ID",
+      "IsBinary": false,
+      "Icon": "mdi:file-music"
+    },
+    {
+      "FieldName": "transcriptionStatus",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "transcription",
+      "WebhookKey": "status",
+      "FieldDataType": "Integer",
+      "Description": "`0`, not transcribed; `1`, transcribing; `2`, succeeded; `3`, failed; `4`, timed out; `5`, speech transcription failed",
+      "IsBinary": false,
+      "Icon": "mdi:text-recognition"
+    },
+    {
+      "FieldName": "transcriptionTimestamp",
+      "FieldSourceType": "webhook",
+      "WebhookParentKey": "transcription",
+      "WebhookKey": "timestamp",
+      "FieldDataType": "Long",
+      "Description": "transcription event timestamp",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    },
+    {
+      "FieldName": "dailySummary",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "dailySummary",
+      "FieldDataType": "Long",
+      "Description": "daily summary generation timestamp",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true
+    },
+    {
+      "FieldName": "weeklySummary",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "weeklySummary",
+      "FieldDataType": "Long",
+      "Description": "weekly summary generation timestamp",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "device ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. AI MindClip",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": []
+}
