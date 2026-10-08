@@ -1,7 +1,7 @@
 {
   "DeviceType": "PlugMiniEu",
   "ApiDeviceTypeString": "Plug Mini (EU)",
-  "WebhookDeviceTypeString": "Plug Mini (EU)",
+  "WebhookDeviceTypeString": "WoPlugEU",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
