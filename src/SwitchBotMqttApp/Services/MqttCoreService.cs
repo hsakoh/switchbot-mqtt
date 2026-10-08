@@ -816,6 +816,11 @@ public class MqttCoreService(
                 {
                     val = "unlocked";
                 }
+                // Treat "halflocked" as "locked" (not in official docs; listed by py-switchbot-api and HA switchbot_cloud)
+                else if (val == "halflocked")
+                {
+                    val = "locked";
+                }
                 webhook[fieldDef.FieldName] = val;
             }
 
@@ -980,6 +985,11 @@ public class MqttCoreService(
                     if (val == "latchboltlocked")
                     {
                         val = "unlocked";
+                    }
+                    // Treat "halflocked" as "locked" (not in official docs; listed by py-switchbot-api and HA switchbot_cloud)
+                    else if (val == "halflocked")
+                    {
+                        val = "locked";
                     }
                     status[fieldDef.FieldName] = val;
                 }
