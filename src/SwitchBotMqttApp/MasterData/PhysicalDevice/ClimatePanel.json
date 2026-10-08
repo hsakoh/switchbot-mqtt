@@ -1,6 +1,7 @@
 {
   "DeviceType": "ClimatePanel",
   "ApiDeviceTypeString": "Climate Panel",
+  "AdditionalApiDeviceTypeStrings": [ "Home Climate Panel" ],
   "WebhookDeviceTypeString": "Climate Panel",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
