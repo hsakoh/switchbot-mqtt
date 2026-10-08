@@ -1,7 +1,7 @@
 {
   "DeviceType": "LockUltra",
   "ApiDeviceTypeString": "Smart Lock Ultra",
-  "WebhookDeviceTypeString": "Smart Lock Ultra",
+  "WebhookDeviceTypeString": "Lock Ultra",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
