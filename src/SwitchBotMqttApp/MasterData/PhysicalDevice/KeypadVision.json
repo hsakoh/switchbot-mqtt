@@ -9,6 +9,28 @@
   "DisplayName": "Keypad Vision",
   "Fields": [
     {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V2.5",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
       "FieldName": "eventName",
       "FieldSourceType": "webhook",
       "WebhookKey": "eventName",
