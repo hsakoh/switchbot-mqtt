@@ -1,7 +1,7 @@
 {
   "DeviceType": "AirPurifierTableVOC",
-  "ApiDeviceTypeString": "Air Purifier Table PM2.5",
-  "WebhookDeviceTypeString": "Air Purifier Table PM2.5",
+  "ApiDeviceTypeString": "Air Purifier Table VOC",
+  "WebhookDeviceTypeString": "Air Purifier Table VOC",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
