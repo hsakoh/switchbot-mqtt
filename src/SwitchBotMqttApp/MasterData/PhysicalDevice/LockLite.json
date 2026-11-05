@@ -110,8 +110,8 @@
       "Icon": "mdi:lock-open-variant",
       "Payloads": []
     },
-    // deadbolt: 公式ドキュメント(devices/locks-security/lock-lite.md、OpenWonderLabs/SwitchBotAPI#499 で復元)のみが根拠。
-    // Home Assistant の switchbot_cloud 統合と py-switchbot-api は Lock Lite で deadbolt を使っておらず、実機では動かない可能性がある。
+    // deadbolt: based only on the official docs (devices/locks-security/lock-lite.md, restored in OpenWonderLabs/SwitchBotAPI#499).
+    // The Home Assistant switchbot_cloud integration and py-switchbot-api do not use deadbolt for Lock Lite, so it may not work on real devices.
     {
       "CommandType": "command",
       "Command": "deadbolt",
