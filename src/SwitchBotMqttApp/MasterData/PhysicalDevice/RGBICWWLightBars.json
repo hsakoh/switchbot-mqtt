@@ -1,0 +1,395 @@
+{
+  "DeviceType": "RGBICWWLightBars",
+  "ApiDeviceTypeString": "RGBICWW Light Bars",
+  // WebhookDeviceTypeString: unconfirmed (assumed), as the official docs have no webhook example. Same as ApiDeviceTypeString, following RGBICWW Strip Light.
+  // Webhooks are matched to devices by deviceMac. This value is only used to display deviceType (if it does not match, ApiDeviceTypeString is used).
+  "WebhookDeviceTypeString": "RGBICWW Light Bars",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "RGBICWW Light Bars",
+  "Fields": [
+    {
+      "FieldName": "onlineStatus",
+      "FieldSourceType": "status",
+      "StatusKey": "onlineStatus",
+      "FieldDataType": "String",
+      "Description": "the connection status of the device. online or offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "online",
+      "OffValue": "offline"
+    },
+    {
+      "FieldName": "power",
+      "FieldSourceType": "both",
+      "StatusKey": "power",
+      "WebhookKey": "powerState",
+      "FieldDataType": "String",
+      "Description": "ON/OFF state",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "power",
+      "OnValue": "on",
+      "OffValue": "off"
+    },
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current Wi-Fi firmware version, e.g. V3.1",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "brightness",
+      "FieldSourceType": "both",
+      "StatusKey": "brightness",
+      "WebhookKey": "brightness",
+      "FieldDataType": "Integer",
+      "Description": "the brightness value, range from 0 to 100",
+      "IsBinary": false,
+      "Icon": "mdi:brightness-5",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "color",
+      "FieldSourceType": "both",
+      "StatusKey": "color",
+      "WebhookKey": "color",
+      "FieldDataType": "String",
+      "Description": "the color value, RGB `255:255:255`",
+      "IsBinary": false,
+      "Icon": "mdi:palette"
+    },
+    {
+      "FieldName": "colorTemperature",
+      "FieldSourceType": "both",
+      "StatusKey": "colorTemperature",
+      "WebhookKey": "colorTemperature",
+      "FieldDataType": "Integer",
+      "Description": "the color temperature value, range from 2700 to 6500",
+      "IsBinary": false,
+      "Icon": "mdi:palette",
+      "StateClass": "measurement"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID. 000000000000 when the device itself is a Hub or it is connected through Wi-Fi. ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  // Commands: setMusicColorMode / setEffectColorMode from the official docs are not supported, because their colorList parameter is an array, which the current payload builder cannot send.
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "turnOn",
+      "PayloadType": "Default",
+      "Description": "set to ON state",
+      "Icon": "mdi:lightbulb-on",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "turnOff",
+      "PayloadType": "Default",
+      "Description": "set to OFF state",
+      "Icon": "mdi:lightbulb-off",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "toggle",
+      "PayloadType": "Default",
+      "Description": "toggle state",
+      "Icon": "mdi:power",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "setBrightness",
+      "PayloadType": "SingleValue",
+      "Description": "set brightness",
+      "Icon": "mdi:brightness-percent",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setBrightness",
+          "Name": "brightness",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 0,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setColor",
+      "PayloadType": "JoinColon",
+      "Description": "set RGB color value",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setColor",
+          "Name": "R",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-r",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setColor",
+          "Name": "G",
+          "Index": 2,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-g",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setColor",
+          "Name": "B",
+          "Index": 3,
+          "ParameterType": "Range",
+          "Icon": "mdi:alpha-b",
+          "RangeMin": 0,
+          "RangeMax": 255,
+          "DefaultValue": "255"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setColorTemperature",
+      "PayloadType": "SingleValue",
+      "Description": "set color temperature",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setColorTemperature",
+          "Name": "colortemperature",
+          "Index": 1,
+          "ParameterType": "Range",
+          "Icon": "mdi:palette",
+          "RangeMin": 2700,
+          "RangeMax": 6500,
+          "DefaultValue": "6500"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setBrightnessAndTemperature",
+      "PayloadType": "Json",
+      "Description": "set brightness and color temperature",
+      "Icon": "mdi:brightness-percent",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setBrightnessAndTemperature",
+          "Name": "brightness",
+          "Index": 1,
+          "Description": "the brightness, 1-100",
+          "ParameterType": "Range",
+          "Icon": "mdi:percent",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "UnitOfMeasurement": "%",
+          "DefaultValue": "100"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setBrightnessAndTemperature",
+          "Name": "temperature",
+          "Index": 2,
+          "Description": "the color temperature, 2700-6500",
+          "ParameterType": "Range",
+          "Icon": "mdi:palette",
+          "RangeMin": 2700,
+          "RangeMax": 6500,
+          "DefaultValue": "6500"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setMusicParamMode",
+      "PayloadType": "Json",
+      "Description": "set music-mode parameters",
+      "Icon": "mdi:music",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setMusicParamMode",
+          "Name": "musicMode",
+          "Index": 1,
+          "Description": "the music mode, 0-5",
+          "ParameterType": "Range",
+          "Icon": "mdi:music",
+          "RangeMin": 0,
+          "RangeMax": 5,
+          "DefaultValue": "0"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setMusicParamMode",
+          "Name": "musicLevel",
+          "Index": 2,
+          "Description": "the music level, 1-100",
+          "ParameterType": "Range",
+          "Icon": "mdi:equalizer",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "DefaultValue": "100"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setMusicParamMode",
+          "Name": "sensitivity",
+          "Index": 3,
+          "Description": "the sensitivity, 1-100",
+          "ParameterType": "Range",
+          "Icon": "mdi:microphone",
+          "RangeMin": 1,
+          "RangeMax": 100,
+          "DefaultValue": "100"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setMusicParamMode",
+          "Name": "controllerMode",
+          "Index": 4,
+          "Description": "the controller mode, 0, 1, or 2",
+          "ParameterType": "Range",
+          "Icon": "mdi:tune",
+          "RangeMin": 0,
+          "RangeMax": 2,
+          "DefaultValue": "0"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setEffectSpeedMode",
+      "PayloadType": "Json",
+      "Description": "set effect speed",
+      "Icon": "mdi:speedometer",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setEffectSpeedMode",
+          "Name": "speed",
+          "Index": 1,
+          "Description": "the effect speed, 1-255",
+          "ParameterType": "Range",
+          "Icon": "mdi:speedometer",
+          "RangeMin": 1,
+          "RangeMax": 255,
+          "DefaultValue": "128"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setSegmentColorMode",
+      "PayloadType": "Json",
+      "Description": "set a Light Bars segment color",
+      "Icon": "mdi:palette",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setSegmentColorMode",
+          "Name": "color",
+          "Index": 1,
+          "Description": "the RGB color value, {0-255}:{0-255}:{0-255}",
+          "ParameterType": "String",
+          "Icon": "mdi:palette",
+          "DefaultValue": "255:255:255"
+        },
+        {
+          "CommandType": "command",
+          "Command": "setSegmentColorMode",
+          "Name": "lightIndex",
+          "Index": 2,
+          "Description": "the segment index, 0-11",
+          "ParameterType": "Range",
+          "Icon": "mdi:numeric",
+          "RangeMin": 0,
+          "RangeMax": 11,
+          "DefaultValue": "0"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setLightEffect",
+      "PayloadType": "Json",
+      "Description": "set a preset light effect",
+      "Icon": "mdi:auto-fix",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setLightEffect",
+          "Name": "effectId",
+          "Index": 1,
+          "Description": "the preset light effect, 0-25",
+          "ParameterType": "Select",
+          "Icon": "mdi:auto-fix",
+          "Options": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25",
+          "OptionsDescription": "Romance|Vitality|Heartthrob|Party|Dynamic|Mystery|Lightning|Rock|Starlight|Valentine's Day|Dream|Alarm|Fireworks|Waves|Christmas|Rainbow|Game|Halloween|Meditation|Starlit Sky|Sleep|Film|Sunrise|Sunset|New Year|Cherry Blossom",
+          "DefaultValue": "0"
+        }
+      ]
+    }
+  ]
+}

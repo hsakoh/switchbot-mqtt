@@ -249,6 +249,11 @@
                     }
                     jsonRoot["mode"] = JsonValue.Create<int>(int.Parse(jsonRoot["mode"]!.AsValue().GetValue<string>()));
                 }
+                if (CommandConf.Command == "setLightEffect"
+                    && int.TryParse(jsonRoot["effectId"]?.AsValue().GetValue<string>(), out var effectId))
+                {
+                    jsonRoot["effectId"] = JsonValue.Create<int>(effectId);
+                }
                 Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, jsonRoot, CancellationToken.None);
             }
             else

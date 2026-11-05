@@ -1,0 +1,137 @@
+{
+  "DeviceType": "SolarPanTiltCam2K",
+  "ApiDeviceTypeString": "Solar Pan/Tilt Cam 2K",
+  "WebhookDeviceTypeString": "Solar Pan/Tilt Cam 2K",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": true,
+  "IsSupportCommand": true,
+  "DisplayName": "Solar Pan/Tilt Cam 2K",
+  "Fields": [
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V1.0.0",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "both",
+      "StatusKey": "battery",
+      "WebhookKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "online",
+      "FieldSourceType": "status",
+      "StatusKey": "online",
+      "FieldDataType": "Boolean",
+      "Description": "the connection status of the device. true or false",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "detectionState",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "detectionState",
+      "FieldDataType": "String",
+      "Description": "the motion state of the device. DETECTED stands for a person or motion is detected. NOT_DETECTED is not reported",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "motion",
+      "OnValue": "DETECTED",
+      "OffValue": "NOT_DETECTED"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceId",
+      "WebhookKey": "deviceMac",
+      "FieldDataType": "String",
+      "Description": "the MAC address of the device. device ID ",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "both",
+      "StatusKey": "deviceType",
+      "WebhookKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "the type of the device",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "latestImageUrl",
+      "FieldSourceType": "status",
+      "StatusKey": "latestImage.imageUrl",
+      "FieldDataType": "String",
+      "Description": "the latest captured image",
+      "IsBinary": false,
+      "IsImage": true,
+      "Icon": "mdi:image"
+    },
+    {
+      "FieldName": "latestImageExpireAt",
+      "FieldSourceType": "status",
+      "StatusKey": "latestImage.expireAt",
+      "FieldDataType": "Long",
+      "Description": "the Unix timestamp (seconds) when the latest image URL expires",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp",
+      "IsTimestampSeconds": true,
+      "Icon": "mdi:clock",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "timeOfSample",
+      "FieldSourceType": "webhook",
+      "WebhookKey": "timeOfSample",
+      "FieldDataType": "Long",
+      "Description": "the time stamp when the event is sent",
+      "IsBinary": false,
+      "SensorDeviceClass": "timestamp"
+    }
+  ],
+  "Commands": [
+    {
+      "CommandType": "command",
+      "Command": "enableMotionDetection",
+      "PayloadType": "Default",
+      "Description": "set motion detection to enabled state",
+      "Icon": "mdi:motion-sensor",
+      "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "disableMotionDetection",
+      "PayloadType": "Default",
+      "Description": "set motion detection to disabled state",
+      "Icon": "mdi:motion-sensor-off",
+      "Payloads": []
+    }
+  ]
+}

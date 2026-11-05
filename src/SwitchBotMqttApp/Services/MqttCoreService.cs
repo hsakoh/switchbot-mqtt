@@ -630,6 +630,12 @@ public class MqttCoreService(
                         // Convert mode from string to int
                         jsonRoot["mode"] = JsonValue.Create<int>(int.Parse(jsonRoot["mode"]!.AsValue().GetValue<string>()));
                     }
+                    // setLightEffect requires an integer effectId
+                    if (commandDef.Command == "setLightEffect"
+                        && int.TryParse(jsonRoot["effectId"]?.AsValue().GetValue<string>(), out var effectId))
+                    {
+                        jsonRoot["effectId"] = JsonValue.Create<int>(effectId);
+                    }
                     await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, jsonRoot, CancellationToken.None);
                 }
                 else
@@ -804,6 +810,7 @@ public class MqttCoreService(
                     || physicalDevice.DeviceType == DeviceType.LockPro
                     || physicalDevice.DeviceType == DeviceType.LockLite
                     || physicalDevice.DeviceType == DeviceType.LockUltra
+                    || physicalDevice.DeviceType == DeviceType.LockUltraMax
                     || physicalDevice.DeviceType == DeviceType.LockProMatterEnabled
                     || physicalDevice.DeviceType == DeviceType.LockVision
                     || physicalDevice.DeviceType == DeviceType.LockVisionPro)
@@ -831,6 +838,7 @@ public class MqttCoreService(
                     || physicalDevice.DeviceType == DeviceType.LockPro
                     || physicalDevice.DeviceType == DeviceType.LockLite
                     || physicalDevice.DeviceType == DeviceType.LockUltra
+                    || physicalDevice.DeviceType == DeviceType.LockUltraMax
                     || physicalDevice.DeviceType == DeviceType.LockProMatterEnabled
                     || physicalDevice.DeviceType == DeviceType.LockVision
                     || physicalDevice.DeviceType == DeviceType.LockVisionPro)
@@ -857,6 +865,7 @@ public class MqttCoreService(
                     || physicalDevice.DeviceType == DeviceType.FloorLamp
                     || physicalDevice.DeviceType == DeviceType.RGBICWWStripLight
                     || physicalDevice.DeviceType == DeviceType.RGBICWWFloorLamp
+                    || physicalDevice.DeviceType == DeviceType.RGBICWWLightBars
                     || physicalDevice.DeviceType == DeviceType.RGBICNeonWireRopeLight
                     || physicalDevice.DeviceType == DeviceType.RGBICNeonRopeLight
                     || physicalDevice.DeviceType == DeviceType.CandleWarmerLamp
@@ -974,6 +983,7 @@ public class MqttCoreService(
                         || physicalDevice.DeviceType == DeviceType.LockPro
                         || physicalDevice.DeviceType == DeviceType.LockLite
                         || physicalDevice.DeviceType == DeviceType.LockUltra
+                        || physicalDevice.DeviceType == DeviceType.LockUltraMax
                         || physicalDevice.DeviceType == DeviceType.LockProMatterEnabled
                         || physicalDevice.DeviceType == DeviceType.LockVision
                         || physicalDevice.DeviceType == DeviceType.LockVisionPro)
