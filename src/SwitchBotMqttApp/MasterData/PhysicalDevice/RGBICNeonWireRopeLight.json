@@ -234,6 +234,27 @@
           "DefaultValue": "6500"
         }
       ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setLightEffect",
+      "PayloadType": "Json",
+      "Description": "set a preset light effect",
+      "Icon": "mdi:auto-fix",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setLightEffect",
+          "Name": "effectId",
+          "Index": 1,
+          "Description": "the preset light effect, 0-25",
+          "ParameterType": "Select",
+          "Icon": "mdi:auto-fix",
+          "Options": "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25",
+          "OptionsDescription": "Romance|Vitality|Heartthrob|Party|Dynamic|Mystery|Lightning|Rock|Starlight|Valentine's Day|Dream|Alarm|Fireworks|Waves|Christmas|Rainbow|Game|Halloween|Meditation|Starlit Sky|Sleep|Film|Sunrise|Sunset|New Year|Cherry Blossom",
+          "DefaultValue": "0"
+        }
+      ]
     }
   ]
 }
