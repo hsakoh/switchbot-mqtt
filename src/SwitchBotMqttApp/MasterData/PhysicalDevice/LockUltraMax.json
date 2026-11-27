@@ -1,9 +1,9 @@
 {
   "DeviceType": "LockUltraMax",
   "ApiDeviceTypeString": "Smart Lock Ultra Max",
-  // WebhookDeviceTypeString: the value in the official webhook example. Real Lock Ultra devices send "Lock Ultra" in webhooks, so this device may actually send "Lock Ultra Max".
+  // WebhookDeviceTypeString: the official webhook example says "Smart Lock Ultra Max", but a real device (firmware V0.8) sends "Lock Ultra Max" (home-assistant/core#192305).
   // Webhooks are matched to devices by deviceMac. This value is only used to display deviceType (if it does not match, ApiDeviceTypeString is used).
-  "WebhookDeviceTypeString": "Smart Lock Ultra Max",
+  "WebhookDeviceTypeString": "Lock Ultra Max",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
@@ -44,11 +44,13 @@
       "OnValue": "unlocked",
       "OffValue": "locked"
     },
-    // doorState: status only in the official docs. The docs list "open, close", but they said the same for Lock Ultra and real devices returned "opened" / "closed", so the values match the other locks.
+    // doorState: status only in the official docs, but a real device (firmware V0.8) also sends it in webhooks as "OPENED" / "CLOSED" (home-assistant/core#192305); webhook values are lowercased.
+    // The docs list "open, close", but they said the same for Lock Ultra and real devices returned "opened" / "closed", so the values match the other locks.
     {
       "FieldName": "doorState",
-      "FieldSourceType": "status",
+      "FieldSourceType": "both",
       "StatusKey": "doorState",
+      "WebhookKey": "doorState",
       "FieldDataType": "String",
       "Description": "determines if the door is closed or not",
       "IsBinary": true,

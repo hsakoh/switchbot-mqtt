@@ -258,9 +258,29 @@ public class SwitchBotApiClient
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "signature generation error. ApiKey:{ApiKey},ApiSecret:{ApiSecret}", _switchBotOptions.Value.ApiSecret, _switchBotOptions.Value.ApiKey);
+            // Never log the credential values themselves; only whether they are set
+            _logger.LogError(ex, "signature generation error. ApiKey:{ApiKey},ApiSecret:{ApiSecret}",
+                DescribeCredential(_switchBotOptions.Value.ApiKey), DescribeCredential(_switchBotOptions.Value.ApiSecret));
             throw;
         }
+    }
+
+    /// <summary>
+    /// Describes a credential for logging without revealing its value.
+    /// </summary>
+    /// <param name="value">Credential value.</param>
+    /// <returns>"null", "empty", or the number of characters.</returns>
+    private static string DescribeCredential(string? value)
+    {
+        if (value == null)
+        {
+            return "null";
+        }
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return "empty";
+        }
+        return $"set ({value.Length} chars)";
     }
 
     /// <summary>

@@ -565,6 +565,12 @@ public class MqttCoreService(
                     {
                         value = int.Parse((string)value);
                     }
+                    // Fan setWindSpeed requires integer value (Battery Circulator Fan 2 Pro ignores a string)
+                    if (commandConf.Command == "setWindSpeed"
+                        && paramDef.ParameterType == ParameterType.Range)
+                    {
+                        value = int.Parse((string)value);
+                    }
                     await switchBotApiClient.SendDeviceControlCommandAsync(device, commandConf, value, CancellationToken.None);
                     return;
                 }

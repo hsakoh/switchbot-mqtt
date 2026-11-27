@@ -229,6 +229,49 @@
           "DefaultValue": "100"
         }
       ]
+    },
+    // setOscillation / setVerticalOscillation: not in the official docs. Confirmed on a real Circulator Fan (firmware V0.9).
+    {
+      "CommandType": "command",
+      "Command": "setOscillation",
+      "PayloadType": "SingleValue",
+      "Description": "set horizontal oscillation. on or off",
+      "Icon": "mdi:arrow-left-right",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setOscillation",
+          "Name": "oscillation",
+          "Index": 1,
+          "Description": "set horizontal oscillation. on or off",
+          "ParameterType": "Select",
+          "Icon": "mdi:arrow-left-right",
+          "Options": "on|off",
+          "OptionsDescription": "on|off",
+          "DefaultValue": "on"
+        }
+      ]
+    },
+    {
+      "CommandType": "command",
+      "Command": "setVerticalOscillation",
+      "PayloadType": "SingleValue",
+      "Description": "set vertical oscillation. on or off",
+      "Icon": "mdi:arrow-up-down",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "setVerticalOscillation",
+          "Name": "verticalOscillation",
+          "Index": 1,
+          "Description": "set vertical oscillation. on or off",
+          "ParameterType": "Select",
+          "Icon": "mdi:arrow-up-down",
+          "Options": "on|off",
+          "OptionsDescription": "on|off",
+          "DefaultValue": "on"
+        }
+      ]
     }
   ]
 }

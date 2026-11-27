@@ -40,6 +40,18 @@
       "StateClass": "measurement",
       "UnitOfMeasurement": "°C"
     },
+    // targetTemperature: not in the official docs. The status response includes it, and HA switchbot_cloud reads it as the target temperature (home-assistant/core#189604).
+    {
+      "FieldName": "targetTemperature",
+      "FieldSourceType": "status",
+      "StatusKey": "targetTemperature",
+      "FieldDataType": "Float",
+      "Description": "the target temperature in celsius",
+      "IsBinary": false,
+      "SensorDeviceClass": "temperature",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "°C"
+    },
     {
       "FieldName": "version",
       "FieldSourceType": "status",

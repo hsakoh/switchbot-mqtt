@@ -192,6 +192,11 @@
                 {
                     value = int.Parse((string)value);
                 }
+                if (CommandConf.Command == "setWindSpeed"
+                    && CommandParams[0].def.ParameterType == ParameterType.Range)
+                {
+                    value = int.Parse((string)value);
+                }
                 Response = await SwitchBotApiClient.SendDeviceControlCommandAsync(Device, CommandConf, value, CancellationToken.None);
             }
             else if (CommandDef.PayloadType == PayloadType.Json)
