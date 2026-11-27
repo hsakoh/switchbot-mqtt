@@ -37,12 +37,13 @@ We have implemented all devices according to the published API specifications, b
 | [Hub Mini][HubMiniProduct] [[JP][HubMiniProductJP]]                                                                                |              [✅][HubMiniList]               |                      -                      |                      -                       |                      -                       |      -       |
 | [Hub 2][Hub2Product] [[JP][Hub2ProductJP]]                                                                                         |                [✅][Hub2List]                |               [✅][Hub2Status]               |               [✅][Hub2Webhook]               |                      -                       |      ✅       |
 | [Hub 3][Hub3Product] [[JP][Hub3ProductJP]]                                                                                         |                [✅][Hub3List]                |               [✅][Hub3Status]               |               [✅][Hub3Webhook]               |                      -                       |      ✅       |
+| [Hub 4][Hub4Product] [[JP][Hub4ProductJP]]                                                                                         |                [✅][Hub4List]                |               [✅][Hub4Status]               |               [✅][Hub4Webhook]               |                      -                       |              |
 | [AI Hub](AIHubProduct) [[JP][AIHubProductJP]]                                                                                      |               [✅][AIHubList]                |              [✅][AIHubStatus]               |                      -                       |                      -                       |              |
 | **Home Automation**                                                                                                                |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | [Bot][BotProduct] [[JP][BotProductJP]]                                                                                             |                [✅][BotList]                 |               [✅][BotStatus]                |               [✅][BotWebhook]                |               [✅][BotCommand]                |              |
 | [Curtain][CurtainProduct]                                                                                                          |              [✅][CurtainList]               |             [✅][CurtainStatus]              |             [✅][CurtainWebhook]              |             [✅][CurtainCommand]              |      ✅       |
 | [Curtain3][Curtain3Product] [[JP][Curtain3ProductJP]]                                                                              |              [✅][Curtain3List]              |             [✅][Curtain3Status]             |             [✅][Curtain3Webhook]             |             [✅][Curtain3Command]             |              |
-| Curtain 4                                                                                                                          |              [✅][Curtain4List]              |             [✅][Curtain4Status]             |             [✅][Curtain4Webhook]             |             [✅][Curtain4Command]             |              |
+| [Curtain 4][Curtain4Product]                                                                                                       |              [✅][Curtain4List]              |             [✅][Curtain4Status]             |             [✅][Curtain4Webhook]             |             [✅][Curtain4Command]             |              |
 | [Blind Tilt][BlindTiltProduct] [[JP][BlindTiltProductJP]]                                                                          |             [✅][BlindTiltList]              |            [✅][BlindTiltStatus]             |                      -                       |            [✅][BlindTiltCommand]             |              |
 | [Roller Shade][RollerShadeProduct]                                                                                                 |            [✅][RollerShadeList]             |           [✅][RollerShadeStatus]            |           [✅][RollerShadeWebhook]            |           [✅][RollerShadeCommand]            |      ✅       |
 | [Universal Remote][UniversalRemoteProduct] [[JP][UniversalRemoteProductJP]]                                                        |                      -                      |                      ✅                      |                      -                       |                      -                       |      ✅       |
@@ -69,7 +70,7 @@ We have implemented all devices according to the published API specifications, b
 | Air Purifier VOC [[JP][AirPurifierVOCProductJP]]                                                                                   |           [✅][AirPurifierVOCList]           |          [✅][AirPurifierVOCStatus]          |          [✅][AirPurifierVOCWebhook]          |          [✅][AirPurifierVOCCommand]          |              |
 | Air Purifier Table VOC [[JP][AirPurifierTableVOCProductJP]]                                                                        |        [✅][AirPurifierTableVOCList]         |       [✅][AirPurifierTableVOCStatus]        |       [✅][AirPurifierTableVOCWebhook]        |       [✅][AirPurifierTableVOCCommand]        |              |
 | [AI Art Frame][AIArtFrameProduct] [[JP][AIArtFrameProductJP]]                                                                      |             [✅][AIArtFrameList]             |            [✅][AIArtFrameStatus]            |            [✅][AIArtFrameWebhook]            |            [✅][AIArtFrameCommand]            |              |
-| [AI Art Frame 2][AIArtFrame2Product]                                                                                               |            [✅][AIArtFrame2List]             |           [✅][AIArtFrame2Status]            |           [✅][AIArtFrame2Webhook]            |           [✅][AIArtFrame2Command]            |              |
+| [AI Art Frame 2][AIArtFrame2Product] [[JP][AIArtFrame2ProductJP]]                                                                  |            [✅][AIArtFrame2List]             |           [✅][AIArtFrame2Status]            |           [✅][AIArtFrame2Webhook]            |           [✅][AIArtFrame2Command]            |              |
 | **Robot Vacuum**                                                                                                                   |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | Robot Vacuum Cleaner S1 [[JP][RobotVacuumCleanerS1ProductJP]]                                                                      |        [✅][RobotVacuumCleanerS1List]        |       [✅][RobotVacuumCleanerS1Status]       |       [✅][RobotVacuumCleanerS1Webhook]       |       [✅][RobotVacuumCleanerS1Command]       |              |
 | Robot Vacuum Cleaner S1 Plus [[JP][RobotVacuumCleanerS1PlusProductJP]]                                                             |      [✅][RobotVacuumCleanerS1PlusList]      |     [✅][RobotVacuumCleanerS1PlusStatus]     |     [✅][RobotVacuumCleanerS1PlusWebhook]     |     [✅][RobotVacuumCleanerS1PlusCommand]     |              |
@@ -78,6 +79,7 @@ We have implemented all devices according to the published API specifications, b
 | [Multitasking Household Robot K20+ Pro][MultitaskingHouseholdRobotK20ProProduct] [[JP][MultitaskingHouseholdRobotK20ProProductJP]] |  [✅][MultitaskingHouseholdRobotK20ProList]  | [✅][MultitaskingHouseholdRobotK20ProStatus] | [✅][MultitaskingHouseholdRobotK20ProWebhook] | [✅][MultitaskingHouseholdRobotK20ProCommand] |              |
 | [Floor Cleaning Robot S10][FloorCleaningRobotS10Product] [[JP][FloorCleaningRobotS10ProductJP]]                                    |       [✅][FloorCleaningRobotS10List]        |      [✅][FloorCleaningRobotS10Status]       |      [✅][FloorCleaningRobotS10Webhook]       |      [✅][FloorCleaningRobotS10Command]       |              |
 | [Floor Cleaning Robot S20][FloorCleaningRobotS20Product] [[JP][FloorCleaningRobotS20ProductJP]]                                    |       [✅][FloorCleaningRobotS20List]        |      [✅][FloorCleaningRobotS20Status]       |      [✅][FloorCleaningRobotS20Webhook]       |      [✅][FloorCleaningRobotS20Command]       |              |
+| Floor Cleaning Robot S30 [[JP][FloorCleaningRobotS30ProductJP]]                                                                    |       [✅][FloorCleaningRobotS30List]        |      [✅][FloorCleaningRobotS30Status]       |      [✅][FloorCleaningRobotS30Webhook]       |      [✅][FloorCleaningRobotS30Command]       |              |
 | [Robot Vacuum K10+ Pro Combo][RobotVacuumK10+ProComboProduct] [[JP][RobotVacuumK10+ProComboProductJP]]                             |      [✅][RobotVacuumK10+ProComboList]       |     [✅][RobotVacuumK10+ProComboStatus]      |     [✅][RobotVacuumK10+ProComboWebhook]      |     [✅][RobotVacuumK10+ProComboCommand]      |              |
 | [Robot Vacuum K11+][RobotVacuumK11+Product] [[JP][RobotVacuumK11+ProductJP]]                                                       |          [✅][RobotVacuumK11+List]           |         [✅][RobotVacuumK11+Status]          |         [✅][RobotVacuumK11+Webhook]          |         [✅][RobotVacuumK11+Command]          |              |
 | [Robot Vacuum K11+ Pro][RobotVacuumK11+ProProduct] [[JP][RobotVacuumK11+ProProductJP]]                                             |         [✅][RobotVacuumK11+ProList]         |        [✅][RobotVacuumK11+ProStatus]        |        [✅][RobotVacuumK11+ProWebhook]        |        [✅][RobotVacuumK11+ProCommand]        |              |
@@ -97,7 +99,7 @@ We have implemented all devices according to the published API specifications, b
 | [Smart Lock Pro][SmartLockProProduct] [[JP][SmartLockProProductJP]]                                                                |            [✅][SmartLockProList]            |           [✅][SmartLockProStatus]           |           [✅][SmartLockProWebhook]           |           [✅][SmartLockProCommand]           |              |
 | [Smart Lock Lite][SmartLockLiteProduct] [[JP][SmartLockLiteProductJP]]                                                             |           [✅][SmartLockLiteList]            |          [✅][SmartLockLiteStatus]           |          [✅][SmartLockLiteWebhook]           |          [✅][SmartLockLiteCommand]           |              |
 | [Smart Lock Ultra][SmartLockUltraProduct] [[JP][SmartLockUltraProductJP]]                                                          |           [✅][SmartLockUltraList]           |          [✅][SmartLockUltraStatus]          |          [✅][SmartLockUltraWebhook]          |          [✅][SmartLockUltraCommand]          |      ✅       |
-| [Smart Lock Ultra Max][SmartLockUltraMaxProduct]                                                                                   |         [✅][SmartLockUltraMaxList]          |        [✅][SmartLockUltraMaxStatus]         |        [✅][SmartLockUltraMaxWebhook]         |        [✅][SmartLockUltraMaxCommand]         |              |
+| [Smart Lock Ultra Max][SmartLockUltraMaxProduct] [[JP][SmartLockUltraMaxProductJP]]                                                |         [✅][SmartLockUltraMaxList]          |        [✅][SmartLockUltraMaxStatus]         |        [✅][SmartLockUltraMaxWebhook]         |        [✅][SmartLockUltraMaxCommand]         |              |
 | [Smart Lock Pro (Matter Enabled)][LockProMatterEnabledProduct]                                                                     |        [✅][LockProMatterEnabledList]        |       [✅][LockProMatterEnabledStatus]       |       [✅][LockProMatterEnabledWebhook]       |       [✅][LockProMatterEnabledCommand]       |              |
 | [Lock Vision][LockVisionProduct]                                                                                                   |             [✅][LockVisionList]             |            [✅][LockVisionStatus]            |            [✅][LockVisionWebhook]            |            [✅][LockVisionCommand]            |              |
 | [Lock Vision Pro][LockVisionProProduct]                                                                                            |           [✅][LockVisionProList]            |          [✅][LockVisionProStatus]           |          [✅][LockVisionProWebhook]           |          [✅][LockVisionProCommand]           |              |
@@ -113,14 +115,17 @@ We have implemented all devices according to the published API specifications, b
 | [Pan/Tilt Cam Plus 2K(3MP)][PanTiltCamPlus3MPProduct] [[JP][PanTiltCamPlus3MPProductJP]]                                           |         [✅][PanTiltCamPlus3MPList]          |                     ✅📸                     |                      ✅📸                      |                      -                       |              |
 | [Pan/Tilt Cam Plus 3K(5MP)][PanTiltCamPlus5MPProduct] [[JP][PanTiltCamPlus5MPProductJP]]                                           |         [✅][PanTiltCamPlus5MPList]          |                     ✅📸                     |                      ✅📸                      |                      -                       |      ✅       |
 | [Outdoor Pan/Tilt Cam 3K][OutdoorPanTiltCam3KProduct] [[JP][OutdoorPanTiltCam3KProductJP]]                                         |                      -                      |      [✅📸][OutdoorPanTiltCam3KStatus]       |                      ✅📸                      |                      -                       |      ✅       |
-| Solar Pan/Tilt Cam 2K                                                                                                              |         [✅][SolarPanTiltCam2KList]          |       [✅📸][SolarPanTiltCam2KStatus]        |        [✅][SolarPanTiltCam2KWebhook]         |        [✅][SolarPanTiltCam2KCommand]         |              |
+| [Solar Pan/Tilt Cam 2K][SolarPanTiltCam2KProduct] [[JP][SolarPanTiltCam2KProductJP]]                                               |         [✅][SolarPanTiltCam2KList]          |       [✅📸][SolarPanTiltCam2KStatus]        |        [✅][SolarPanTiltCam2KWebhook]         |        [✅][SolarPanTiltCam2KCommand]         |              |
 | [Indoor Cam][IndoorCamProduct] [[JP][IndoorCamProductJP]]                                                                          |             [✅][IndoorCamList]              |                      -                      |            [✅][IndoorCamWebhook]             |                      -                       |      ✅       |
 | [Video Doorbell][VideoDoorbellProduct] [[JP][VideoDoorbellProductJP]]                                                              |           [✅][VideoDoorbellList]            |          [✅][VideoDoorbellStatus]           |          [✅][VideoDoorbellWebhook]📸          |          [✅][VideoDoorbellCommand]           |      ✅       |
+| [Vision Doorbell][VisionDoorbellProduct] [[JP][VisionDoorbellProductJP]]                                                           |           [✅][VisionDoorbellList]           |          [✅][VisionDoorbellStatus]          |                      -                       |                      -                       |              |
 | **Power & Switch**                                                                                                                 |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | Plug                                                                                                                               |                [✅][PlugList]                |               [✅][PlugStatus]               |                      -                       |               [✅][PlugCommand]               |              |
 | [Plug Mini (US)][PlugMiniUSProduct]                                                                                                |             [✅][PlugMiniUSList]             |            [✅][PlugMiniUSStatus]            |            [✅][PlugMiniUSWebhook]            |            [✅][PlugMiniUSCommand]            |              |
 | Plug Mini (JP) [[JP][PlugMiniJPProductJP]]                                                                                         |             [✅][PlugMiniJPList]             |            [✅][PlugMiniJPStatus]            |            [✅][PlugMiniJPWebhook]            |            [✅][PlugMiniJPCommand]            |      ✅       |
 | [Plug Mini (EU)][PlugMiniEUProduct]                                                                                                |             [✅][PlugMiniEUList]             |            [✅][PlugMiniEUStatus]            |            [✅][PlugMiniEUWebhook]            |            [✅][PlugMiniEUCommand]            |              |
+| Plug Mini (IT)                                                                                                                     |             [✅][PlugMiniITList]             |            [✅][PlugMiniITStatus]            |            [✅][PlugMiniITWebhook]            |            [✅][PlugMiniITCommand]            |              |
+| Outdoor Plug (EU)                                                                                                                  |           [✅][OutdoorPlugEUList]            |          [✅][OutdoorPlugEUStatus]           |          [✅][OutdoorPlugEUWebhook]           |          [✅][OutdoorPlugEUCommand]           |              |
 | [Remote][RemoteProduct] [[JP][RemoteProductJP]]                                                                                    |               [✅][RemoteList]               |                      -                      |                      -                       |                      -                       |      -       |
 | **Lighting**                                                                                                                       |                      -                      |                      -                      |                      -                       |                      -                       |      -       |
 | Ceiling Light [[JP][CeilingLightProductJP]]                                                                                        |            [✅][CeilingLightList]            |           [✅][CeilingLightStatus]           |           [✅][CeilingLightWebhook]           |           [✅][CeilingLightCommand]           |      ✅       |
@@ -161,6 +166,11 @@ We have implemented all devices according to the published API specifications, b
 [Hub3List]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/hubhub-plushub-minihub-2hub-3.md#device-list-information
 [Hub3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/hub-3.md#device-status
 [Hub3Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/hub-3.md#webhook-events
+[Hub4Product]: https://www.switch-bot.com/products/switchbot-hub-4
+[Hub4ProductJP]: https://www.switchbot.jp/products/switchbot-hub4
+[Hub4List]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/hub-4.md#device-list-information
+[Hub4Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/hub-4.md#device-status
+[Hub4Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/hub-4.md#webhook-events
 [AIHubProduct]: https://www.switch-bot.com/products/switchbot-ai-hub
 [AIHubProductJP]: https://www.switchbot.jp/products/switchbot-aihub
 [AIHubList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/hubs/ai-hub.md#device-list-information
@@ -182,6 +192,7 @@ We have implemented all devices according to the published API specifications, b
 [Curtain3Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/curtains-blinds/curtain-3.md#device-status
 [Curtain3Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/curtains-blinds/curtain-3.md#webhook-events
 [Curtain3Command]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/curtains-blinds/curtain-3.md#control-commands
+[Curtain4Product]: https://www.switch-bot.com/products/switchbot-curtain-track-4
 [Curtain4List]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/curtains-blinds/curtain-4.md#device-list-information
 [Curtain4Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/curtains-blinds/curtain-4.md#device-status
 [Curtain4Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/curtains-blinds/curtain-4.md#webhook-events
@@ -296,6 +307,7 @@ We have implemented all devices according to the published API specifications, b
 [AIArtFrameWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-art-frame.md#webhook-events
 [AIArtFrameCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-art-frame.md#control-commands
 [AIArtFrame2Product]: https://www.switch-bot.com/products/switchbot-ai-art-frame-2
+[AIArtFrame2ProductJP]: https://www.switchbot.jp/products/switchbot-ai-art-frame-2
 [AIArtFrame2List]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-art-frame-2.md#device-list-information
 [AIArtFrame2Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-art-frame-2.md#device-status
 [AIArtFrame2Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/ai-art-frame-2.md#webhook-events
@@ -340,6 +352,11 @@ We have implemented all devices according to the published API specifications, b
 [FloorCleaningRobotS20Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s20.md#device-status
 [FloorCleaningRobotS20Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s20.md#webhook-events
 [FloorCleaningRobotS20Command]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s20.md#control-commands
+[FloorCleaningRobotS30ProductJP]: https://www.switchbot.jp/products/switchbot-robot-vacuum-cleaner-s30
+[FloorCleaningRobotS30List]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s30.md#device-list-information
+[FloorCleaningRobotS30Status]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s30.md#device-status
+[FloorCleaningRobotS30Webhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s30.md#webhook-events
+[FloorCleaningRobotS30Command]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/floor-cleaning-robot-s30.md#control-commands
 [RobotVacuumK10+ProComboProduct]: https://www.switch-bot.com/products/switchbot-k10-pro-combo
 [RobotVacuumK10+ProComboProductJP]: https://www.switchbot.jp/products/robot-vacuum-cleaner-k10-pro-combo
 [RobotVacuumK10+ProComboList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/robot-vacuum/k10-pro-combo.md#device-list-information
@@ -441,7 +458,8 @@ We have implemented all devices according to the published API specifications, b
 [SmartLockUltraStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/locks-security/lock-ultra.md#device-status
 [SmartLockUltraWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/locks-security/lock-ultra.md#webhook-events
 [SmartLockUltraCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/locks-security/lock-ultra.md#control-commands
-[SmartLockUltraMaxProduct]: https://www.switch-bot.com/products/switchbot-lock-ultra-max-vision-pro-combo
+[SmartLockUltraMaxProduct]: https://www.switch-bot.com/products/switchbot-lock-ultra-max-vision-pro-combo?variant=51286962569383
+[SmartLockUltraMaxProductJP]: https://www.switchbot.jp/products/switchbot-lock-ultra-max
 [SmartLockUltraMaxList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/locks-security/lock-ultra-max.md#device-list-information
 [SmartLockUltraMaxStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/locks-security/lock-ultra-max.md#device-status
 [SmartLockUltraMaxWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/locks-security/lock-ultra-max.md#webhook-events
@@ -504,6 +522,8 @@ We have implemented all devices according to the published API specifications, b
 [OutdoorPanTiltCam3KProduct]: https://www.switch-bot.com/products/outdoor-ptc-3k5mp
 [OutdoorPanTiltCam3KProductJP]: https://www.switchbot.jp/products/switchbot-outdoor-pan-tilt-cam-5mp
 [OutdoorPanTiltCam3KStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/outdoor-pantilt-cam-3k.md#device-status
+[SolarPanTiltCam2KProduct]: https://www.switch-bot.com/products/switchbot-solar-pan-tilt-cam-2k-viewstation-kit
+[SolarPanTiltCam2KProductJP]: https://www.switchbot.jp/products/switchbot-solar-pan-tilt-cam-2k
 [SolarPanTiltCam2KList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/solar-pantilt-cam-2k.md#device-list-information
 [SolarPanTiltCam2KStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/solar-pantilt-cam-2k.md#device-status
 [SolarPanTiltCam2KWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/solar-pantilt-cam-2k.md#webhook-events
@@ -518,6 +538,10 @@ We have implemented all devices according to the published API specifications, b
 [VideoDoorbellStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/video-doorbell.md#device-status
 [VideoDoorbellWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/video-doorbell.md#webhook-events
 [VideoDoorbellCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/video-doorbell.md#control-commands
+[VisionDoorbellProduct]: https://www.switch-bot.com/products/switchbot-vision-doorbell
+[VisionDoorbellProductJP]: https://www.switchbot.jp/products/switchbot-vision-doorbell
+[VisionDoorbellList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/vision-doorbell.md#device-list-information
+[VisionDoorbellStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/cameras/vision-doorbell.md#device-status
 [PlugList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug.md#device-list-information
 [PlugStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug.md#device-status
 [PlugCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug.md#control-commands
@@ -531,11 +555,19 @@ We have implemented all devices according to the published API specifications, b
 [PlugMiniJPStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-jp.md#device-status
 [PlugMiniJPWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-jp.md#webhook-events
 [PlugMiniJPCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-jp.md#control-commands
-[PlugMiniEUProduct]: https://eu.switch-bot.com/products/switchbot-plug-mini
+[PlugMiniEUProduct]: https://www.switch-bot.com/products/switchbot-plug-mini-eu
 [PlugMiniEUList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-eu.md#device-list-information
 [PlugMiniEUStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-eu.md#device-status
 [PlugMiniEUWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-eu.md#webhook-events
 [PlugMiniEUCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-eu.md#control-commands
+[PlugMiniITList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-it.md#device-list-information
+[PlugMiniITStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-it.md#device-status
+[PlugMiniITWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-it.md#webhook-events
+[PlugMiniITCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/plug-mini-it.md#control-commands
+[OutdoorPlugEUList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/outdoor-plug-eu.md#device-list-information
+[OutdoorPlugEUStatus]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/outdoor-plug-eu.md#device-status
+[OutdoorPlugEUWebhook]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/outdoor-plug-eu.md#webhook-events
+[OutdoorPlugEUCommand]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/plugs-switches/outdoor-plug-eu.md#control-commands
 [RemoteProduct]: https://switch-bot.com/products/switchbot-remote
 [RemoteProductJP]: https://www.switchbot.jp/products/switchbot-remote
 [RemoteList]: https://github.com/OpenWonderLabs/SwitchBotAPI/blob/main/devices/others/remote.md#device-list-information

@@ -1,0 +1,74 @@
+{
+  "DeviceType": "VisionDoorbell",
+  "ApiDeviceTypeString": "Vision Doorbell",
+  "PhysicalOrVirtual": "PhysicalDevice",
+  "IsSupportPolling": true,
+  "IsSupportWebhook": false,
+  "IsSupportCommand": false,
+  "DisplayName": "Vision Doorbell",
+  "Fields": [
+    {
+      "FieldName": "version",
+      "FieldSourceType": "status",
+      "StatusKey": "version",
+      "FieldDataType": "String",
+      "Description": "the current firmware version, e.g. V1.0",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "battery",
+      "FieldSourceType": "status",
+      "StatusKey": "battery",
+      "FieldDataType": "Integer",
+      "Description": "the current battery level, 0-100",
+      "IsBinary": false,
+      "SensorDeviceClass": "battery",
+      "StateClass": "measurement",
+      "UnitOfMeasurement": "%"
+    },
+    {
+      "FieldName": "online",
+      "FieldSourceType": "status",
+      "StatusKey": "online",
+      "FieldDataType": "Boolean",
+      "Description": "the connection status of the device. true, online; false, offline",
+      "IsBinary": true,
+      "BinarySensorDeviceClass": "connectivity",
+      "OnValue": "true",
+      "OffValue": "false"
+    },
+    {
+      "FieldName": "deviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceId",
+      "FieldDataType": "String",
+      "Description": "device ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "deviceType",
+      "FieldSourceType": "status",
+      "StatusKey": "deviceType",
+      "FieldDataType": "String",
+      "Description": "device type. Vision Doorbell",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    },
+    {
+      "FieldName": "hubDeviceId",
+      "FieldSourceType": "status",
+      "StatusKey": "hubDeviceId",
+      "FieldDataType": "String",
+      "Description": "device's parent Hub ID",
+      "IsBinary": false,
+      "Icon": "mdi:information",
+      "EntityCategory": "diagnostic"
+    }
+  ],
+  "Commands": []
+}

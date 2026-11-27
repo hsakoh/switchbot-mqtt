@@ -185,7 +185,8 @@
                 {
                     value = int.Parse((string)value);
                 }
-                if (Device.DeviceType == DeviceType.RobotVacuumCleanerS20
+                if ((Device.DeviceType == DeviceType.RobotVacuumCleanerS20
+                    || Device.DeviceType == DeviceType.RobotVacuumCleanerS30)
                     && CommandConf.Command == "selfClean"
                     && CommandParams[0].def.ParameterType == ParameterType.Select)
                 {

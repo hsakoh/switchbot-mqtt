@@ -1,7 +1,10 @@
 {
   "DeviceType": "AIArtFrame2",
-  "ApiDeviceTypeString": "AI Art Frame Luma",
-  "WebhookDeviceTypeString": "AI Art Frame Luma",
+  "ApiDeviceTypeString": "AI Art Frame 2",
+  "AdditionalApiDeviceTypeStrings": [
+    "AI Art Frame Luma"
+  ],
+  "WebhookDeviceTypeString": "AI Art Frame 2",
   "PhysicalOrVirtual": "PhysicalDevice",
   "IsSupportPolling": true,
   "IsSupportWebhook": true,
@@ -118,6 +121,27 @@
       "Description": "Switch to the previous image",
       "Icon": "mdi:page-previous",
       "Payloads": []
+    },
+    {
+      "CommandType": "command",
+      "Command": "deleteImage",
+      "PayloadType": "SingleValue",
+      "Description": "Delete one image from the photo frame. Deleted images cannot be recovered. The image currently displayed is never deleted.",
+      "Icon": "mdi:image-remove",
+      "Payloads": [
+        {
+          "CommandType": "command",
+          "Command": "deleteImage",
+          "Name": "target",
+          "Index": 1,
+          "Description": "which image to delete: random, newest (most recently added) or oldest (earliest added)",
+          "ParameterType": "Select",
+          "Icon": "mdi:image-remove",
+          "Options": "random|newest|oldest",
+          "OptionsDescription": "random|newest|oldest",
+          "DefaultValue": "oldest"
+        }
+      ]
     },
     {
       "CommandType": "command",
